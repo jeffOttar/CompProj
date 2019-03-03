@@ -30,15 +30,53 @@
 */
 
 #include "Item.h"
+#include "DataTables.h"
+
 
 namespace GEX {
 
-	Item::Item()
+	namespace
 	{
+		const std::map<Item::Type, ItemData> TABLE = initializeItemData();
 	}
 
 
-	Item::~Item()
+	Item::Item(Item::Type type, const GEX::TextureManager & textures):
+		type_(type)
+		, state_(State::Normal)
+		, sprite_(textures.get(TABLE.at(type).texture))
 	{
+		sprite_.setTextureRect(TABLE.at(type).textureRect);
 	}
+	std::string Item::getItemName(Item::Type type)
+	{
+		switch (type)
+		{
+		case Item::Type::BlackCoat:
+			return "Black Coat";
+		case Item::Type::Bread:
+			return "Bread";
+		case Item::Type::OldSword:
+			return "Old Sword";
+		default: 
+			return "";
+		}
+	}
+
+	std::vector<Item::Type> Item::getAllTypes()
+	{
+		std::vector<Item::Type> items;
+		for (int i = 0; i < (int)Item::Type::Count; i++)
+		{
+			items.push_back(static_cast<Item::Type>(i));
+		}
+		return items;
+	}
+
+	double Item::getPrice()
+	{
+		return TABLE.at(type_).price;
+	}
+
+	
 }

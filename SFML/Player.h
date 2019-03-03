@@ -64,8 +64,8 @@ namespace GEX
 		void									setRiding(bool riding);
 		void									playLocalSound(CommandQueue & commands, SoundEffectID effect);
 
-		double getMoney() { return _money; }
-		void setMoney(double money) { _money = money; }
+		double									getMoney() { return _money; }
+		void									setMoney(double money) { _money = money; }
 
 	private:
 		void									updateCurrent(sf::Time dt, CommandQueue& commands) override;

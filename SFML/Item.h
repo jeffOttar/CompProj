@@ -30,15 +30,31 @@
 */
 
 #pragma once
+#include <SFML/Graphics/Sprite.hpp>
+#include <string>
+#include <vector>
 
 namespace GEX {
+	class TextureManager;
+	class TextNode;
+
 	class Item
 	{
 	public:
-		enum class Type { Car, RaceCar, RaceCarL, Turtle3, Turtle3F, Turtle2, Turtle2F, Log1, Log2, Log2C, Truck, Tractor, Croc };
+		enum class Type { BlackCoat, Bread, OldSword, Count };
 		enum class State { Normal };
 
-		Item();
-		~Item();
+		Item(Item::Type type, const GEX::TextureManager& textures);
+		~Item()= default;
+
+		std::string getItemName(Item::Type type);
+		std::vector<Item::Type> getAllTypes();
+		double getPrice();
+		
+
+	private:
+		Type										type_;
+		State										state_;
+		mutable sf::Sprite							sprite_;
 	};
 }

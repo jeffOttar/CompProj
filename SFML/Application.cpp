@@ -67,6 +67,8 @@ _statisticsNumFrames(0)
 	_textures.load(GEX::TextureID::ShopIcon, "Media/Textures/homeIcon.png");
 	_textures.load(GEX::TextureID::MarcoMoney, "Media/Textures/endIcon.png");
 	_textures.load(GEX::TextureID::WarehouseIcon, "Media/Textures/warehouseIcon.png");
+	_textures.load(GEX::TextureID::Warehouse, "Media/Textures/warehouse.png");
+	_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
 
 	_statisticsText.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	_statisticsText.setPosition(5.f, 5.f);

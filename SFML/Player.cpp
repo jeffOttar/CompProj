@@ -53,6 +53,7 @@ namespace GEX
 		, textures_(textures)
 		, state_(State::Up)
 		, riding_(false)
+		, _money(1000)
 	{
 		textures.load(GEX::TextureID::Characters, "Media/Textures/characters.png");
 		sprite_.setTexture(textures.get(TABLE.at(type).texture));

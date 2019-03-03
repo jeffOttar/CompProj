@@ -71,7 +71,7 @@ namespace GEX
 	{
 		double						price;
 		TextureID					texture;
-		sf::IntRect					textureRect;
+		sf::IntRect		textureRect;
 		
 	};
 

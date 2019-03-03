@@ -48,6 +48,9 @@ namespace Category {
 		Shelf = 1 << 11,
 		Courtney = 1 << 12,
 		Greg = 1 << 13,
+		OldSword = 1 << 14,
+		BlackCoat = 1 << 15,
+		Bread = 1 << 16,
 
 		Villager = Courtney | Greg,
 		Aircraft = PlayerAircraft | AlliedAircraft | EnemyAircraft,//used to include all ORed objects into one definition

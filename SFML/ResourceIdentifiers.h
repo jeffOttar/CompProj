@@ -42,6 +42,7 @@ namespace GEX {
 		FinishLine,
 		Shelf,
 		Face,
+		Items,
 		Map,
 		ShopIcon,
 		Shop,

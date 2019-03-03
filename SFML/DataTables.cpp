@@ -74,10 +74,18 @@ namespace GEX {
 	{
 		std::map<Item::Type, ItemData> data;
 
-		//data[Projectile::Type::AlliedBullet].damage = 10;
-		//data[Projectile::Type::AlliedBullet].speed = 300.f;
-		//data[Projectile::Type::AlliedBullet].texture = TextureID::Entities;
-		//data[Projectile::Type::AlliedBullet].textureRect = sf::IntRect(175, 64, 3, 14);
+		data[Item::Type::BlackCoat].texture = TextureID::Items;
+		data[Item::Type::BlackCoat].price = 250;
+		data[Item::Type::BlackCoat].textureRect= sf::IntRect(0,320,32,32);
+
+		data[Item::Type::Bread].texture = TextureID::Items;
+		data[Item::Type::Bread].price = 20;
+		data[Item::Type::Bread].textureRect = sf::IntRect(0, 960, 32, 32);
+
+		data[Item::Type::OldSword].texture = TextureID::Items;
+		data[Item::Type::OldSword].price = 100;
+		data[Item::Type::OldSword].textureRect = sf::IntRect(32, 0, 32, 32);
+		
 
 		return data;
 	}
@@ -146,29 +154,6 @@ namespace GEX {
 	std::map<Player::PlayerType, PlayerData> initializePlayerData()
 	{
 		std::map<Player::PlayerType, PlayerData> data;
-
-		/*data[Player::PlayerType::PacMan].texture = TextureID::Atlas;
-		data[Player::PlayerType::PacMan].hitpoints = 5;
-		data[Player::PlayerType::PacMan].textureRect = sf::IntRect(43, 379, 40, 40);*/
-
-		//JsonFrameParser frames = JsonFrameParser("Media/Textures/pacManAtlas.json");
-
-		////pacman walking in any direction orientation set in playercontroller
-		//data[Player::PlayerType::PacMan].animations[Player::State::Up].addFrameSet(frames.getFramesFor("chomp"));
-		//data[Player::PlayerType::PacMan].animations[Player::State::Up].setDuration(sf::Time(sf::seconds(1.f)));
-		//data[Player::PlayerType::PacMan].animations[Player::State::Up].setRepeating(true);
-
-		/*data[Player::PlayerType::PacMan].animations[Player::State::Left].addFrameSet(frames.getFramesFor("chomp"));
-		data[Player::PlayerType::PacMan].animations[Player::State::Left].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Player::PlayerType::PacMan].animations[Player::State::Left].setRepeating(true);
-
-		data[Player::PlayerType::PacMan].animations[Player::State::Right].addFrameSet(frames.getFramesFor("chomp"));
-		data[Player::PlayerType::PacMan].animations[Player::State::Right].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Player::PlayerType::PacMan].animations[Player::State::Right].setRepeating(true);
-
-		data[Player::PlayerType::PacMan].animations[Player::State::Down].addFrameSet(frames.getFramesFor("chomp"));
-		data[Player::PlayerType::PacMan].animations[Player::State::Down].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Player::PlayerType::PacMan].animations[Player::State::Down].setRepeating(true);*/
 
 		data[Player::PlayerType::Player].hitpoints = 100;
 		data[Player::PlayerType::Player].texture = TextureID::Characters;

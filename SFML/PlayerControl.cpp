@@ -67,8 +67,6 @@ namespace GEX {
 			{
 				if (player.finishedAnimation())
 					player.setState(Player::State::Left);
-
-
 			}
 			else if (movement.x > 0)
 			{
