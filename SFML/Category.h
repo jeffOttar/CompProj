@@ -45,7 +45,11 @@ namespace Category {
 		ParticleSystem = 1 << 8,
 		SoundEffect = 1 << 9,
 		Player = 1 <<10,
+		Shelf = 1 << 11,
+		Courtney = 1 << 12,
+		Greg = 1 << 13,
 
+		Villager = Courtney | Greg,
 		Aircraft = PlayerAircraft | AlliedAircraft | EnemyAircraft,//used to include all ORed objects into one definition
 		Projectile = EnemyProjectile | AlliedProjectile,
 	};

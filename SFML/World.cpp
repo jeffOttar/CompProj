@@ -44,6 +44,7 @@ namespace GEX {
 		_worldView(outputTarget.getDefaultView()),
 		_textures(),
 		_sounds(sounds),
+		_shelves(),
 		_sceneGraph(),
 		_sceneLayers(),
 		_worldBounds(0.f, 0.f, _worldView.getSize().x, _worldView.getSize().y),//left top width height
@@ -93,6 +94,31 @@ namespace GEX {
 	void World::adaptPlayerVelocity()
 	{
 		_player->setVelocity(sf::Vector2f(0.f, 0.f));
+	}
+
+	void World::addShelves()
+	{
+		//left wall shelves
+		createShelves(-400.f,30.f,270.f);
+		createShelves(-410.f, -70.f, 270.f);
+		createShelves(-420.f, -170.f, 270.f);
+		createShelves(-430.f, -270.f, 270.f);
+
+		//upper shelves
+		createShelves(-200.f, 100.f, 0.f);
+		createShelves(-100.f, 100.f, 0.f);
+		createShelves(-00.f, 100.f, 0.f);
+		createShelves(100.f, 100.f, 0.f);
+	}
+
+	void World::createShelves(float relX, float relY, float rotation)
+	{
+
+			std::unique_ptr<Shelf> shelf(new Shelf(Shelf::ShelfType::Shelf, _textures));
+			shelf->setPosition(_spawnPosition.x + relX, _spawnPosition.y - relY);
+			shelf->setRotation(rotation);
+			//move the enemy to the scenegraph
+			_sceneLayers[UpperAir]->attachChild(std::move(shelf));
 	}
 
 	void World::addEnemies()
@@ -389,6 +415,7 @@ namespace GEX {
 		_textures.load(GEX::TextureID::Explosion, "Media/Textures/Explosion.png");
 		_textures.load(GEX::TextureID::FinishLine, "Media/Textures/FinishLine.png");
 		_textures.load(GEX::TextureID::Shop, "Media/Textures/shopBackground2.png");
+		_textures.load(GEX::TextureID::Shelf, "Media/Textures/shelf.png");
 
 	}
 
@@ -441,6 +468,8 @@ namespace GEX {
 		_sceneLayers[UpperAir]->attachChild(std::move(player));
 
 		addEnemies();
+
+		addShelves();
 
 	}
 

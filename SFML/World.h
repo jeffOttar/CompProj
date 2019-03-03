@@ -41,6 +41,7 @@
 #include "BloomEffect.h"
 #include "SoundPlayer.h"
 #include "Player.h"
+#include "Shelf.h"
 
 #include <memory>
 #include <iostream>
@@ -69,6 +70,9 @@ namespace GEX {
 		void								buildScene();
 		void								adaptPlayerPosition();
 		void								adaptPlayerVelocity();
+
+		void								addShelves();
+		void								createShelves(float relX, float relY, float rotation);
 
 		void								addEnemies();//add enemies spawn points for them to spawn at
 		void								addEnemy(AircraftType type, float relX, float relY);
@@ -106,6 +110,8 @@ namespace GEX {
 			float y;
 		};
 
+	
+
 
 	private:
 		sf::RenderTarget&					_target;//the order that they are declared in the .h is the order they are created in the initialization list
@@ -113,6 +119,7 @@ namespace GEX {
 		sf::View                            _worldView;
 		TextureManager                      _textures;
 		SoundPlayer&						_sounds;
+		std::vector<Shelf*>					_shelves;
 
 		SceneNode                           _sceneGraph;
 		std::vector<SceneNode*>				_sceneLayers;

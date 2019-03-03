@@ -237,4 +237,14 @@ namespace GEX {
 		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Right].setRepeating(true);
 		*/
 	}
+	std::map<Shelf::ShelfType, ShelfData> initializeShelfData()
+	{
+		std::map<Shelf::ShelfType, ShelfData> data;
+
+		data[Shelf::ShelfType::Shelf].texture = TextureID::Shelf;
+		data[Shelf::ShelfType::Shelf].hitpoints = 10;
+		data[Shelf::ShelfType::Shelf].textureRect = sf::IntRect(0, 0, 75, 100);
+
+		return data;
+	}
 }

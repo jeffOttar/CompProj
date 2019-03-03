@@ -40,6 +40,7 @@ namespace GEX {
 		Explosion,
 		Particle,
 		FinishLine,
+		Shelf,
 		Face,
 		Map,
 		ShopIcon,

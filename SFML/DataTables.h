@@ -36,6 +36,7 @@
 #include "Particle.h"
 #include "Item.h"
 #include "Player.h"
+#include "Shelf.h"
 
 #include <map>
 #include <vector>
@@ -101,6 +102,16 @@ namespace GEX
 		std::map<Player::State, Animation2>		animations;
 		int										hitpoints;
 	};
+	struct ShelfData {
+
+		int											hitpoints;
+		TextureID									texture;
+		sf::IntRect									textureRect;
+		bool										occupied;
+
+
+
+	};
 
 	//declaring a function that returns a map of aircrafttype and data
 	std::map<AircraftType, AircraftData> initializeAircraftData();
@@ -114,4 +125,6 @@ namespace GEX
 	std::map<Particle::Type, ParticleData> initializeParticleData();
 
 	std::map<Player::PlayerType, PlayerData> initializePlayerData();
+
+	std::map<Shelf::ShelfType, ShelfData>			initializeShelfData();
 }
