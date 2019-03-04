@@ -42,7 +42,7 @@
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
 Application::Application() : //_window(sf::VideoMode(640, 480), "Killer Plane", sf::Style::Close), //smaller screen
-_window(sf::VideoMode(1280, 960), "Killer Plane", sf::Style::Close),//bigger screen
+_window(sf::VideoMode(1280, 960), "Marco's Merchandise", sf::Style::Close),//bigger screen
 _player(), 
 _font(),
 _textures(),
@@ -57,7 +57,7 @@ _statisticsNumFrames(0)
 
 	GEX::FontManager::getInstance().load(GEX::FontID::Main,"Media/Sansation.ttf");
 	
-	_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/TitleScreen.png");//for small screen
+	_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/title.png");//for small screen
 	//_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/TitleScreenBig.png");//for big screen
 
 	//ADD THIS BACK IN AFTER THE PLAYER HAS AN ACTUAL TEXTURE SET IN THE CONSTRUCTOR OF PLAYER

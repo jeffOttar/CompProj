@@ -64,6 +64,11 @@ namespace GEX {
 		bool								hasAlivePlayer() const;
 		bool								hasPlayerReachedEnd() const;
 		bool	atDoor();
+		void								worldEvent(const sf::Event& event);
+		void CollectShelves();
+		void								inventoryView(Shelf* shelf, const sf::Event & event);
+		void updateOptionText(std::vector<sf::Text> options, std::size_t optionsIndex);
+		//void								dialogueView(Villager villager);
 
 	private:
 		void								loadTextures();
@@ -86,10 +91,7 @@ namespace GEX {
 
 		void								destroyEntitiesOutOfView();
 		void								updateSounds();
-		void								worldEvent(const sf::Event& event);
-		void								inventoryView(Shelf* shelf, const sf::Event & event);
-		void updateOptionText(std::vector<sf::Text> options, std::size_t optionsIndex);
-		//void								dialogueView(Villager villager);
+
 
 	private: 
 		enum Layer

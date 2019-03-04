@@ -102,7 +102,8 @@ namespace GEX {
 
 	sf::FloatRect GEX::Shelf::getBoundingBox() const
 	{
-		return getWorldTransform().transformRect(sprite_.getGlobalBounds());
+		return getWorldTransform().transformRect(backgroundSprite_.getGlobalBounds());
+		//return getWorldTransform().transformRect(sprite_.getGlobalBounds());
 	}
 
 	bool GEX::Shelf::isMarkedForRemoval() const

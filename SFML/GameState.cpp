@@ -77,6 +77,7 @@ bool GameState::handleEvent(const sf::Event & event)
 	//get the commands to handle the event
 	auto& commands = _world.getCommandQueue();//this is the same as above in update but using auto
 	_player.handleEvent(event, commands);
+	_world.worldEvent(event);
 
 	//if the escape key is pressed then stack push the pause state
 	if (event.type==sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)

@@ -336,23 +336,19 @@ namespace GEX {
 
 	void World::worldEvent(const sf::Event & event)
 	{
-		if (event.key.code == sf::Keyboard::Return)//if key press is return
+		if (event.key.code == sf::Keyboard::Space)//if key press is return
 		{
 			bool shelfInteract = false;
 			bool villagerInteract = false;
 			//check if near villager or shelf and move to correct method
-			Command shelfCollector;
-			shelfCollector.category = Category::Type::Shelf;//everything with category enemy with execute this command
-			shelfCollector.action = derivedAction<Shelf>([this](Shelf& shelf, sf::Time dt)
-			{
-				_shelves.push_back(&shelf);
-			});
+			
+
 			Shelf* tmp = nullptr;
 			for (auto s : _shelves)
 			{
 				//if it is intersecting player at all 
-				if (s->getBoundingBox().intersects(sf::FloatRect(0, 0, (_player->getPosition().x + 1.f), (_player->getPosition().y + 1.f)))||
-					s->getBoundingBox().intersects(sf::FloatRect(0, 0, (_player->getPosition().x - 1.f), (_player->getPosition().y - 1.f))))
+				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f),32,32))||
+					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
 					tmp = s;
 					shelfInteract = true;
@@ -363,6 +359,18 @@ namespace GEX {
 				inventoryView(tmp,event);
 			}
 		}
+	}
+
+	void World::CollectShelves()
+	{
+		Command shelfCollector;
+		shelfCollector.category = Category::Type::Shelf;//everything with category enemy with execute this command
+		shelfCollector.action = derivedAction<Shelf>([this](Shelf& shelf, sf::Time dt)
+		{
+			_shelves.push_back(&shelf);
+		});
+
+		_commandQueue.push(shelfCollector);
 	}
 
 	void World::inventoryView(Shelf* shelf, const sf::Event & event)
@@ -379,7 +387,7 @@ namespace GEX {
 		int count = 0;
 		for (auto i : inventory)
 		{
-			Item* item = i.first;
+			Item* item = i.first;//CHANGE TO USE ITEM::TYPE *create new item using the itemtype/i.first and textures
 			indexedInventory.push_back(item);
 			sf::Text option;
 			optionString.insert(std::pair<int, std::string>(count, (tmp.getItemName(item->getType()) +
@@ -394,8 +402,12 @@ namespace GEX {
 		//set up movement events
 		if (event.key.code == sf::Keyboard::Return)//if key press is return
 		{
-			shelf->setItemOnShelf(*indexedInventory.at(optionsIndex));
-			_player->removeFromInventory(indexedInventory.at(optionsIndex));
+			if (indexedInventory.size() != 0)
+			{
+				shelf->setItemOnShelf(*indexedInventory.at(optionsIndex));
+				_player->removeFromInventory(indexedInventory.at(optionsIndex));//CHANGE TO USE ITEM::TYPE
+			}
+			
 		}
 		else if (event.key.code == sf::Keyboard::Up)//if key is up
 		{
@@ -435,6 +447,18 @@ namespace GEX {
 			text.setOutlineColor(sf::Color::Black);
 		}
 		options[optionsIndex].setFillColor(sf::Color::Magenta);
+
+		
+		sf::RectangleShape backgroundShape;//the translucent background
+		backgroundShape.setFillColor(sf::Color(255, 0, 0, 100));
+		backgroundShape.setSize(_worldView.getSize());
+
+		_target.draw(backgroundShape);
+
+		for (const sf::Text& text : options)
+		{
+			_target.draw(text);
+		}
 	}
 
 
@@ -576,6 +600,8 @@ namespace GEX {
 		std::unique_ptr<Player> player(_player);
 		player->setPosition(_spawnPosition);
 		_sceneLayers[UpperAir]->attachChild(std::move(player));
+
+		CollectShelves();
 	}
 
 

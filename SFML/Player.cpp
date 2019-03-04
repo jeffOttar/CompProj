@@ -132,7 +132,7 @@ namespace GEX
 
 	}
 
-	void Player::addToInventory(Item* item)
+	void Player::addToInventory(Item* item)//CHANGE TO USE ITEM::TYPE
 	{
 		std::unique_ptr<Item> item2(item);
 		auto it = _inventory.find(item);
@@ -148,7 +148,7 @@ namespace GEX
 		//_inventory.insert_or_assign(std::pair<Item,int>(*item, count));
 	}
 
-	void Player::removeFromInventory(Item* item)
+	void Player::removeFromInventory(Item* item)//CHANGE TO USE ITEM::TYPE
 	{
 		auto it = _inventory.find(item);
 		if (it != _inventory.end())
@@ -166,7 +166,7 @@ namespace GEX
 		}
 	}
 
-	std::map<Item*, int> Player::getInventory()
+	std::map<Item*, int> Player::getInventory()//CHANGE TO USE ITEM::TYPE
 	{
 		return _inventory;
 	}
