@@ -41,11 +41,12 @@ namespace GEX {
 	}
 
 
-	Item::Item(Item::Type type, const GEX::TextureManager & textures):
+	Item::Item(Item::Type type,  GEX::TextureManager & textures):
 		type_(type)
 		, state_(State::Normal)
-		, sprite_(textures.get(TABLE.at(type).texture))
+		, _textures(&textures)
 	{
+		sprite_.setTexture(_textures->get(TABLE.at(type).texture));
 		sprite_.setTextureRect(TABLE.at(type).textureRect);
 	}
 	std::string Item::getItemName(Item::Type type)

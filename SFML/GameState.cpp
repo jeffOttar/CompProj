@@ -79,7 +79,7 @@ bool GameState::handleEvent(const sf::Event & event)
 	_player.handleEvent(event, commands);
 
 	//if the escape key is pressed then stack push the pause state
-	if (event.type==sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+	if (event.type==sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)
 	{
 		requestStackPush(GEX::StateID::Pause);
 	}
@@ -95,6 +95,7 @@ bool GameState::handleEvent(const sf::Event & event)
 		requestStackPush(GEX::StateID::Menu);
 	}
 
+	//REMOVE
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
 	{
 		requestStackPush(GEX::StateID::Map);

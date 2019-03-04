@@ -18,13 +18,12 @@
 		_backgroundSprite.setTexture(texture);
 		_backgroundSprite.scale(1.5, 1.5);
 
-		
-		sf::Sprite marcoOption;
-		//marcoOption.setTexture = context.textures->get(GEX::TextureID::MarcoMoney);
-		marcoOption.setTexture(context.textures->get(GEX::TextureID::MarcoMoney));
-		centerOrigin(marcoOption);
-		marcoOption.setPosition(context.window->getView().getSize().y / 1.5f, context.window->getView().getSize().x / 12.f);
-		_options.push_back(marcoOption);//add the option to the list
+		sf::Sprite shopOption;
+		shopOption.setTexture(context.textures->get(GEX::TextureID::ShopIcon));
+		//shopOption.setTexture = context.textures->get(GEX::TextureID::ShopIcon);
+		centerOrigin(shopOption);
+		shopOption.setPosition(context.window->getView().getSize().y / 1.2f, context.window->getView().getSize().x / 2.5f);
+		_options.push_back(shopOption);//add the option to the list
 
 		sf::Sprite warehouseOption;
 		//warehouseOption.setTexture = context.textures->get(GEX::TextureID::WarehouseIcon);
@@ -33,14 +32,14 @@
 		warehouseOption.setPosition(context.window->getView().getSize().y / 5.f, context.window->getView().getSize().x / 2.f);
 		_options.push_back(warehouseOption);//add the option to the list
 
+		sf::Sprite marcoOption;
+		//marcoOption.setTexture = context.textures->get(GEX::TextureID::MarcoMoney);
+		marcoOption.setTexture(context.textures->get(GEX::TextureID::MarcoMoney));
+		centerOrigin(marcoOption);
+		marcoOption.setPosition(context.window->getView().getSize().y / 1.5f, context.window->getView().getSize().x / 12.f);
+		_options.push_back(marcoOption);//add the option to the list
 		
 		
-		sf::Sprite shopOption;
-		shopOption.setTexture(context.textures->get(GEX::TextureID::ShopIcon));
-		//shopOption.setTexture = context.textures->get(GEX::TextureID::ShopIcon);
-		centerOrigin(shopOption);
-		shopOption.setPosition(context.window->getView().getSize().y / 1.2f, context.window->getView().getSize().x / 2.5f);
-		_options.push_back(shopOption);//add the option to the list
 		//set up the menu 
 		//the play option settings
 		//sf::Text playOption;
@@ -93,8 +92,7 @@
 			}
 			else if (_optionsIndex == Marco)
 			{
-				//5 / 0;
-				if (_money >= 1000000)
+				if (_money >= 100000000)
 				{
 					requestStackPush(GEX::StateID::MarcoLand);
 				}

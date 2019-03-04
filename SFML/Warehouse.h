@@ -3,6 +3,8 @@
 #include <vector>
 #include "Item.h"
 #include "TextureManager.h"
+#include <map>
+#include "Player.h"
 
 	class Warehouse :
 		public GEX::State
@@ -26,6 +28,9 @@
 		double						_money;
 		GEX::TextureManager*				_textures;
 		int _itemCount;
+		std::map<int,std::string> _optionString;
+		std::map<int, std::string> _optionCount;
+		GEX::Player*			_player;
 
 	};
 

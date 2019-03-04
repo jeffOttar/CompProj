@@ -37,6 +37,7 @@
 #include "TextureManager.h"
 #include "Command.h"
 #include "Animation2.h"
+#include "Item.h"
 
 namespace GEX
 {
@@ -66,6 +67,9 @@ namespace GEX
 
 		double									getMoney() { return _money; }
 		void									setMoney(double money) { _money = money; }
+		void									addToInventory(Item* item);
+		void									removeFromInventory(Item* item);
+		std::map<Item*, int>						getInventory();
 
 	private:
 		void									updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -80,6 +84,7 @@ namespace GEX
 		const TextureManager&					textures_;
 		bool									riding_;
 		double _money;
+		std::map<Item*, int>						_inventory;
 
 
 

@@ -334,6 +334,109 @@ namespace GEX {
 		_sounds.removeStoppedSounds();
 	}
 
+	void World::worldEvent(const sf::Event & event)
+	{
+		if (event.key.code == sf::Keyboard::Return)//if key press is return
+		{
+			bool shelfInteract = false;
+			bool villagerInteract = false;
+			//check if near villager or shelf and move to correct method
+			Command shelfCollector;
+			shelfCollector.category = Category::Type::Shelf;//everything with category enemy with execute this command
+			shelfCollector.action = derivedAction<Shelf>([this](Shelf& shelf, sf::Time dt)
+			{
+				_shelves.push_back(&shelf);
+			});
+			Shelf* tmp = nullptr;
+			for (auto s : _shelves)
+			{
+				//if it is intersecting player at all 
+				if (s->getBoundingBox().intersects(sf::FloatRect(0, 0, (_player->getPosition().x + 1.f), (_player->getPosition().y + 1.f)))||
+					s->getBoundingBox().intersects(sf::FloatRect(0, 0, (_player->getPosition().x - 1.f), (_player->getPosition().y - 1.f))))
+				{
+					tmp = s;
+					shelfInteract = true;
+				}
+			}
+			if (shelfInteract)
+			{
+				inventoryView(tmp,event);
+			}
+		}
+	}
+
+	void World::inventoryView(Shelf* shelf, const sf::Event & event)
+	{
+		GEX::Item tmp(GEX::Item::Type::Bread, _textures);
+
+		auto inventory = _player->getInventory();
+		
+		std::map<int, std::string> optionString;
+		std::map<int, std::string> optionCount;
+		std::vector<sf::Text>		options;
+		std::size_t					optionsIndex = 0;
+		std::vector<Item*>			indexedInventory;
+		int count = 0;
+		for (auto i : inventory)
+		{
+			Item* item = i.first;
+			indexedInventory.push_back(item);
+			sf::Text option;
+			optionString.insert(std::pair<int, std::string>(count, (tmp.getItemName(item->getType()) +
+				" " + std::to_string(item->getPrice()))));
+			optionCount.insert(std::pair<int, std::string>(count, " " + std::to_string(inventory.at(item))));
+			option.setString(optionString.at(count) + optionCount.at(count));
+			option.setPosition(_worldView.getSize().x / 2.f, (100.f + (50.f * count)));
+			options.push_back(option);//add the option to the list
+			count++;
+		}
+
+		//set up movement events
+		if (event.key.code == sf::Keyboard::Return)//if key press is return
+		{
+			shelf->setItemOnShelf(*indexedInventory.at(optionsIndex));
+			_player->removeFromInventory(indexedInventory.at(optionsIndex));
+		}
+		else if (event.key.code == sf::Keyboard::Up)//if key is up
+		{
+			//if they use the up key move the index in the correct direction for the selections
+			if (optionsIndex > 0)
+			{
+				optionsIndex--;
+			}
+			else
+			{
+				optionsIndex = options.size() - 1;
+			}
+
+			updateOptionText(options,optionsIndex);
+		}
+		else if (event.key.code == sf::Keyboard::Down)//if key is down
+		{
+			//if they use the up key move the index in the correct direction for the selections
+			if (optionsIndex < options.size() - 1)// if it is less than the max size/ top of the vector
+			{
+				optionsIndex++;
+			}
+			else//if it reaches the top then reset to the 0 indexed item
+			{
+				optionsIndex = 0;
+			}
+
+			updateOptionText(options, optionsIndex);
+		}
+	}
+
+	void World::updateOptionText(std::vector<sf::Text> options, std::size_t optionsIndex)
+	{
+		for (sf::Text& text : options)//set all text to white
+		{
+			text.setFillColor(sf::Color::White);
+			text.setOutlineColor(sf::Color::Black);
+		}
+		options[optionsIndex].setFillColor(sf::Color::Magenta);
+	}
+
 
 	void World::adaptPlayerPosition()
 	{
@@ -416,6 +519,7 @@ namespace GEX {
 		_textures.load(GEX::TextureID::FinishLine, "Media/Textures/FinishLine.png");
 		_textures.load(GEX::TextureID::Shop, "Media/Textures/shopBackground2.png");
 		_textures.load(GEX::TextureID::Shelf, "Media/Textures/shelf.png");
+		_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
 
 	}
 
@@ -462,15 +566,16 @@ namespace GEX {
 		//_player = leader.get();
 		//_sceneLayers[UpperAir]->attachChild(std::move(leader));
 
-		//add player aircraft and game objects
-		std::unique_ptr<Player> player(_player);
-		player->setPosition(_spawnPosition);
-		_sceneLayers[UpperAir]->attachChild(std::move(player));
+		
 
 		addEnemies();
 
 		addShelves();
 
+		//add player aircraft and game objects
+		std::unique_ptr<Player> player(_player);
+		player->setPosition(_spawnPosition);
+		_sceneLayers[UpperAir]->attachChild(std::move(player));
 	}
 
 

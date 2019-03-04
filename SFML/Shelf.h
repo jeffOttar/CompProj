@@ -56,7 +56,7 @@ namespace GEX {
 		};
 
 	public:
-		explicit		Shelf(ShelfType type, const TextureManager& textures);
+		explicit		Shelf(ShelfType type,  TextureManager& textures);
 
 		
 		unsigned int	getCategory() const override;
@@ -70,7 +70,7 @@ namespace GEX {
 		bool			isOccupied() const;
 		void			setOccupied(bool occupy);
 		void			setItemOnShelf(Item item);
-		void			removeItemOnShelf();
+		Item			removeItemOnShelf();
 
 
 
@@ -84,13 +84,15 @@ namespace GEX {
 
 	private:
 		ShelfType								type_;
-		ShelfState							state_;
+		ShelfState								state_;
 		std::map<ShelfState, Animation2>		animations_;
 		mutable sf::Sprite						sprite_;
 		sf::Sprite								backgroundSprite_;
 	
 		bool									isMarkedForRemoval_;
 		bool									occupied_;
+		Item									_item;
+		TextureManager*							 _textures;
 	};
 
 }

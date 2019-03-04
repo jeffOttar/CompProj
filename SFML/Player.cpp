@@ -132,6 +132,45 @@ namespace GEX
 
 	}
 
+	void Player::addToInventory(Item* item)
+	{
+		std::unique_ptr<Item> item2(item);
+		auto it = _inventory.find(item);
+		int count = it != _inventory.end() ? _inventory.at(item) : 1;
+		if (it != _inventory.end())
+		{
+			_inventory.at(item) = count++;
+		}
+		else
+		{
+			_inventory.insert(std::pair<Item*, int>(item, count));
+		}
+		//_inventory.insert_or_assign(std::pair<Item,int>(*item, count));
+	}
+
+	void Player::removeFromInventory(Item* item)
+	{
+		auto it = _inventory.find(item);
+		if (it != _inventory.end())
+		{
+			int count = _inventory.at(item);
+			if (count == 1)
+			{
+				_inventory.erase(it);
+			}
+			else
+			{
+				count--;
+				_inventory.at(item) = count;
+			}
+		}
+	}
+
+	std::map<Item*, int> Player::getInventory()
+	{
+		return _inventory;
+	}
+
 	bool Player::isMarkedForRemoval() const
 	{
 		return isDestroyed() && finishedAnimation();

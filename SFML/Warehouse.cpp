@@ -10,9 +10,10 @@
 		State(stack, context),
 		_backgroundSprite(),
 		_textures(context.textures),
-		_itemCount(0)
+		_itemCount(0),
+		_player(context.playerBody)
 	{
-		_money = context.playerBody->getMoney();
+		_money = _player->getMoney();
 		//set the background face texture
 		_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::Warehouse));
 		//centerOrigin(_backgroundSprite);
@@ -32,9 +33,11 @@
 		{
 			sf::Text option;
 			option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
-			option.setString((tmp.getItemName(itemTypes[i]) + std::to_string(_items.at(i).getPrice()) + std::to_string(_itemCount)));
+			_optionString.insert(std::pair<int, std::string>(i, (tmp.getItemName(itemTypes[i]) + " " + std::to_string(_items.at(i).getPrice()))));
+			_optionCount.insert(std::pair<int, std::string>(i," " + std::to_string(_itemCount)));
+			option.setString(_optionString.at(i) + _optionCount.at(i));
 			centerOrigin(option);
-			option.setPosition(context.window->getView().getSize() + sf::Vector2f(0.f, (30.f + 30.f * i)));
+			option.setPosition(context.window->getView().getSize().x/2.f, (100.f + (50.f * i)));
 			_options.push_back(option);//add the option to the list
 		}
 	}
@@ -71,10 +74,18 @@
 
 		if (event.key.code == sf::Keyboard::Return)//if key press is return
 		{
+
 			//buy the items
+			for (int i = 0; i < _itemCount; i++)
+			{
+				auto item = new GEX::Item(_items.at(_optionsIndex).getType(), *_textures);
+				//item desired
+				_player->addToInventory(item);
+			}
 		}
 		else if (event.key.code == sf::Keyboard::Up)//if key is up
 		{
+			_itemCount = 0;
 			//if they use the up key move the index in the correct direction for the selections
 			if (_optionsIndex > 0)
 			{
@@ -89,6 +100,7 @@
 		}
 		else if (event.key.code == sf::Keyboard::Down)//if key is down
 		{
+			_itemCount = 0;
 			//if they use the up key move the index in the correct direction for the selections
 			if (_optionsIndex < _options.size() - 1)// if it is less than the max size/ top of the vector
 			{
@@ -104,7 +116,7 @@
 		else if (event.key.code == sf::Keyboard::Right)
 		{
 			
-			if (_money >= (_items.at(_optionsIndex).getPrice()*_itemCount))
+			if (_money >= (_items.at(_optionsIndex).getPrice()*(_itemCount+1)))
 			{
 				_itemCount++;
 			}
@@ -118,7 +130,7 @@
 		else if (event.key.code == sf::Keyboard::Left)
 		{
 
-			if (_itemCount>0)
+			if (_itemCount>1)
 			{
 				_itemCount--;
 			}
@@ -129,6 +141,10 @@
 			}
 
 			updateOptionText();
+		}
+		else if (event.key.code == sf::Keyboard::Escape)
+		{
+			requestStackPop();
 		}
 
 		return true;
@@ -146,6 +162,10 @@
 			text.setFillColor(sf::Color::White);
 			text.setOutlineColor(sf::Color::Black);
 		}
+
+		//update option text
+		_optionCount.at(_optionsIndex) = " " + std::to_string(_itemCount);
+		_options[_optionsIndex].setString(_optionString.at(_optionsIndex) + _optionCount.at(_optionsIndex));
 
 		//change the selected texts color
 		_options[_optionsIndex].setFillColor(sf::Color::Magenta);

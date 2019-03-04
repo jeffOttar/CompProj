@@ -44,8 +44,10 @@ namespace GEX {
 		enum class Type { BlackCoat, Bread, OldSword, Count };
 		enum class State { Normal };
 
-		Item(Item::Type type, const GEX::TextureManager& textures);
+		Item(Item::Type type,  GEX::TextureManager& textures);
 		~Item()= default;
+
+		Type getType() { return type_; }
 
 		std::string getItemName(Item::Type type);
 		std::vector<Item::Type> getAllTypes();
@@ -56,5 +58,6 @@ namespace GEX {
 		Type										type_;
 		State										state_;
 		mutable sf::Sprite							sprite_;
+		GEX::TextureManager*				_textures;
 	};
 }

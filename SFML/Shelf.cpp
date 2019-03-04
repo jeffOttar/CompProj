@@ -44,7 +44,7 @@ namespace GEX {
 		const std::map<Item::Type, ItemData> ITEMTABLE = initializeItemData();
 	}
 
-	GEX::Shelf::Shelf(ShelfType type, const TextureManager & textures)
+	GEX::Shelf::Shelf(ShelfType type,  TextureManager & textures)
 		: Entity(TABLE.at(type).hitpoints)
 		, type_(type)
 		, state_(ShelfState::empty)
@@ -52,8 +52,9 @@ namespace GEX {
 		, isMarkedForRemoval_(false)
 		, occupied_(false)
 		, backgroundSprite_()
+		, _textures(&textures)
+		, _item(Item::Type::Bread,textures)
 	{
-
 		//for (auto a : TABLE.at(type).animations)
 		//{
 		//	animations_[a.first] = a.second;
@@ -128,12 +129,19 @@ namespace GEX {
 	void GEX::Shelf::setItemOnShelf(Item item)
 	{
 		//get the item type and then the sprite from the table for that item type
-		
+		_item = item;
+		setOccupied(true);
+		sprite_.setTexture(_textures->get(ITEMTABLE.at(_item.getType()).texture));
+		sprite_.setTextureRect((ITEMTABLE.at(_item.getType()).textureRect));
+		sprite_.setScale(1,1);
 	}
 
-	void  GEX::Shelf::removeItemOnShelf()
+	Item  GEX::Shelf::removeItemOnShelf()
 	{
 		sprite_.setScale(0.000000000001f, 0.000000000001f);
+
+		setOccupied(false);
+		return _item;
 	}
 
 	
