@@ -387,12 +387,12 @@ namespace GEX {
 		int count = 0;
 		for (auto i : inventory)
 		{
-			Item* item = i.first;//CHANGE TO USE ITEM::TYPE *create new item using the itemtype/i.first and textures
-			indexedInventory.push_back(item);
+			Item item(i.first,_textures);//CHANGE TO USE ITEM::TYPE *create new item using the itemtype/i.first and textures
+			indexedInventory.push_back(&item);
 			sf::Text option;
-			optionString.insert(std::pair<int, std::string>(count, (tmp.getItemName(item->getType()) +
-				" " + std::to_string(item->getPrice()))));
-			optionCount.insert(std::pair<int, std::string>(count, " " + std::to_string(inventory.at(item))));
+			optionString.insert(std::pair<int, std::string>(count, (tmp.getItemName(i.first) +
+				" " + std::to_string((&item)->getPrice()))));
+			optionCount.insert(std::pair<int, std::string>(count, " " + std::to_string(inventory.at(i.first))));
 			option.setString(optionString.at(count) + optionCount.at(count));
 			option.setPosition(_worldView.getSize().x / 2.f, (100.f + (50.f * count)));
 			options.push_back(option);//add the option to the list

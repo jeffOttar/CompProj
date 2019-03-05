@@ -97,7 +97,7 @@ bool MenuState::handleEvent(const sf::Event & event)
 		if (_optionsIndex == Play)// if currently selected option is play
 		{
 			requestStackPop();
-			requestStackPush(GEX::StateID::Game);
+			requestStackPush(GEX::StateID::Opening);
 		}
 		else if (_optionsIndex == Exit)
 		{

@@ -81,7 +81,13 @@
 				auto item = new GEX::Item(_items.at(_optionsIndex).getType(), *_textures);
 				//item desired
 				_player->addToInventory(item);
+				
 			}
+			//change the money to new values
+			double money = _player->getMoney();
+			money = money - (_items.at(_optionsIndex).getPrice()*_itemCount);
+			_player->setMoney(money);
+			_money = _player->getMoney();
 		}
 		else if (event.key.code == sf::Keyboard::Up)//if key is up
 		{

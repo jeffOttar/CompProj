@@ -38,6 +38,8 @@
 #include "FontManager.h"
 #include "Map.h"
 #include "Warehouse.h"
+#include "Opening.h"
+#include "Ending.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
@@ -78,6 +80,7 @@ _statisticsNumFrames(0)
 	registerStates();
 	//SWITCH BACK TO LOADING TITLE FIRST AFTER FINISHED WITH THE MAP TESTING
 	//_stateStack.pushState(GEX::StateID::Map);
+	//_stateStack.pushState(GEX::StateID::Opening);
 	_stateStack.pushState(GEX::StateID::Title);//when running titlescreen goes to top of stack so it shows first
 }
 
@@ -190,4 +193,6 @@ void Application::registerStates()
 
 	_stateStack.registerState<Map>(GEX::StateID::Map);
 	_stateStack.registerState<Warehouse>(GEX::StateID::Warehouse);
+	_stateStack.registerState<Opening>(GEX::StateID::Opening);
+	_stateStack.registerState<Ending>(GEX::StateID::Ending);
 }

@@ -69,7 +69,7 @@ namespace GEX
 		void									setMoney(double money) { _money = money; }
 		void									addToInventory(Item* item);
 		void									removeFromInventory(Item* item);
-		std::map<Item*, int>						getInventory();
+		std::map<Item::Type, int>						getInventory();
 
 	private:
 		void									updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -84,7 +84,7 @@ namespace GEX
 		const TextureManager&					textures_;
 		bool									riding_;
 		double _money;
-		std::map<Item*, int>						_inventory;
+		std::map<Item::Type, int>						_inventory;
 
 
 

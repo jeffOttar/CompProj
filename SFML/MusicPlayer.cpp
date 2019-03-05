@@ -37,8 +37,8 @@ namespace GEX {
 		_filenames(),
 		_volume(25.f)
 	{
-		_filenames[MusicID::MenuTheme] = "Media/Music/MenuTheme.ogg";
-		_filenames[MusicID::MissionTheme] = "Media/Music/MissionTheme.ogg";
+		_filenames[MusicID::MenuTheme] = "Media/Music/GameTheme.wav";
+		_filenames[MusicID::MissionTheme] = "Media/Music/GameTheme.wav";
 	}
 
 	void MusicPlayer::play(MusicID theme)

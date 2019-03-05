@@ -138,6 +138,15 @@
     <ClCompile Include="Shelf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Opening.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ending.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomDialogue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureManager.h">
@@ -273,6 +282,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shelf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Opening.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ending.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomDialogue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

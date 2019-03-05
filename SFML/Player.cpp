@@ -134,26 +134,25 @@ namespace GEX
 
 	void Player::addToInventory(Item* item)//CHANGE TO USE ITEM::TYPE
 	{
-		std::unique_ptr<Item> item2(item);
-		auto it = _inventory.find(item);
-		int count = it != _inventory.end() ? _inventory.at(item) : 1;
+		auto it = _inventory.find(item->getType());
+		int count = it != _inventory.end() ? _inventory.at(item->getType()) : 1;
 		if (it != _inventory.end())
 		{
-			_inventory.at(item) = count++;
+			_inventory.at(item->getType()) = ++count;
 		}
 		else
 		{
-			_inventory.insert(std::pair<Item*, int>(item, count));
+			_inventory.insert(std::pair<Item::Type, int>(item->getType(), count));
 		}
 		//_inventory.insert_or_assign(std::pair<Item,int>(*item, count));
 	}
 
 	void Player::removeFromInventory(Item* item)//CHANGE TO USE ITEM::TYPE
 	{
-		auto it = _inventory.find(item);
+		auto it = _inventory.find(item->getType());
 		if (it != _inventory.end())
 		{
-			int count = _inventory.at(item);
+			int count = _inventory.at(item->getType());
 			if (count == 1)
 			{
 				_inventory.erase(it);
@@ -161,12 +160,12 @@ namespace GEX
 			else
 			{
 				count--;
-				_inventory.at(item) = count;
+				_inventory.at(item->getType()) = count;
 			}
 		}
 	}
 
-	std::map<Item*, int> Player::getInventory()//CHANGE TO USE ITEM::TYPE
+	std::map<Item::Type, int> Player::getInventory()//CHANGE TO USE ITEM::TYPE
 	{
 		return _inventory;
 	}
