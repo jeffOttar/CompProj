@@ -77,8 +77,17 @@ bool GameState::handleEvent(const sf::Event & event)
 	//get the commands to handle the event
 	auto& commands = _world.getCommandQueue();//this is the same as above in update but using auto
 	_player.handleEvent(event, commands);
-	_world.worldEvent(event);//change to new type of event and return true if clicked shelf and shelf empty
+
+	//change to new type of event and return true if clicked shelf and shelf empty
 	//if the shelf is clicked but full in world take the item, put in inventory, and return false to here as well
+	if (_world.shelfEvent(event))
+	{
+		requestStackPush(GEX::StateID::Inventory);
+	}
+	else if (false)//use for the other space button event of villager dialogue
+	{
+
+	}
 
 	//have villager talk in another world event that checks if player tried to talk to villager and passes villager to here 
 	//*ABOVE CONT* use same as shelf but go through active villagers and check if they were clicked

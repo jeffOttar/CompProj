@@ -31,25 +31,29 @@
 
 #pragma once
 
-#include "Item.h"
+#pragma once
+#include "State.h"
+#include "Shelf.h"
 #include <vector>
-#include <map>
-
-namespace GEX {
-
-class Inventory
+class Inventory :
+	public GEX::State
 {
 public:
-	Inventory();
-	~Inventory();
+	Inventory(GEX::StateStack& stack, Context context, GEX::Shelf* shelf);
 
-	void addItem(Item item);
-	std::vector<Item> getInventory();
+	void					draw() override;
+	bool					update(sf::Time dt) override;
+	bool					handleEvent(const sf::Event& event) override;
+
+	void					updateOptionText();
 
 private:
-	std::vector<Item> inventory;
 
+	GEX::Player*				_player;
+	std::vector<sf::Text>		_options;
+	std::vector<GEX::Item>		_items;
+	std::size_t					_optionsIndex;
+	GEX::TextureManager*		_textures;
+	GEX::Shelf*					_shelf;
 };
 
-
-}

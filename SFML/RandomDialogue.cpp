@@ -20,8 +20,9 @@ RandomDialogue::RandomDialogue(GEX::StateStack & stack, Context context)//have v
 
 
 	std::map<std::string, std::string> villagerDialogue;
+	villagerDialogue.insert(std::pair<std::string, std::string>("test", "the story is so far test test/then it goes test test/followed by test test/ended by test test"));
 	
-	std::string s = "";//set string to type of villager dialogue
+	std::string s = villagerDialogue.at("test");//set string to type of villager dialogue
 
 	std::string word;
 	std::istringstream tokenStream(s);

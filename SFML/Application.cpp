@@ -40,6 +40,8 @@
 #include "Warehouse.h"
 #include "Opening.h"
 #include "Ending.h"
+#include "Inventory.h"
+#include "RandomDialogue.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
@@ -195,4 +197,6 @@ void Application::registerStates()
 	_stateStack.registerState<Warehouse>(GEX::StateID::Warehouse);
 	_stateStack.registerState<Opening>(GEX::StateID::Opening);
 	_stateStack.registerState<Ending>(GEX::StateID::Ending);
+	//_stateStack.registerState<Inventory>(GEX::StateID::Inventory);
+	//_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
 }

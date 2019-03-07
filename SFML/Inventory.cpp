@@ -30,24 +30,114 @@
 */
 
 #include "Inventory.h"
-namespace GEX {
+#include "Utility.h"
+#include "FontManager.h"
 
-
-
-
-	Inventory::Inventory()
+Inventory::Inventory(GEX::StateStack & stack, Context context, GEX::Shelf * shelf) :
+	State(stack, context),
+	_player(context.playerBody),
+	_textures(context.textures),
+	_shelf(shelf)
+{
+	for (auto i : _player->getInventory())
 	{
+		auto item = new GEX::Item(i.first, *_textures);
+		_items.push_back(*item);
+	}
+	for (int i = 0; i < _player->getInventory().size(); i++)
+	{
+		sf::Text option;
+		option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
+		option.setString(_items[i].getItemName(_items[i].getType()));
+		centerOrigin(option);
+		option.setPosition(context.window->getView().getSize().x / 2.f, (100.f + (50.f * i)));
+		_options.push_back(option);//add the option to the list
+	}
+}
+
+void Inventory::draw()
+{
+	sf::RenderWindow& window = *getContext().window;
+	window.setView(window.getDefaultView());
+
+	sf::RectangleShape backgroundShape;//the translucent background
+	backgroundShape.setFillColor(sf::Color(211, 211, 211, 100));
+	backgroundShape.setSize(window.getView().getSize());
+
+	//draw objects
+	window.draw(backgroundShape);
+
+
+	for (const sf::Text& text : _options)
+	{
+		window.draw(text);
+	}
+}
+
+bool Inventory::update(sf::Time dt)
+{
+	return false;
+}
+
+bool Inventory::handleEvent(const sf::Event & event)
+{
+	//if the event is not a keypress
+	if (event.type != sf::Event::KeyPressed)
+	{
+		return false;
 	}
 
+	if (event.key.code == sf::Keyboard::Return)//if key press is return
+	{
+		//set the item to shelf 
+		_shelf->setItemOnShelf(_items[_optionsIndex]);
+		_player->removeFromInventory(&_items[_optionsIndex]);
+		requestStackPop();
+	}
+	else if (event.key.code == sf::Keyboard::Up)//if key is up
+	{
+		//if they use the up key move the index in the correct direction for the selections
+		if (_optionsIndex > 0)
+		{
+			_optionsIndex--;
+		}
+		else
+		{
+			_optionsIndex = _options.size() - 1;
+		}
 
-	Inventory::~Inventory()
-	{
+		updateOptionText();
 	}
-	void Inventory::addItem(Item item)
+	else if (event.key.code == sf::Keyboard::Down)//if key is down
 	{
+		//if they use the up key move the index in the correct direction for the selections
+		if (_optionsIndex < _options.size() - 1)// if it is less than the max size/ top of the vector
+		{
+			_optionsIndex++;
+		}
+		else//if it reaches the top then reset to the 0 indexed item
+		{
+			_optionsIndex = 0;
+		}
+
+		updateOptionText();
 	}
-	std::vector<Item> Inventory::getInventory()
+	return true;
+}
+
+void Inventory::updateOptionText()
+{
+	if (_options.empty())
 	{
-		return inventory;
+		return;
 	}
+
+	for (sf::Text& text : _options)//set all text to white
+	{
+		text.setFillColor(sf::Color::White);
+		text.setOutlineColor(sf::Color::Black);
+	}
+
+	//change the selected texts color
+	_options[_optionsIndex].setFillColor(sf::Color::Cyan);
 }

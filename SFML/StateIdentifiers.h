@@ -44,6 +44,9 @@ namespace GEX {
 		MarcoLand,
 		Opening,
 		Ending,
+		Inventory,
+		Dialogue,
+		Selling,
 		None
 	};
 }

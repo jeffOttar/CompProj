@@ -289,6 +289,35 @@ namespace GEX {
 				player.damage(enemy.getHitPoints());
 				enemy.destroy();
 			}
+			//BELOW STOPS COLLISION VERTICALLY BUT IS FLAWED WHEN MOVING HORIZONTALLY AND STOPS SHELF INTERACTION
+			//else if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
+			//{
+			//	auto& player = static_cast<Player&>(*pair.first);
+			//	auto& shelf = static_cast<Shelf&>(*pair.second);
+
+			//	// Apply pickup effect to player, destroy projectile
+
+			//	auto pos = player.getPosition();
+
+			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x - 1, player.getWorldPosition().y, 32, 32))))
+			//	{
+			//		player.setPosition(pos.x - 1, pos.y);
+			//	}
+			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x + 1, player.getWorldPosition().y, 32, 32))))
+			//	{
+			//		player.setPosition(pos.x + 1, pos.y);
+			//	}
+			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y - 1, 32, 32))))
+			//	{
+			//		player.setPosition(pos.x, pos.y - 1);
+			//	}
+			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y + 1, 32, 32))))
+			//	{
+			//		player.setPosition(pos.x, pos.y + 1);
+			//	}
+			//	//play collision sound
+			//	//player.playLocalSound(_commandQueue, SoundEffectID::CollectPickup);
+			//}
 			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup))
 			{
 				auto& player = static_cast<Aircraft&>(*pair.first);
@@ -334,7 +363,7 @@ namespace GEX {
 		_sounds.removeStoppedSounds();
 	}
 
-	void World::worldEvent(const sf::Event & event)
+	bool World::shelfEvent(const sf::Event & event)
 	{
 		if (event.key.code == sf::Keyboard::Space)//if key press is return
 		{
@@ -350,15 +379,22 @@ namespace GEX {
 				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f),32,32))||
 					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
-					tmp = s;
+ 					tmp = s;
 					shelfInteract = true;
 				}
 			}
 			if (shelfInteract)
 			{
-				inventoryView(tmp,event);
+				return true;
+			}
+			else
+			{
+				Item item = tmp->removeItemOnShelf();
+				_player->addToInventory(&item);
+				return false;
 			}
 		}
+		return false;
 	}
 
 	void World::CollectShelves()
@@ -373,93 +409,7 @@ namespace GEX {
 		_commandQueue.push(shelfCollector);
 	}
 
-	void World::inventoryView(Shelf* shelf, const sf::Event & event)
-	{
-		GEX::Item tmp(GEX::Item::Type::Bread, _textures);
-
-		auto inventory = _player->getInventory();
-		
-		std::map<int, std::string> optionString;
-		std::map<int, std::string> optionCount;
-		std::vector<sf::Text>		options;
-		std::size_t					optionsIndex = 0;
-		std::vector<Item*>			indexedInventory;
-		int count = 0;
-		for (auto i : inventory)
-		{
-			Item item(i.first,_textures);//CHANGE TO USE ITEM::TYPE *create new item using the itemtype/i.first and textures
-			indexedInventory.push_back(&item);
-			sf::Text option;
-			optionString.insert(std::pair<int, std::string>(count, (tmp.getItemName(i.first) +
-				" " + std::to_string((&item)->getPrice()))));
-			optionCount.insert(std::pair<int, std::string>(count, " " + std::to_string(inventory.at(i.first))));
-			option.setString(optionString.at(count) + optionCount.at(count));
-			option.setPosition(_worldView.getSize().x / 2.f, (100.f + (50.f * count)));
-			options.push_back(option);//add the option to the list
-			count++;
-		}
-
-		//set up movement events
-		if (event.key.code == sf::Keyboard::Return)//if key press is return
-		{
-			if (indexedInventory.size() != 0)
-			{
-				shelf->setItemOnShelf(*indexedInventory.at(optionsIndex));
-				_player->removeFromInventory(indexedInventory.at(optionsIndex));//CHANGE TO USE ITEM::TYPE
-			}
-			
-		}
-		else if (event.key.code == sf::Keyboard::Up)//if key is up
-		{
-			//if they use the up key move the index in the correct direction for the selections
-			if (optionsIndex > 0)
-			{
-				optionsIndex--;
-			}
-			else
-			{
-				optionsIndex = options.size() - 1;
-			}
-
-			updateOptionText(options,optionsIndex);
-		}
-		else if (event.key.code == sf::Keyboard::Down)//if key is down
-		{
-			//if they use the up key move the index in the correct direction for the selections
-			if (optionsIndex < options.size() - 1)// if it is less than the max size/ top of the vector
-			{
-				optionsIndex++;
-			}
-			else//if it reaches the top then reset to the 0 indexed item
-			{
-				optionsIndex = 0;
-			}
-
-			updateOptionText(options, optionsIndex);
-		}
-	}
-
-	void World::updateOptionText(std::vector<sf::Text> options, std::size_t optionsIndex)
-	{
-		for (sf::Text& text : options)//set all text to white
-		{
-			text.setFillColor(sf::Color::White);
-			text.setOutlineColor(sf::Color::Black);
-		}
-		options[optionsIndex].setFillColor(sf::Color::Magenta);
-
-		
-		sf::RectangleShape backgroundShape;//the translucent background
-		backgroundShape.setFillColor(sf::Color(255, 0, 0, 100));
-		backgroundShape.setSize(_worldView.getSize());
-
-		_target.draw(backgroundShape);
-
-		for (const sf::Text& text : options)
-		{
-			_target.draw(text);
-		}
-	}
+	
 
 
 	void World::adaptPlayerPosition()
@@ -598,7 +548,7 @@ namespace GEX {
 
 		//add player aircraft and game objects
 		std::unique_ptr<Player> player(_player);
-		player->setPosition(_spawnPosition);
+		player->setPosition(_spawnPosition+sf::Vector2f(0,50));
 		_sceneLayers[UpperAir]->attachChild(std::move(player));
 
 		CollectShelves();

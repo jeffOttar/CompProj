@@ -173,6 +173,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TitleState.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Villager.cpp" />
     <ClCompile Include="Warehouse.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -223,6 +224,7 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TitleState.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="Villager.h" />
     <ClInclude Include="Warehouse.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

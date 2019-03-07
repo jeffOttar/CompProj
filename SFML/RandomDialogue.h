@@ -15,11 +15,11 @@ private:
 	sf::Sprite					_backgroundSprite;
 	std::vector<std::string>	_text;
 	std::size_t					_index;
-	sf::Text				_displayedText1;
-	sf::Text				_displayedText2;
-	sf::Text				_displayedText3;
-	std::vector<sf::Text*>	_displayedTexts;
-	bool _end;
+	sf::Text					_displayedText1;
+	sf::Text					_displayedText2;
+	sf::Text					_displayedText3;
+	std::vector<sf::Text*>		_displayedTexts;
+	bool						_end;
 	//have a map of villager type and text for dialogue
 };
 
