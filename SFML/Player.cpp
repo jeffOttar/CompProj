@@ -52,7 +52,6 @@ namespace GEX
 		, type_(type)
 		, textures_(textures)
 		, state_(State::Up)
-		, riding_(false)
 		, _money(1000)
 	{
 		textures.load(GEX::TextureID::Characters, "Media/Textures/characters.png");
@@ -75,10 +74,10 @@ namespace GEX
 	sf::FloatRect Player::getBoundingBox() const
 	{
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		box.width -= 10; // tighten up bounding box for more realistic collisions
-		box.left += 5;
-		box.height -= 10;
-		box.top += 5;
+		box.width -= 35; // tighten up bounding box for more realistic collisions
+		box.left += 10;
+		box.height -= 25;
+		box.top += 20;
 		return box;
 	}
 
@@ -209,15 +208,6 @@ namespace GEX
 		}
 	}
 
-	bool Player::isRiding() const
-	{
-		return riding_;
-	}
-
-	void Player::setRiding(bool riding)
-	{
-		riding_ = riding;
-	}
 
 	void Player::setState(State state)
 	{

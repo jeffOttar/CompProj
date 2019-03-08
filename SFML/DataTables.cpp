@@ -232,4 +232,49 @@ namespace GEX {
 
 		return data;
 	}
+	std::map<Villager::Type, VillagerData> initializeVillagerData()
+	{
+		std::map<Villager::Type, VillagerData> data;
+
+		data[Villager::Type::Courtney].hitpoints = 100;
+		data[Villager::Type::Courtney].texture = TextureID::Characters;
+		//data[Player::PlayerType::Player].textureRect = sf::IntRect(0, 384, 32, 32);//first 2 numbers are location in sprite sheet
+
+		JsonFrameParser frames = JsonFrameParser("Media/Textures/Atlas.json");
+
+		data[Villager::Type::Courtney].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Villager::Type::Courtney].animations[Villager::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::Up].setRepeating(false);
+	
+		data[Villager::Type::Courtney].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown"));
+		data[Villager::Type::Courtney].animations[Villager::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::Down].setRepeating(false);
+		
+		data[Villager::Type::Courtney].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight"));
+		data[Villager::Type::Courtney].animations[Villager::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::Right].setRepeating(false);
+				
+		data[Villager::Type::Courtney].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft "));
+		data[Villager::Type::Courtney].animations[Villager::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::Left].setRepeating(false);
+					
+		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].setRepeating(false);
+							
+		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].addFrameSet(frames.getFramesFor("pinkHairDown"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].setRepeating(false);
+							
+		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].addFrameSet(frames.getFramesFor("pinkHairRight"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].setRepeating(false);
+							
+		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].addFrameSet(frames.getFramesFor("pinkHairLeft"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].setRepeating(false);
+
+
+		return data;
+	}
 }

@@ -37,6 +37,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "Shelf.h"
+#include "Villager.h"
 
 #include <map>
 #include <vector>
@@ -108,9 +109,12 @@ namespace GEX
 		TextureID									texture;
 		sf::IntRect									textureRect;
 		bool										occupied;
-
-
-
+	};
+	struct VillagerData//data for the player
+	{
+		TextureID								texture;
+		std::map<Villager::State, Animation2>		animations;
+		int										hitpoints;
 	};
 
 	//declaring a function that returns a map of aircrafttype and data
@@ -127,4 +131,6 @@ namespace GEX
 	std::map<Player::PlayerType, PlayerData> initializePlayerData();
 
 	std::map<Shelf::ShelfType, ShelfData>			initializeShelfData();
+
+	std::map<Villager::Type, VillagerData>			initializeVillagerData();
 }

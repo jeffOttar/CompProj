@@ -379,15 +379,15 @@ namespace GEX {
 				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f),32,32))||
 					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
- 					tmp = s;
+  					tmp = s;
 					shelfInteract = true;
 				}
 			}
-			if (shelfInteract)
+			if (shelfInteract && !tmp->isOccupied())
 			{
 				return true;
 			}
-			else
+			else if(shelfInteract && tmp->isOccupied())
 			{
 				Item item = tmp->removeItemOnShelf();
 				_player->addToInventory(&item);

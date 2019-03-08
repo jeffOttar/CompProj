@@ -198,5 +198,5 @@ void Application::registerStates()
 	_stateStack.registerState<Opening>(GEX::StateID::Opening);
 	_stateStack.registerState<Ending>(GEX::StateID::Ending);
 	//_stateStack.registerState<Inventory>(GEX::StateID::Inventory);
-	//_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
+	_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
 }

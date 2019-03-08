@@ -61,8 +61,6 @@ namespace GEX
 		bool									finishedAnimation(State state) const;
 		bool									finishedDeathAnimation() const;
 		void									destroy() override;
-		bool									isRiding() const;
-		void									setRiding(bool riding);
 		void									playLocalSound(CommandQueue & commands, SoundEffectID effect);
 
 		double									getMoney() { return _money; }
@@ -82,7 +80,6 @@ namespace GEX
 		mutable sf::Sprite						sprite_;
 		mutable std::map<State, Animation2>		animations_;
 		const TextureManager&					textures_;
-		bool									riding_;
 		double _money;
 		std::map<Item::Type, int>						_inventory;
 
