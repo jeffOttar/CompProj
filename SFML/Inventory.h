@@ -39,7 +39,7 @@ class Inventory :
 	public GEX::State
 {
 public:
-	Inventory(GEX::StateStack& stack, Context context, GEX::Shelf* shelf);
+	Inventory(GEX::StateStack& stack, Context context);
 
 	void					draw() override;
 	bool					update(sf::Time dt) override;

@@ -59,14 +59,14 @@ namespace GEX {
 				PlayerControl&			player,
 				MusicPlayer&            music,
 				SoundPlayer&			sound,
-				Player& playerBody);
+				Player&					playerBody);
 
 			sf::RenderWindow*		window;
 			TextureManager*			textures;
 			PlayerControl*			player;
 			MusicPlayer*			music;
 			SoundPlayer*			sound;
-			Player* playerBody;
+			Player*					playerBody;
 		};
 		
 	public:

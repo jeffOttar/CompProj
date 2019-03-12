@@ -36,6 +36,7 @@
 #include "BloomEffect.h"
 #include "SoundNode.h"
 #include "State.h"
+#include "CurrentShelf.h"
 
 
 namespace GEX {
@@ -61,6 +62,7 @@ namespace GEX {
 		loadTextures();
 		buildScene();
 
+		_player->addToInventory(new Item(Item::Type::Bread,_textures));
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
 
@@ -379,19 +381,24 @@ namespace GEX {
 				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f),32,32))||
 					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
-  					tmp = s;
+  					//tmp = s;
+					CurrentShelf q;
+					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
 					shelfInteract = true;
 				}
 			}
-			if (shelfInteract && !tmp->isOccupied())
-			{
-				return true;
-			}
-			else if(shelfInteract && tmp->isOccupied())
-			{
-				Item item = tmp->removeItemOnShelf();
-				_player->addToInventory(&item);
-				return false;
+			tmp = GEX::CurrentShelf::getInstance().getCurrentShelf();
+			if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr) {
+				if (shelfInteract && !tmp->isOccupied())
+				{
+					return true;
+				}
+				if (shelfInteract && tmp->isOccupied())
+				{
+					Item item = tmp->removeItemOnShelf();
+					_player->addToInventory(&item);
+					return false;
+				}
 			}
 		}
 		return false;

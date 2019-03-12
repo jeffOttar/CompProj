@@ -32,12 +32,13 @@
 #include "Inventory.h"
 #include "Utility.h"
 #include "FontManager.h"
+#include "CurrentShelf.h"
 
-Inventory::Inventory(GEX::StateStack & stack, Context context, GEX::Shelf * shelf) :
+Inventory::Inventory(GEX::StateStack & stack, Context context) :
 	State(stack, context),
 	_player(context.playerBody),
 	_textures(context.textures),
-	_shelf(shelf)
+	_shelf(GEX::CurrentShelf::getInstance().getCurrentShelf())
 {
 	for (auto i : _player->getInventory())
 	{
