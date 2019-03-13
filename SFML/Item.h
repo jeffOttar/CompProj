@@ -48,6 +48,7 @@ namespace GEX {
 		~Item()= default;
 
 		Type getType() { return type_; }
+		void setItem(Type type) { type_ = type; }
 
 		std::string getItemName(Item::Type type);
 		std::vector<Item::Type> getAllTypes();
@@ -58,6 +59,6 @@ namespace GEX {
 		Type										type_;
 		State										state_;
 		mutable sf::Sprite							sprite_;
-		GEX::TextureManager*				_textures;
+		GEX::TextureManager*						_textures;
 	};
 }

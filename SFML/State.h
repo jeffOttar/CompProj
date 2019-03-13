@@ -38,6 +38,7 @@
 #include "MusicPlayer.h"
 #include "SoundPlayer.h"
 #include "Player.h"
+#include "CurrentShelf.h"
 
 #include <memory>
 

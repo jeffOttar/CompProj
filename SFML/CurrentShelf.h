@@ -4,8 +4,6 @@
 #pragma once
 namespace GEX
 {
-
-
 	class CurrentShelf
 	{
 	public:
@@ -21,5 +19,4 @@ namespace GEX
 		static CurrentShelf* _instance;
 		Shelf* _shelf;//this may need to be an object not a ptr
 	};
-
 }

@@ -92,7 +92,7 @@ namespace GEX {
 		bool									isMarkedForRemoval_;
 		bool									occupied_;
 		Item									_item;
-		TextureManager*							 _textures;
+		TextureManager*							_textures;
 	};
 
 }

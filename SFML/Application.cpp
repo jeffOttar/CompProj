@@ -42,6 +42,7 @@
 #include "Ending.h"
 #include "Inventory.h"
 #include "RandomDialogue.h"
+#include "CurrentShelf.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
@@ -50,6 +51,7 @@ _window(sf::VideoMode(1280, 960), "Marco's Merchandise", sf::Style::Close),//big
 _player(), 
 _font(),
 _textures(),
+_currentShelf(),
 _playerBody(GEX::Player::PlayerType::Player, _textures),
 _stateStack(GEX::State::Context(_window, _textures, _player,_music,_sound, _playerBody)),
 _statisticsText(),

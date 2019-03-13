@@ -53,7 +53,7 @@ namespace GEX {
 		, occupied_(false)
 		, backgroundSprite_()
 		, _textures(&textures)
-		, _item(Item::Type::Bread,textures)
+		, _item(Item::Type::Bread, textures)
 	{
 		//for (auto a : TABLE.at(type).animations)
 		//{
@@ -130,7 +130,9 @@ namespace GEX {
 	void GEX::Shelf::setItemOnShelf(Item item)
 	{
 		//get the item type and then the sprite from the table for that item type
-		_item = item;
+		auto type = item.getType();
+		_item.setItem(type);
+		//int i = 5;
 		setOccupied(true);
 		sprite_.setTexture(_textures->get(ITEMTABLE.at(_item.getType()).texture));
 		sprite_.setTextureRect((ITEMTABLE.at(_item.getType()).textureRect));

@@ -71,6 +71,7 @@ private:
 	GEX::MusicPlayer		_music;
 	GEX::SoundPlayer		_sound;
 	GEX::Player             _playerBody;
+	GEX::CurrentShelf		_currentShelf;
 
 	sf::Text				_statisticsText;
 	sf::Time				_statisticsUpdateTime;

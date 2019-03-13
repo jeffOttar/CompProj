@@ -382,7 +382,6 @@ namespace GEX {
 					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
   					//tmp = s;
-					CurrentShelf q;
 					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
 					shelfInteract = true;
 				}
@@ -480,6 +479,7 @@ namespace GEX {
 
 		if (_player->getPosition().y < 480.f && _player->getPosition().y > 240.f)
 		{
+			//set the player positition back some after this
 			return !_worldBounds.contains(sf::Vector2f(_player->getPosition().x + BORDER_DISTANCE,
 				_player->getPosition().y + BORDER_DISTANCE));
 		}
