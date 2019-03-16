@@ -48,6 +48,7 @@ void GameState::draw()
 bool GameState::update(sf::Time dt)
 {
 	_world.update(dt, _world.getCommandQueue());
+	_world.updateVillagers(dt);
 
 	//check if player won or died
 	if (!_world.hasAlivePlayer())
@@ -64,6 +65,13 @@ bool GameState::update(sf::Time dt)
 	{
 		requestStackPush(GEX::StateID::Map);
 	}
+	else if (_world.villagerBuying())
+	{
+		requestStackPush(GEX::StateID::Selling);
+	}
+
+
+
 
 	//get the commands to handle real time input for the game
 	GEX::CommandQueue& commands = _world.getCommandQueue();
@@ -108,9 +116,9 @@ bool GameState::handleEvent(const sf::Event & event)
 		{
 			requestStackPush(GEX::StateID::Inventory);
 		}
-		else if (false)//use for the other space button event of villager dialogue
+		else if (_world.dialogueEvent(event))//use for the other space button event of villager dialogue
 		{
-
+			requestStackPush(GEX::StateID::Dialogue);
 		}
 
 		//have villager talk in another world event that checks if player tried to talk to villager and passes villager to here 

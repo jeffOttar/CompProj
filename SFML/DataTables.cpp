@@ -161,19 +161,19 @@ namespace GEX {
 
 		JsonFrameParser frames = JsonFrameParser("Media/Textures/Atlas.json");
 
-		data[Player::PlayerType::Player].animations[Player::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Player::PlayerType::Player].animations[Player::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp (1)"));
 		data[Player::PlayerType::Player].animations[Player::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Up].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown"));
+		data[Player::PlayerType::Player].animations[Player::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown (1)"));
 		data[Player::PlayerType::Player].animations[Player::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Down].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight"));
+		data[Player::PlayerType::Player].animations[Player::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight (1)"));
 		data[Player::PlayerType::Player].animations[Player::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Right].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft "));
+		data[Player::PlayerType::Player].animations[Player::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft (1)"));
 		data[Player::PlayerType::Player].animations[Player::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Left].setRepeating(false);
 
@@ -237,24 +237,24 @@ namespace GEX {
 		std::map<Villager::Type, VillagerData> data;
 
 		data[Villager::Type::Courtney].hitpoints = 100;
-		data[Villager::Type::Courtney].texture = TextureID::Characters;
+		data[Villager::Type::Courtney].texture = TextureID::Villagers;
 		//data[Player::PlayerType::Player].textureRect = sf::IntRect(0, 384, 32, 32);//first 2 numbers are location in sprite sheet
 
 		JsonFrameParser frames = JsonFrameParser("Media/Textures/Atlas.json");
 
-		data[Villager::Type::Courtney].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Villager::Type::Courtney].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp (1)"));
 		data[Villager::Type::Courtney].animations[Villager::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Up].setRepeating(false);
-	
-		data[Villager::Type::Courtney].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown"));
+
+		data[Villager::Type::Courtney].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown (1)"));
 		data[Villager::Type::Courtney].animations[Villager::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Down].setRepeating(false);
-		
-		data[Villager::Type::Courtney].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight"));
+
+		data[Villager::Type::Courtney].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight (1)"));
 		data[Villager::Type::Courtney].animations[Villager::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Right].setRepeating(false);
-				
-		data[Villager::Type::Courtney].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft "));
+
+		data[Villager::Type::Courtney].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft (1)"));
 		data[Villager::Type::Courtney].animations[Villager::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Left].setRepeating(false);
 					

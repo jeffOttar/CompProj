@@ -9,14 +9,29 @@ namespace GEX {
 		//const is all uppercase and this is for all the aircraft data (it had to be initialized when declared because its const
 		const std::map<Villager::Type, VillagerData> TABLE = initializeVillagerData();
 	}
+	std::default_random_engine generator;
+	std::uniform_int_distribution<int> distribution(1, 100);
+	auto randomNumber = std::bind(distribution, generator);
 
 	Villager::Villager(Villager::Type type, GEX::TextureManager & textures)
 		: Entity(TABLE.at(type).hitpoints)
 		, type_(type)
 		, textures_(textures)
-		, state_(State::Up)
-	{
-	}
+		, state_(State::Left)
+		, _leaveTime(sf::seconds(300))
+		, _buyTime(defaultBuyTime)
+		, _moveTime(defaultMoveTime)
+		, _buying(false)
+	{ 
+		sprite_.setTexture(textures.get(TABLE.at(type).texture));
+		sprite_.scale(5.f, 5.f);
+		for (auto a : TABLE.at(type).animations)
+		{
+			animations_[a.first] = a.second;
+		}
+		sprite_.setTextureRect(sf::IntRect());
+		centerOrigin(sprite_);
+	}	  
 
 	unsigned int Villager::getCategory() const
 	{
@@ -52,9 +67,91 @@ namespace GEX {
 		return isDestroyed() && finishedAnimation();
 	}
 
+	bool Villager::isBuying()
+	{
+		return _buying;
+	}
+
+	void Villager::checkBuy()//random check to set variable
+	{
+		if (randomNumber() <= 85)
+		{
+			_buying = true;
+		}
+		else if (randomNumber() > 85)
+		{
+			_buying = false;
+		}
+	}
+
+	sf::Vector2f Villager::randomMove()//random direction movement
+	{
+		if (randomNumber() <= 30)
+		{
+			return sf::Vector2f(-5,0);
+		}
+		else if (randomNumber() > 30 && randomNumber() < 50)
+		{
+			return sf::Vector2f(5, 0);
+		}
+		else if (randomNumber() >= 55 && randomNumber() < 75)
+		{
+			return sf::Vector2f(0, 5);
+		}
+		else if (randomNumber() >= 75 && randomNumber() < 95)
+		{
+			return sf::Vector2f(0, -5);
+		}
+		else
+		{
+			return sf::Vector2f();
+		}
+
+	}
+
+	void Villager::decrementBuyTime(sf::Time time)
+	{
+		_buyTime -= time;
+	}
+
+	sf::Time Villager::getBuyTime()
+	{
+		return _buyTime;
+	}
+
+	void Villager::decrementMoveTime(sf::Time time)
+	{
+		_moveTime -= time;
+	}
+
+	sf::Time Villager::getMoveTime()
+	{
+		return _moveTime;
+	}
+
+	void Villager::decrementLeaveTime(sf::Time time)
+	{
+		_leaveTime -= time;
+	}
+
+	sf::Time Villager::getLeaveTime()
+	{
+		return _leaveTime;
+	}
+
+	void Villager::resetBuyTime()
+	{
+		_buyTime = defaultBuyTime;
+	}
+
+	void Villager::resetMoveTime()
+	{
+		_moveTime = defaultMoveTime;
+	}
+
 	void Villager::updateCurrent(sf::Time dt, CommandQueue & commands)
 	{
-		//updateStates();
+		updateStates();
 
 		auto rec = animations_.at(state_).update(dt);
 

@@ -153,6 +153,9 @@
     <ClCompile Include="CurrentShelf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CurrentVillager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureManager.h">
@@ -303,6 +306,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CurrentShelf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentVillager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

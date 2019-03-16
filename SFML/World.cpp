@@ -37,6 +37,7 @@
 #include "SoundNode.h"
 #include "State.h"
 #include "CurrentShelf.h"
+#include "CurrentVillager.h"
 
 
 namespace GEX {
@@ -54,8 +55,10 @@ namespace GEX {
 		_player(&player),
 		_enemySpawnPoints(),
 		_activeEnemies(),
+		_activeVillagers(),
 		_commandQueue(),
-		_bloomEffect()
+		_bloomEffect(),
+		_spawnTimer(DEFAULT_TIME)
 	{
 		_sceneTexture.create(_target.getSize().x, _target.getSize().y);
 
@@ -65,7 +68,6 @@ namespace GEX {
 		_player->addToInventory(new Item(Item::Type::Bread,_textures));
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
-
 	}
 
 	void World::update(sf::Time dt, CommandQueue& commands)
@@ -89,7 +91,25 @@ namespace GEX {
 		_sceneGraph.update(dt, commands);
 		adaptPlayerPosition();
 
+		//clear list before each recollection
+		_activeVillagers.clear();
+		Command villagerCollector;
+		villagerCollector.category = Category::Type::Villager;//everything with category villager with execute this command
+		villagerCollector.action = derivedAction<Villager>([this](Villager& villager, sf::Time dt)
+		{
+			if (!villager.isDestroyed())//dont add destroyed villagers to list 
+			{
+				_activeVillagers.push_back(&villager);
+			}
+		});
+		_commandQueue.push(villagerCollector);
 		//spawnEnemies();
+		_spawnTimer -= dt;
+		if (_spawnTimer <= sf::Time::Zero)//every so many seconds
+		{
+			_spawnTimer = DEFAULT_TIME;
+			addVillagers();
+		}
 		updateSounds();
 	}
 
@@ -119,8 +139,42 @@ namespace GEX {
 			std::unique_ptr<Shelf> shelf(new Shelf(Shelf::ShelfType::Shelf, _textures));
 			shelf->setPosition(_spawnPosition.x + relX, _spawnPosition.y - relY);
 			shelf->setRotation(rotation);
-			//move the enemy to the scenegraph
 			_sceneLayers[UpperAir]->attachChild(std::move(shelf));
+	}
+
+	void World::addVillagers()
+	{
+		//std::default_random_engine generator;
+		//std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) -1 ));
+		//int randomNum = distribution(generator);
+		auto type = Villager::Type::Courtney;//have it get random type for this variable
+		bool exists = false;
+
+		//loop through all active villagers and check if new type exists
+		for (auto v : _activeVillagers)
+		{
+			if (static_cast<Villager::Type>(v->getCategory()) == type)
+			{
+				exists = true;
+			}
+		}
+		if (!exists)
+		{
+			switch (type)
+			{
+			case Villager::Type::Courtney:
+				std::unique_ptr<Villager> villager(new Villager(type, _textures));
+				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				//shelf->setRotation(rotation);
+				_sceneLayers[UpperAir]->attachChild(std::move(villager));
+				break;
+				//case othervillager:
+			}
+		}
+		//std::unique_ptr<Villager> villager (new Villager(type, _textures));
+			//villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+			////shelf->setRotation(rotation);
+			//_sceneLayers[UpperAir]->attachChild(std::move(villager));
 	}
 
 	void World::addEnemies()
@@ -182,6 +236,37 @@ namespace GEX {
 			//remove the spawned enemy from the list
 			_enemySpawnPoints.pop_back();
 		}
+	}
+
+	void World::moveVillager(sf::Vector2f movement, Villager* v)
+	{
+		v->move(movement);
+		if (movement != sf::Vector2f(0, 0))
+		{
+			if (movement.x < 0)
+			{
+				if (v->finishedAnimation())
+					v->setState(Villager::State::MoveLeft);
+			}
+			else if (movement.x > 0)
+			{
+				if (v->finishedAnimation())
+					v->setState(Villager::State::MoveRight);
+			}
+			else if (movement.y < 0)
+			{
+				if (v->finishedAnimation())
+					v->setState(Villager::State::MoveUp);
+
+			}
+			else if (movement.y > 0)
+			{
+				if (v->finishedAnimation())
+					v->setState(Villager::State::MoveDown);
+
+			}
+		}
+		
 	}
 
 	sf::FloatRect World::getViewBounds() const
@@ -370,8 +455,6 @@ namespace GEX {
 		if (event.key.code == sf::Keyboard::Space)//if key press is return
 		{
 			bool shelfInteract = false;
-			bool villagerInteract = false;
-			//check if near villager or shelf and move to correct method
 			
 
 			Shelf* tmp = nullptr;
@@ -403,6 +486,33 @@ namespace GEX {
 		return false;
 	}
 
+	bool World::dialogueEvent(const sf::Event & event)
+	{
+		if (event.key.code == sf::Keyboard::Space)//if key press is return
+		{
+			bool villagerInteract = false;
+
+			Villager* tmp = nullptr;
+			for (auto v : _activeVillagers)
+			{
+				//if it is intersecting player at all 
+				if (v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f), 32, 32)) ||
+					v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
+				{
+					GEX::CurrentVillager::getInstance().setCurrentVillager(v);
+					villagerInteract = true;
+				}
+			}
+			if (GEX::CurrentVillager::getInstance().getCurrentVillager() != nullptr) {
+				if (villagerInteract)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	void World::CollectShelves()
 	{
 		Command shelfCollector;
@@ -413,6 +523,45 @@ namespace GEX {
 		});
 
 		_commandQueue.push(shelfCollector);
+	}
+
+	void World::updateVillagers(sf::Time dt)
+	{
+		
+
+		for (auto v : _activeVillagers)
+		{
+			v->decrementBuyTime(dt);
+			v->decrementMoveTime(dt);
+			v->decrementLeaveTime(dt);
+			if (!(v->getLeaveTime() <= sf::Time::Zero))
+			{
+				if (v->getMoveTime() <= sf::Time::Zero)
+				{
+					sf::Vector2f movement = v->randomMove();
+					v->resetMoveTime();
+					moveVillager(movement, v);
+				}
+				if (v->getBuyTime() <= sf::Time::Zero)
+				{
+					v->checkBuy();
+					v->resetBuyTime();
+				}
+			}
+			else
+			{
+				v->damage(10000);//destory the villager at leave time
+			}
+		}
+	}
+
+	bool World::villagerBuying()
+	{
+		for (auto v : _activeVillagers)//this might not check all villagers
+		{
+			return v->isBuying();
+		}
+		return false;
 	}
 
 	
@@ -494,6 +643,7 @@ namespace GEX {
 	void World::loadTextures()
 	{
 		_textures.load(GEX::TextureID::Entities, "Media/Textures/Entities.png");
+		_textures.load(GEX::TextureID::Villagers, "Media/Textures/characters.png");
 		_textures.load(GEX::TextureID::Jungle, "Media/Textures/Jungle.png");
 		_textures.load(GEX::TextureID::Particle, "Media/Textures/Particle.png");
 		_textures.load(GEX::TextureID::Explosion, "Media/Textures/Explosion.png");

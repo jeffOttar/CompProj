@@ -66,23 +66,23 @@ namespace GEX {
 			if (movement.x < 0)
 			{
 				if (player.finishedAnimation())
-					player.setState(Player::State::Left);
+					player.setState(Player::State::MoveLeft);
 			}
 			else if (movement.x > 0)
 			{
 				if (player.finishedAnimation())
-					player.setState(Player::State::Right);
+					player.setState(Player::State::MoveRight);
 			}
 			else if (movement.y < 0)
 			{
 				if (player.finishedAnimation())
-					player.setState(Player::State::Up);
+					player.setState(Player::State::MoveUp);
 
 			}
 			else if (movement.y > 0)
 			{
 				if (player.finishedAnimation())
-					player.setState(Player::State::Down);
+					player.setState(Player::State::MoveDown);
 
 			}
 		}

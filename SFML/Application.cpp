@@ -43,6 +43,7 @@
 #include "Inventory.h"
 #include "RandomDialogue.h"
 #include "CurrentShelf.h"
+#include "CurrentVillager.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
@@ -52,6 +53,7 @@ _player(),
 _font(),
 _textures(),
 _currentShelf(),
+_currentVillager(),
 _playerBody(GEX::Player::PlayerType::Player, _textures),
 _stateStack(GEX::State::Context(_window, _textures, _player,_music,_sound, _playerBody)),
 _statisticsText(),
@@ -69,6 +71,7 @@ _statisticsNumFrames(0)
 	//ADD THIS BACK IN AFTER THE PLAYER HAS AN ACTUAL TEXTURE SET IN THE CONSTRUCTOR OF PLAYER
 	//_textures.load(GEX::TextureID::Face, "Media/Textures/face.png");//load face texture
 
+	_textures.load(GEX::TextureID::Villagers, "Media/Textures/characters.png");
 	_textures.load(GEX::TextureID::Map, "Media/Textures/MapBackground.png");
 	_textures.load(GEX::TextureID::ShopIcon, "Media/Textures/homeIcon.png");
 	_textures.load(GEX::TextureID::MarcoMoney, "Media/Textures/endIcon.png");

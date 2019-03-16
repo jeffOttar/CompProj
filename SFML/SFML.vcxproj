@@ -139,6 +139,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandQueue.cpp" />
     <ClCompile Include="CurrentShelf.cpp" />
+    <ClCompile Include="CurrentVillager.cpp" />
     <ClCompile Include="DataTables.cpp" />
     <ClCompile Include="EmitterNode.cpp" />
     <ClCompile Include="Ending.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="CurrentShelf.h" />
+    <ClInclude Include="CurrentVillager.h" />
     <ClInclude Include="DataTables.h" />
     <ClInclude Include="EmitterNode.h" />
     <ClInclude Include="Ending.h" />

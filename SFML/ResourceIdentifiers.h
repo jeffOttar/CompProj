@@ -35,6 +35,7 @@ namespace GEX {
 	enum class TextureID {
 		TitleScreen,
 		Characters,
+		Villagers,
 		Entities,
 		Jungle,
 		Explosion,

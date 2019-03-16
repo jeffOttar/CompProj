@@ -42,6 +42,7 @@
 #include "SoundPlayer.h"
 #include "Player.h"
 #include "Shelf.h"
+#include "Villager.h"
 
 #include <memory>
 #include <iostream>
@@ -65,8 +66,10 @@ namespace GEX {
 		bool								hasPlayerReachedEnd() const;
 		bool	atDoor();
 		bool								shelfEvent(const sf::Event& event);
+		bool								dialogueEvent(const sf::Event& event);
 		void CollectShelves();
-		//void								dialogueView(Villager villager);
+		void								updateVillagers(sf::Time dt);
+		bool								villagerBuying();//checks all villagers and has the buy command pushed
 
 	private:
 		void								loadTextures();
@@ -77,9 +80,12 @@ namespace GEX {
 		void								addShelves();
 		void								createShelves(float relX, float relY, float rotation);
 
+		void								addVillagers();
+
 		void								addEnemies();//add enemies spawn points for them to spawn at
 		void								addEnemy(AircraftType type, float relX, float relY);
 		void								spawnEnemies();
+		void								moveVillager(sf::Vector2f movement, Villager* v);
 
 		sf::FloatRect						getViewBounds() const;
 		sf::FloatRect						getBattlefieldBounds() const;
@@ -138,8 +144,11 @@ namespace GEX {
 		std::vector<SpawnPoint>				_enemySpawnPoints;
 
 		std::vector<Aircraft*>				_activeEnemies;
+		std::vector<Villager*>				_activeVillagers;
 
 		BloomEffect							_bloomEffect;
+		sf::Time							_spawnTimer;
+		const sf::Time						DEFAULT_TIME = sf::seconds(30);
 	};
 
 }

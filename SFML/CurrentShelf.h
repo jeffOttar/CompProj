@@ -17,6 +17,6 @@ namespace GEX
 
 	private:
 		static CurrentShelf* _instance;
-		Shelf* _shelf;//this may need to be an object not a ptr
+		Shelf* _shelf;
 	};
 }

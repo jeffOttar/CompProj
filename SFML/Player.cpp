@@ -87,7 +87,7 @@ namespace GEX
 
 	void Player::updateCurrent(sf::Time dt, CommandQueue & commands)
 	{
-		//updateStates();
+		updateStates();
 
 		auto rec = animations_.at(state_).update(dt);
 

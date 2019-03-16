@@ -41,6 +41,7 @@
 #include "MusicPlayer.h"
 #include "SoundPlayer.h"
 #include "Player.h"
+#include "CurrentVillager.h"
 
 
 class Application
@@ -72,6 +73,7 @@ private:
 	GEX::SoundPlayer		_sound;
 	GEX::Player             _playerBody;
 	GEX::CurrentShelf		_currentShelf;
+	GEX::CurrentVillager	_currentVillager;
 
 	sf::Text				_statisticsText;
 	sf::Time				_statisticsUpdateTime;
