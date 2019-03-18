@@ -59,6 +59,7 @@ namespace GEX {
 	public:
 		World(sf::RenderTarget& outputTarget, SoundPlayer& sounds, Player& player);
 		void								update(sf::Time dt,CommandQueue& commands);
+		void collectVillagers();
 		void								draw();
 
 		CommandQueue&						getCommandQueue();

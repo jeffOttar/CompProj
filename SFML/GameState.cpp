@@ -67,7 +67,7 @@ bool GameState::update(sf::Time dt)
 	}
 	else if (_world.villagerBuying())
 	{
-		requestStackPush(GEX::StateID::Selling);
+		//requestStackPush(GEX::StateID::Selling);
 	}
 
 

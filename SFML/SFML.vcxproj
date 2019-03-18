@@ -153,6 +153,7 @@
     <ClCompile Include="JsonFrameParser.cpp" />
     <ClCompile Include="Opening.cpp" />
     <ClCompile Include="RandomDialogue.cpp" />
+    <ClCompile Include="SellingState.cpp" />
     <ClCompile Include="Shelf.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="JsonFrameParser.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="RandomDialogue.h" />
+    <ClInclude Include="SellingState.h" />
     <ClInclude Include="Shelf.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MenuState.h" />

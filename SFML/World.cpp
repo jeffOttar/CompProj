@@ -41,7 +41,7 @@
 
 
 namespace GEX {
-	World::World(sf::RenderTarget& outputTarget,SoundPlayer& sounds, Player& player) :
+	World::World(sf::RenderTarget& outputTarget, SoundPlayer& sounds, Player& player) :
 		_target(outputTarget),
 		_worldView(outputTarget.getDefaultView()),
 		_textures(),
@@ -65,7 +65,7 @@ namespace GEX {
 		loadTextures();
 		buildScene();
 
-		_player->addToInventory(new Item(Item::Type::Bread,_textures));
+		_player->addToInventory(new Item(Item::Type::Bread, _textures));
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
 	}
@@ -83,7 +83,7 @@ namespace GEX {
 			_sceneGraph.onCommand(_commandQueue.pop(), dt);
 		}
 
-		
+
 		handleCollisions();
 		_sceneGraph.removeWrecks();
 
@@ -92,7 +92,6 @@ namespace GEX {
 		adaptPlayerPosition();
 
 		//clear list before each recollection
-		_activeVillagers.clear();
 		Command villagerCollector;
 		villagerCollector.category = Category::Type::Villager;//everything with category villager with execute this command
 		villagerCollector.action = derivedAction<Villager>([this](Villager& villager, sf::Time dt)
@@ -121,7 +120,7 @@ namespace GEX {
 	void World::addShelves()
 	{
 		//left wall shelves
-		createShelves(-400.f,30.f,270.f);
+		createShelves(-400.f, 30.f, 270.f);
 		createShelves(-410.f, -70.f, 270.f);
 		createShelves(-420.f, -170.f, 270.f);
 		createShelves(-430.f, -270.f, 270.f);
@@ -136,10 +135,10 @@ namespace GEX {
 	void World::createShelves(float relX, float relY, float rotation)
 	{
 
-			std::unique_ptr<Shelf> shelf(new Shelf(Shelf::ShelfType::Shelf, _textures));
-			shelf->setPosition(_spawnPosition.x + relX, _spawnPosition.y - relY);
-			shelf->setRotation(rotation);
-			_sceneLayers[UpperAir]->attachChild(std::move(shelf));
+		std::unique_ptr<Shelf> shelf(new Shelf(Shelf::ShelfType::Shelf, _textures));
+		shelf->setPosition(_spawnPosition.x + relX, _spawnPosition.y - relY);
+		shelf->setRotation(rotation);
+		_sceneLayers[UpperAir]->attachChild(std::move(shelf));
 	}
 
 	void World::addVillagers()
@@ -153,7 +152,7 @@ namespace GEX {
 		//loop through all active villagers and check if new type exists
 		for (auto v : _activeVillagers)
 		{
-			if (static_cast<Villager::Type>(v->getCategory()) == type)
+			if ((v->getType()) == type)
 			{
 				exists = true;
 			}
@@ -182,7 +181,7 @@ namespace GEX {
 		addEnemy(AircraftType::Raptor, 0.f, 200.f);
 		addEnemy(AircraftType::Raptor, 250.f, 200.f);
 		addEnemy(AircraftType::Raptor, -250.f, 200.f);
-		
+
 		addEnemy(AircraftType::Avenger, -70.f, 400.f);//these start at end of screen
 		addEnemy(AircraftType::Avenger, 70.f, 400.f);
 
@@ -266,7 +265,7 @@ namespace GEX {
 
 			}
 		}
-		
+
 	}
 
 	sf::FloatRect World::getViewBounds() const
@@ -285,11 +284,11 @@ namespace GEX {
 
 	void World::guideMissiles()
 	{
-		
+
 		//build list of active enemies
 		Command enemyCollector;
 		enemyCollector.category = Category::Type::EnemyAircraft;//everything with category enemy with execute this command
-		enemyCollector.action = derivedAction<Aircraft>([this](Aircraft& enemy, sf::Time dt) 
+		enemyCollector.action = derivedAction<Aircraft>([this](Aircraft& enemy, sf::Time dt)
 		{
 			if (!enemy.isDestroyed())//dont add destroyed enemies to list
 			{
@@ -455,16 +454,16 @@ namespace GEX {
 		if (event.key.code == sf::Keyboard::Space)//if key press is return
 		{
 			bool shelfInteract = false;
-			
+
 
 			Shelf* tmp = nullptr;
 			for (auto s : _shelves)
 			{
 				//if it is intersecting player at all 
-				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f),32,32))||
+				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f), 32, 32)) ||
 					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
 				{
-  					//tmp = s;
+					//tmp = s;
 					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
 					shelfInteract = true;
 				}
@@ -527,7 +526,7 @@ namespace GEX {
 
 	void World::updateVillagers(sf::Time dt)
 	{
-		
+
 
 		for (auto v : _activeVillagers)
 		{
@@ -552,6 +551,7 @@ namespace GEX {
 			{
 				v->damage(10000);//destory the villager at leave time
 			}
+			_activeVillagers.clear();
 		}
 	}
 
@@ -559,12 +559,28 @@ namespace GEX {
 	{
 		for (auto v : _activeVillagers)//this might not check all villagers
 		{
-			return v->isBuying();
+			for (auto s : _shelves)
+			{
+				//if it is intersecting player at all 
+				if (s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x + 20.f), (v->getWorldPosition().y + 20.f), 320, 320)) ||
+					s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x - 20.f), (v->getWorldPosition().y - 20.f), 320, 320)))
+				{
+					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
+				}
+			}
+			if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr)
+			{
+				if (v->isBuying() && GEX::CurrentShelf::getInstance().getCurrentShelf()->isOccupied())
+				{
+					return true;
+				}
+			}
+			_activeVillagers.clear();
 		}
 		return false;
 	}
 
-	
+
 
 
 	void World::adaptPlayerPosition()
@@ -581,7 +597,7 @@ namespace GEX {
 		position.x = std::min(position.x, viewBounds.left + viewBounds.width - BORDER_DISTANCE);
 
 		//adjust position so it stays within the bounds
-		position.y = std::max(position.y, viewBounds.top + BORDER_DISTANCE+yBorder);
+		position.y = std::max(position.y, viewBounds.top + BORDER_DISTANCE + yBorder);
 		position.y = std::min(position.y, viewBounds.top + viewBounds.height - 40.f);
 
 		_player->setPosition(position);
@@ -623,7 +639,7 @@ namespace GEX {
 	{
 		const float BORDER_DISTANCE = 200.f;
 
-		/*return !_worldBounds.contains(sf::Vector2f(_player->getPosition().x + BORDER_DISTANCE, 
+		/*return !_worldBounds.contains(sf::Vector2f(_player->getPosition().x + BORDER_DISTANCE,
 			_player->getPosition().y + BORDER_DISTANCE));*/
 
 		if (_player->getPosition().y < 480.f && _player->getPosition().y > 240.f)
@@ -636,7 +652,7 @@ namespace GEX {
 		{
 			return false;
 		}
-			
+
 
 	}
 
@@ -697,7 +713,7 @@ namespace GEX {
 		//_player = leader.get();
 		//_sceneLayers[UpperAir]->attachChild(std::move(leader));
 
-		
+
 
 		addEnemies();
 
@@ -705,7 +721,7 @@ namespace GEX {
 
 		//add player aircraft and game objects
 		std::unique_ptr<Player> player(_player);
-		player->setPosition(_spawnPosition+sf::Vector2f(0,50));
+		player->setPosition(_spawnPosition + sf::Vector2f(0, 50));
 		_sceneLayers[UpperAir]->attachChild(std::move(player));
 
 		CollectShelves();

@@ -42,6 +42,7 @@
 #include "Ending.h"
 #include "Inventory.h"
 #include "RandomDialogue.h"
+#include "SellingState.h"
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
 
@@ -204,4 +205,5 @@ void Application::registerStates()
 	_stateStack.registerState<Ending>(GEX::StateID::Ending);
 	_stateStack.registerState<Inventory>(GEX::StateID::Inventory);
 	_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
+	_stateStack.registerState<SellingState>(GEX::StateID::Selling);
 }

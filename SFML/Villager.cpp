@@ -109,6 +109,11 @@ namespace GEX {
 
 	}
 
+	Villager::Type Villager::getType()
+	{
+		return type_;
+	}
+
 	void Villager::decrementBuyTime(sf::Time time)
 	{
 		_buyTime -= time;

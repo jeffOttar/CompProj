@@ -24,6 +24,7 @@ namespace GEX {
 		bool									isBuying();
 		void									checkBuy();
 		sf::Vector2f							randomMove();
+		Type									getType();
 
 		//timers
 		void decrementBuyTime(sf::Time time);

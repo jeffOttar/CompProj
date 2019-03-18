@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-RandomDialogue::RandomDialogue(GEX::StateStack & stack, Context context)//have villager type in constructor
+RandomDialogue::RandomDialogue(GEX::StateStack & stack, Context context)
 	: GEX::State(stack, context)
 	, _displayedText1()
 	, _displayedText2()

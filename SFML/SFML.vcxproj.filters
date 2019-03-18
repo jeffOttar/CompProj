@@ -156,6 +156,9 @@
     <ClCompile Include="CurrentVillager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SellingState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureManager.h">
@@ -309,6 +312,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CurrentVillager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SellingState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

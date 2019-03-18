@@ -40,7 +40,7 @@ Inventory::Inventory(GEX::StateStack & stack, Context context) :
 	_textures(context.textures),
 	_shelf(GEX::CurrentShelf::getInstance().getCurrentShelf())
 {
-	for (auto i : _player->getInventory())
+  	for (auto i : _player->getInventory())
 	{
 		auto item = new GEX::Item(i.first, *_textures);
 		_items.push_back(*item);
