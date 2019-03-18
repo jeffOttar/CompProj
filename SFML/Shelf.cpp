@@ -132,7 +132,6 @@ namespace GEX {
 		//get the item type and then the sprite from the table for that item type
 		auto type = item.getType();
 		_item.setItem(type);
-		//int i = 5;
 		setOccupied(true);
 		sprite_.setTexture(_textures->get(ITEMTABLE.at(_item.getType()).texture));
 		sprite_.setTextureRect((ITEMTABLE.at(_item.getType()).textureRect));
@@ -144,6 +143,11 @@ namespace GEX {
 		sprite_.setScale(0.000000000001f, 0.000000000001f);
 
 		setOccupied(false);
+		return _item;
+	}
+
+	Item Shelf::getItem()
+	{
 		return _item;
 	}
 

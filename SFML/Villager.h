@@ -23,6 +23,7 @@ namespace GEX {
 		bool									isMarkedForRemoval() const override;
 		bool									isBuying();
 		void									checkBuy();
+		void									setBuy(bool buying) { _buying = buying; }
 		sf::Vector2f							randomMove();
 		Type									getType();
 
@@ -50,8 +51,8 @@ namespace GEX {
 
 
 	private:
-		const sf::Time defaultBuyTime = sf::seconds(120);
-		const sf::Time defaultMoveTime = sf::seconds(10);
+		const sf::Time defaultBuyTime = sf::seconds(8);//120
+		const sf::Time defaultMoveTime = sf::seconds(10);//10
 
 		Type									type_;
 		State									state_;

@@ -39,6 +39,7 @@
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
 
+#include <algorithm>
 
 namespace GEX {
 	World::World(sf::RenderTarget& outputTarget, SoundPlayer& sounds, Player& player) :
@@ -96,12 +97,35 @@ namespace GEX {
 		villagerCollector.category = Category::Type::Villager;//everything with category villager with execute this command
 		villagerCollector.action = derivedAction<Villager>([this](Villager& villager, sf::Time dt)
 		{
-			if (!villager.isDestroyed())//dont add destroyed villagers to list 
+			auto type = villager.getType();
+			bool exists = false;
+			for (auto v : _activeVillagers)
+			{
+				if ((v->getType()) == type)
+				{
+					exists = true;
+				}
+			}
+
+			if (!villager.isDestroyed() && !exists)//dont add destroyed villagers to list 
 			{
 				_activeVillagers.push_back(&villager);
 			}
 		});
 		_commandQueue.push(villagerCollector);
+		//for (auto v : _activeVillagers)
+		//{
+		//	if ((v->isDestroyed()))
+		//	{
+		//		//remove deleted villagers
+		//		auto it = std::find(_activeVillagers.begin(), _activeVillagers.end(), v);
+		//		if (it != _activeVillagers.end())//extra safety
+		//		{
+		//			_activeVillagers.erase(it);
+		//		}
+
+		//	}
+		//}
 		//spawnEnemies();
 		_spawnTimer -= dt;
 		if (_spawnTimer <= sf::Time::Zero)//every so many seconds
@@ -549,33 +573,44 @@ namespace GEX {
 			}
 			else
 			{
-				v->damage(10000);//destory the villager at leave time
+				auto it = std::find(_activeVillagers.begin(), _activeVillagers.end(), v);
+				if (it != _activeVillagers.end())//extra safety
+				{
+					_activeVillagers.erase(it);
+				}
+				v->destroy();
+				//v->damage(10000);//destory the villager at leave time
 			}
-			_activeVillagers.clear();
+			//_activeVillagers.clear();
 		}
 	}
 
 	bool World::villagerBuying()
 	{
-		for (auto v : _activeVillagers)//this might not check all villagers
+		for (auto v : _activeVillagers)
 		{
-			for (auto s : _shelves)
-			{
-				//if it is intersecting player at all 
-				if (s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x + 20.f), (v->getWorldPosition().y + 20.f), 320, 320)) ||
-					s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x - 20.f), (v->getWorldPosition().y - 20.f), 320, 320)))
+			if (v->isBuying()) {
+				for (auto s : _shelves)
 				{
-					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
+					//if it is close at all 
+					if (s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x + 20.f), (v->getWorldPosition().y + 20.f), 320, 320)) ||
+						s->getBoundingBox().intersects(sf::FloatRect((v->getWorldPosition().x - 20.f), (v->getWorldPosition().y - 20.f), 320, 320)))
+					{
+						GEX::CurrentShelf::getInstance().setCurrentShelf(s);
+					}
 				}
-			}
-			if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr)
-			{
-				if (v->isBuying() && GEX::CurrentShelf::getInstance().getCurrentShelf()->isOccupied())
+				if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr)
 				{
-					return true;
+					bool occupied = GEX::CurrentShelf::getInstance().getCurrentShelf()->isOccupied();
+					if (occupied)
+					{
+						v->setBuy(false);
+						return true;
+					}
 				}
+				//_activeVillagers.clear();
+				v->setBuy(false);
 			}
-			_activeVillagers.clear();
 		}
 		return false;
 	}

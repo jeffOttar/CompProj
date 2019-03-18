@@ -2,6 +2,7 @@
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
 #include "Utility.h"
+#include "FontManager.h"
 
 
 
@@ -17,9 +18,19 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 
 	sf::Text option;
 	option.setString("0");
+	option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	centerOrigin(option);
 	option.setPosition(context.window->getView().getSize()/ 2.f);
 	_amount.push_back(option);
+
+	sf::Text item;
+	auto item2 = GEX::CurrentShelf::getInstance().getCurrentShelf()->getItem().getType();
+	auto s = GEX::CurrentShelf::getInstance().getCurrentShelf()->getItem().getItemName(item2);
+	item.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
+	item.setString(s);
+	centerOrigin(item);
+	item.setPosition((context.window->getView().getSize() / 2.f) - sf::Vector2f(50.f,0.f));
+	_amount.push_back(item);
 }
 
 void SellingState::draw()

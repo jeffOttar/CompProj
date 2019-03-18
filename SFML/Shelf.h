@@ -71,6 +71,7 @@ namespace GEX {
 		void			setOccupied(bool occupy);
 		void			setItemOnShelf(Item item);
 		Item			removeItemOnShelf();
+		Item			getItem();
 
 
 

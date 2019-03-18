@@ -123,6 +123,10 @@ bool Inventory::handleEvent(const sf::Event & event)
 
 		updateOptionText();
 	}
+	else if (event.key.code == sf::Keyboard::Escape)
+	{
+		requestStackPop();
+	}
 	return true;
 }
 
