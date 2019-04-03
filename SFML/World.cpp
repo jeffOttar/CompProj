@@ -66,7 +66,7 @@ namespace GEX {
 		loadTextures();
 		buildScene();
 
-		_player->addToInventory(new Item(Item::Type::Bread, _textures));
+		_player->addToInventory(new Item(Item::Type::BlackCoat, _textures));
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
 	}
@@ -400,34 +400,34 @@ namespace GEX {
 				enemy.destroy();
 			}
 			//BELOW STOPS COLLISION VERTICALLY BUT IS FLAWED WHEN MOVING HORIZONTALLY AND STOPS SHELF INTERACTION
-			//else if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
-			//{
-			//	auto& player = static_cast<Player&>(*pair.first);
-			//	auto& shelf = static_cast<Shelf&>(*pair.second);
+			else if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
+			{
+				auto& player = static_cast<Player&>(*pair.first);
+				auto& shelf = static_cast<Shelf&>(*pair.second);
 
-			//	// Apply pickup effect to player, destroy projectile
+				// Apply pickup effect to player, destroy projectile
 
-			//	auto pos = player.getPosition();
+				auto pos = player.getPosition();
 
-			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x - 1, player.getWorldPosition().y, 32, 32))))
-			//	{
-			//		player.setPosition(pos.x - 1, pos.y);
-			//	}
-			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x + 1, player.getWorldPosition().y, 32, 32))))
-			//	{
-			//		player.setPosition(pos.x + 1, pos.y);
-			//	}
-			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y - 1, 32, 32))))
-			//	{
-			//		player.setPosition(pos.x, pos.y - 1);
-			//	}
-			//	if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y + 1, 32, 32))))
-			//	{
-			//		player.setPosition(pos.x, pos.y + 1);
-			//	}
-			//	//play collision sound
-			//	//player.playLocalSound(_commandQueue, SoundEffectID::CollectPickup);
-			//}
+				/*if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x - 10, player.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x - 1, pos.y);
+				}
+				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x + 10, player.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x + 1, pos.y);
+				}
+				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y - 10, 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y - 1);
+				}
+				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y + 10, 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y + 1);
+				}*/
+				//play collision sound
+				//player.playLocalSound(_commandQueue, SoundEffectID::CollectPickup);
+			}
 			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup))
 			{
 				auto& player = static_cast<Aircraft&>(*pair.first);
@@ -689,6 +689,30 @@ namespace GEX {
 		}
 
 
+	}
+
+	bool World::OutOfMoney()
+	{
+		if (_player->getInventory().empty())//if there are items then they can make money
+		{
+			double money = _player->getMoney();
+			double itemsValue;
+			bool hasShelfItem;
+			for (auto shelfItem : _shelves)
+			{
+				hasShelfItem = shelfItem->isOccupied();
+				if (hasShelfItem == true)
+				{
+					break;
+				}
+			}
+			if ((!hasShelfItem)&&(money) < 20)//if the money on hand is less than 20 and no items
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	void World::loadTextures()

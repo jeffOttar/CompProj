@@ -1,15 +1,15 @@
 /**
 * @file
-* @author Jeff Ottar-
+* @authors
+* Jeff Ottar
+* @Date
+* 2018
 * @version 1.0
 *
-*
 * @section DESCRIPTION
-* <  >
 *
 *
 * @section LICENSE
-*
 *
 * Copyright 2018
 * Permission to use, copy, modify, and/or distribute this software for
@@ -29,25 +29,27 @@
 * NBCC Academic Integrity Policy (policy 1111)
 */
 #pragma once
+#include "State.h"
+class OutOfMoneyGameOver :
+	public GEX::State
+{
+public:
+	OutOfMoneyGameOver(GEX::StateStack& stack, Context context);
 
-namespace GEX {
-	enum class StateID
-	{
-		Title,
-		Menu,
-		Game, 
-		Pause,
-		Gex,
-		GameOver,
-		Warehouse,
-		Map,
-		MarcoLand,
-		Opening,
-		Ending,
-		Inventory,
-		Dialogue,
-		Selling,
-		NoMoney,
-		None
-	};
-}
+	void					draw() override;
+	bool					update(sf::Time dt) override;
+	bool					handleEvent(const sf::Event& event) override;
+	void					updateText();
+
+private:
+	sf::Sprite					_backgroundSprite;
+	std::vector<std::string>	_text;
+	std::size_t					_index;
+	sf::Text				_displayedText1;
+	sf::Text				_displayedText2;
+	sf::Text				_displayedText3;
+	std::vector<sf::Text*>	_displayedTexts;
+	bool _end;
+};
+
+

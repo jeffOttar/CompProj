@@ -47,7 +47,7 @@
       "filename": "blackCoat.png",
       "frame": {
         "x": 0,
-        "y": 320,
+        "y": 290,
         "w": 32,
         "h": 32
       },
@@ -65,7 +65,7 @@
       }
     },
     {
-      "filename": "pinkHairLeft (2).png",
+      "filename": "jeweledBangle.png",
       "frame": {
         "x": 0,
         "y": 416,
@@ -86,156 +86,9 @@
       }
     },
     {
-      "filename": "pinkHairLeft (1).png",
-      "frame": {
-        "x": 0,
-        "y": 448,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairLeft (3).png",
-      "frame": {
-        "x": 0,
-        "y": 480,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairDown (1).png",
+      "filename": "hat.png",
       "frame": {
         "x": 64,
-        "y": 416,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairDown (2).png",
-      "frame": {
-        "x": 64,
-        "y": 448,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairDown (3).png",
-      "frame": {
-        "x": 64,
-        "y": 480,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairRight (1).png",
-      "frame": {
-        "x": 32,
-        "y": 384,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairRight (2).png",
-      "frame": {
-        "x": 32,
-        "y": 416,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      }
-    },
-    {
-      "filename": "pinkHairRight (3).png",
-      "frame": {
-        "x": 32,
         "y": 448,
         "w": 32,
         "h": 32

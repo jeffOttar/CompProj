@@ -59,6 +59,10 @@ namespace GEX {
 			return "Bread";
 		case Item::Type::OldSword:
 			return "Old Sword";
+		case Item::Type::Hat:
+			return "Hat";
+		case Item::Type::JeweledBangle:
+			return "Jeweled Bangle";
 		default: 
 			return "";
 		}

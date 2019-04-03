@@ -55,6 +55,7 @@ namespace GEX {
 		loadBuffer(SoundEffectID::LaunchMissile, "Media/Sound/LaunchMissile.wav");
 		loadBuffer(SoundEffectID::CollectPickup, "Media/Sound/CollectPickup.wav");
 		loadBuffer(SoundEffectID::Button, "Media/Sound/Button.wav");
+		loadBuffer(SoundEffectID::Bump, "Media/Sound/Bump.wav");
 
 		// Listener points towards the screen (default in SFML)
 		sf::Listener::setDirection(0.f, 0.f, -1.f);

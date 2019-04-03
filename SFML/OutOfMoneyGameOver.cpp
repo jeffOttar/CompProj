@@ -8,7 +8,7 @@
 * @version 1.0
 *
 * @section DESCRIPTION
-* 
+*
 *
 * @section LICENSE
 *
@@ -29,13 +29,13 @@
 * I certify that this work is solely my own and complies with
 * NBCC Academic Integrity Policy (policy 1111)
 */
-#include "Opening.h"
+#include "OutOfMoneyGameOver.h"
 #include "Utility.h"
 #include "FontManager.h"
 #include <fstream>
 #include <string>
 
-Opening::Opening(GEX::StateStack & stack, Context context)
+OutOfMoneyGameOver::OutOfMoneyGameOver(GEX::StateStack & stack, Context context)
 	: GEX::State(stack, context)
 	, _backgroundSprite()
 	, _displayedText1()
@@ -57,7 +57,7 @@ Opening::Opening(GEX::StateStack & stack, Context context)
 	std::string line;
 
 
-	inFile.open("intro.txt", std::ios::in);
+	inFile.open("noMoneyEnd.txt", std::ios::in);
 
 	if (!inFile) {
 		throw std::runtime_error("Could not open file");
@@ -94,7 +94,7 @@ Opening::Opening(GEX::StateStack & stack, Context context)
 	updateText();
 }
 
-void Opening::draw()
+void OutOfMoneyGameOver::draw()
 {
 	//Draw the elements
 	//getting window
@@ -103,7 +103,7 @@ void Opening::draw()
 
 	sf::RectangleShape backgroundShape;//the translucent background
 	backgroundShape.setFillColor(sf::Color(255, 255, 224, 150));
-	backgroundShape.setSize(sf::Vector2f(window.getView().getSize().x, window.getView().getSize().y/3));
+	backgroundShape.setSize(sf::Vector2f(window.getView().getSize().x, window.getView().getSize().y / 3));
 	backgroundShape.setPosition(0, window.getView().getSize().y*0.7f);
 
 	//draw objects
@@ -116,14 +116,14 @@ void Opening::draw()
 	window.draw(_displayedText3);
 }
 
-bool Opening::update(sf::Time dt)
+bool OutOfMoneyGameOver::update(sf::Time dt)
 {
 	return false;
 }
 
-bool Opening::handleEvent(const sf::Event & event)
+bool OutOfMoneyGameOver::handleEvent(const sf::Event & event)
 {
-	
+
 	//if the event is not a keypress
 	if (event.type != sf::Event::KeyPressed)
 	{
@@ -136,14 +136,14 @@ bool Opening::handleEvent(const sf::Event & event)
 		if (_end)
 		{
 			requestStackPop();
-			requestStackPush(GEX::StateID::Game);
+			requestStackPush(GEX::StateID::GameOver);
 		}
 		updateText();
 	}
 	return true;
 }
 
-void Opening::updateText()
+void OutOfMoneyGameOver::updateText()
 {
 	_end = false;
 	for (int i = 0; i < _displayedTexts.size(); i++)//blank out all texts
@@ -151,7 +151,7 @@ void Opening::updateText()
 		_displayedTexts[i]->setString("");
 	}
 	int count = 0;
-	int index=_index;
+	int index = _index;
 	for (int i = index; i < (index + 3); i++) {//make new texts
 		if (i < _text.size())//do something
 		{
@@ -164,5 +164,5 @@ void Opening::updateText()
 			_end = true;
 		}
 	}
-		
+
 }

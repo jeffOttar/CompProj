@@ -61,13 +61,18 @@ bool GameState::update(sf::Time dt)
 		_player.setMissionStatus(GEX::MissionStatus::MissionSuccess);
 		requestStackPush(GEX::StateID::GameOver);
 	}
-	else if (_world.atDoor())
-	{
-		requestStackPush(GEX::StateID::Map);
-	}
+	//else if (_world.atDoor())
+	//{
+	//	requestStackPush(GEX::StateID::Map);
+	//}
 	else if (_world.villagerBuying())
 	{
 		requestStackPush(GEX::StateID::Selling);
+	}
+	else if (_world.OutOfMoney())
+	{
+		_player.setMissionStatus(GEX::MissionStatus::MissionFailure);
+		requestStackPush(GEX::StateID::NoMoney);
 	}
 
 
@@ -120,7 +125,10 @@ bool GameState::handleEvent(const sf::Event & event)
 		{
 			requestStackPush(GEX::StateID::Dialogue);
 		}
-
+		else if (_world.atDoor())
+		{
+			requestStackPush(GEX::StateID::Map);
+		}
 		//have villager talk in another world event that checks if player tried to talk to villager and passes villager to here 
 		//*ABOVE CONT* use same as shelf but go through active villagers and check if they were clicked
 	}

@@ -135,7 +135,8 @@ namespace GEX {
 		setOccupied(true);
 		sprite_.setTexture(_textures->get(ITEMTABLE.at(_item.getType()).texture));
 		sprite_.setTextureRect((ITEMTABLE.at(_item.getType()).textureRect));
-		sprite_.setScale(1,1);
+		sprite_.setScale(2,2);
+		sprite_.setPosition(sprite_.getPosition().x,sprite_.getPosition().y-20.f);
 	}
 
 	Item  GEX::Shelf::removeItemOnShelf()

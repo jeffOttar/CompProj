@@ -2,7 +2,7 @@
   "frames": [
 
     {
-      "filename": "pinkHairUp (1).png",
+      "filename": "pinkHairUpIdle.png",
       "frame": {
         "x": 0,
         "y": 384,
@@ -23,7 +23,7 @@
       }
     },
     {
-      "filename": "pinkHairUp (2).png",
+      "filename": "pinkHairUpMove (2).png",
       "frame": {
         "x": 64,
         "y": 384,
@@ -44,7 +44,7 @@
       }
     },
     {
-      "filename": "pinkHairUp (3).png",
+      "filename": "pinkHairUpMove (3).png",
       "frame": {
         "x": 32,
         "y": 480,
@@ -65,7 +65,7 @@
       }
     },
     {
-      "filename": "pinkHairLeft (2).png",
+      "filename": "pinkHairLeftMove (2).png",
       "frame": {
         "x": 0,
         "y": 416,
@@ -86,7 +86,7 @@
       }
     },
     {
-      "filename": "pinkHairLeft (1).png",
+      "filename": "pinkHairLeftIdle.png",
       "frame": {
         "x": 0,
         "y": 448,
@@ -107,7 +107,7 @@
       }
     },
     {
-      "filename": "pinkHairLeft (3).png",
+      "filename": "pinkHairLeftMove (3).png",
       "frame": {
         "x": 0,
         "y": 480,
@@ -128,7 +128,7 @@
       }
     },
     {
-      "filename": "pinkHairDown (1).png",
+      "filename": "pinkHairDownIdle.png",
       "frame": {
         "x": 64,
         "y": 416,
@@ -149,7 +149,7 @@
       }
     },
     {
-      "filename": "pinkHairDown (2).png",
+      "filename": "pinkHairDownMove (2).png",
       "frame": {
         "x": 64,
         "y": 448,
@@ -170,7 +170,7 @@
       }
     },
     {
-      "filename": "pinkHairDown (3).png",
+      "filename": "pinkHairDownMove (3).png",
       "frame": {
         "x": 64,
         "y": 480,
@@ -191,7 +191,7 @@
       }
     },
     {
-      "filename": "pinkHairRight (1).png",
+      "filename": "pinkHairRightIdle.png",
       "frame": {
         "x": 32,
         "y": 384,
@@ -212,7 +212,7 @@
       }
     },
     {
-      "filename": "pinkHairRight (2).png",
+      "filename": "pinkHairRightMove (2).png",
       "frame": {
         "x": 32,
         "y": 416,
@@ -233,7 +233,7 @@
       }
     },
     {
-      "filename": "pinkHairRight (3).png",
+      "filename": "pinkHairRightMove (3).png",
       "frame": {
         "x": 32,
         "y": 448,

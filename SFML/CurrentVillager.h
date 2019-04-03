@@ -1,6 +1,7 @@
-#pragma once
+
 #include "Villager.h"
 
+#pragma once
 namespace GEX
 {
 	class CurrentVillager

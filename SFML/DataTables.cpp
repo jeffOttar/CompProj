@@ -76,7 +76,7 @@ namespace GEX {
 
 		data[Item::Type::BlackCoat].texture = TextureID::Items;
 		data[Item::Type::BlackCoat].price = 250;
-		data[Item::Type::BlackCoat].textureRect= sf::IntRect(0,320,32,32);
+		data[Item::Type::BlackCoat].textureRect= sf::IntRect(0,290,32,32);
 
 		data[Item::Type::Bread].texture = TextureID::Items;
 		data[Item::Type::Bread].price = 20;
@@ -85,6 +85,14 @@ namespace GEX {
 		data[Item::Type::OldSword].texture = TextureID::Items;
 		data[Item::Type::OldSword].price = 100;
 		data[Item::Type::OldSword].textureRect = sf::IntRect(32, 0, 32, 32);
+
+		data[Item::Type::Hat].texture = TextureID::Items;
+		data[Item::Type::Hat].price = 50;
+		data[Item::Type::Hat].textureRect = sf::IntRect(64, 448, 32, 32);
+
+		data[Item::Type::JeweledBangle].texture = TextureID::Items;
+		data[Item::Type::JeweledBangle].price = 1000;
+		data[Item::Type::JeweledBangle].textureRect = sf::IntRect(0, 416, 32, 32);
 		
 
 		return data;
@@ -161,35 +169,35 @@ namespace GEX {
 
 		JsonFrameParser frames = JsonFrameParser("Media/Textures/Atlas.json");
 
-		data[Player::PlayerType::Player].animations[Player::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp (1)"));
+		data[Player::PlayerType::Player].animations[Player::State::Up].addFrameSet(frames.getFramesFor("pinkHairUpIdle"));
 		data[Player::PlayerType::Player].animations[Player::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Up].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown (1)"));
+		data[Player::PlayerType::Player].animations[Player::State::Down].addFrameSet(frames.getFramesFor("pinkHairDownIdle"));
 		data[Player::PlayerType::Player].animations[Player::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Down].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight (1)"));
+		data[Player::PlayerType::Player].animations[Player::State::Right].addFrameSet(frames.getFramesFor("pinkHairRightIdle"));
 		data[Player::PlayerType::Player].animations[Player::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Right].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft (1)"));
+		data[Player::PlayerType::Player].animations[Player::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeftIdle"));
 		data[Player::PlayerType::Player].animations[Player::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::Left].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::MoveUp].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Player::PlayerType::Player].animations[Player::State::MoveUp].addFrameSet(frames.getFramesFor("pinkHairUpMove"));
 		data[Player::PlayerType::Player].animations[Player::State::MoveUp].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::MoveUp].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::MoveDown].addFrameSet(frames.getFramesFor("pinkHairDown"));
+		data[Player::PlayerType::Player].animations[Player::State::MoveDown].addFrameSet(frames.getFramesFor("pinkHairDownMove"));
 		data[Player::PlayerType::Player].animations[Player::State::MoveDown].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::MoveDown].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::MoveRight].addFrameSet(frames.getFramesFor("pinkHairRight"));
+		data[Player::PlayerType::Player].animations[Player::State::MoveRight].addFrameSet(frames.getFramesFor("pinkHairRightMove"));
 		data[Player::PlayerType::Player].animations[Player::State::MoveRight].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::MoveRight].setRepeating(false);
 
-		data[Player::PlayerType::Player].animations[Player::State::MoveLeft].addFrameSet(frames.getFramesFor("pinkHairLeft"));
+		data[Player::PlayerType::Player].animations[Player::State::MoveLeft].addFrameSet(frames.getFramesFor("pinkHairLeftMove"));
 		data[Player::PlayerType::Player].animations[Player::State::MoveLeft].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Player::PlayerType::Player].animations[Player::State::MoveLeft].setRepeating(false);
 		
@@ -242,35 +250,35 @@ namespace GEX {
 
 		JsonFrameParser frames = JsonFrameParser("Media/Textures/Atlas.json");
 
-		data[Villager::Type::Courtney].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("pinkHairUp (1)"));
+		data[Villager::Type::Courtney].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("pinkHairUpIdle"));
 		data[Villager::Type::Courtney].animations[Villager::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Up].setRepeating(false);
 
-		data[Villager::Type::Courtney].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("pinkHairDown (1)"));
+		data[Villager::Type::Courtney].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("pinkHairDownIdle"));
 		data[Villager::Type::Courtney].animations[Villager::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Down].setRepeating(false);
 
-		data[Villager::Type::Courtney].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("pinkHairRight (1)"));
+		data[Villager::Type::Courtney].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("pinkHairRightIdle"));
 		data[Villager::Type::Courtney].animations[Villager::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Right].setRepeating(false);
 
-		data[Villager::Type::Courtney].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeft (1)"));
+		data[Villager::Type::Courtney].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("pinkHairLeftIdle"));
 		data[Villager::Type::Courtney].animations[Villager::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::Left].setRepeating(false);
 					
-		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].addFrameSet(frames.getFramesFor("pinkHairUp"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].addFrameSet(frames.getFramesFor("pinkHairUpMove"));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveUp].setRepeating(false);
 							
-		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].addFrameSet(frames.getFramesFor("pinkHairDown"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].addFrameSet(frames.getFramesFor("pinkHairDownMove"));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveDown].setRepeating(false);
 							
-		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].addFrameSet(frames.getFramesFor("pinkHairRight"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].addFrameSet(frames.getFramesFor("pinkHairRightMove"));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveRight].setRepeating(false);
 							
-		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].addFrameSet(frames.getFramesFor("pinkHairLeft"));
+		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].addFrameSet(frames.getFramesFor("pinkHairLeftMove"));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].setDuration(sf::Time(sf::seconds(0.75f)));
 		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].setRepeating(false);
 

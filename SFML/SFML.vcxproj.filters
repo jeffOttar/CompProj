@@ -159,6 +159,9 @@
     <ClCompile Include="SellingState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OutOfMoneyGameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureManager.h">
@@ -315,6 +318,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SellingState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutOfMoneyGameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

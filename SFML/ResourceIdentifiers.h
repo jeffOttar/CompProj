@@ -65,7 +65,8 @@ namespace GEX {
 		Explosion2,
 		LaunchMissile,
 		CollectPickup,
-		Button
+		Button,
+		Bump
 	};
 
 	enum class MusicID

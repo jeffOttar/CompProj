@@ -128,7 +128,7 @@
 			}
 			else//if it reaches the top then reset to the 0 indexed item
 			{
-				_itemCount = 1;
+				_itemCount = 0;
 			}
 
 			updateOptionText();
@@ -136,14 +136,18 @@
 		else if (event.key.code == sf::Keyboard::Left)
 		{
 
-			if (_itemCount>1)
+			if (_itemCount>=1)
 			{
 				_itemCount--;
 			}
-			else//if it reaches the top then reset to the 0 indexed item
+			else if(std::floor(_money / _items.at(_optionsIndex).getPrice())>=1)//if it reaches the top then reset to the 0 indexed item
 			{
 				int flooredAmount = std::floor(_money / _items.at(_optionsIndex).getPrice());
 				_itemCount = flooredAmount;
+			}
+			else
+			{
+				_itemCount = 0;
 			}
 
 			updateOptionText();
@@ -151,6 +155,7 @@
 		else if (event.key.code == sf::Keyboard::Escape)
 		{
 			requestStackPop();
+			requestStackPush(GEX::StateID::Map);
 		}
 
 		return true;

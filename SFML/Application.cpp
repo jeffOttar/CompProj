@@ -45,6 +45,7 @@
 #include "SellingState.h"
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
+#include "OutOfMoneyGameOver.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.0f / 60.f);//seconds per frame for 60fps
 
@@ -206,4 +207,5 @@ void Application::registerStates()
 	_stateStack.registerState<Inventory>(GEX::StateID::Inventory);
 	_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
 	_stateStack.registerState<SellingState>(GEX::StateID::Selling);
+	_stateStack.registerState<OutOfMoneyGameOver>(GEX::StateID::NoMoney);
 }

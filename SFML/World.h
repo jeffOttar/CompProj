@@ -64,7 +64,8 @@ namespace GEX {
 		CommandQueue&						getCommandQueue();
 		bool								hasAlivePlayer() const;
 		bool								hasPlayerReachedEnd() const;
-		bool	atDoor();
+		bool								atDoor();
+		bool								OutOfMoney();
 		bool								shelfEvent(const sf::Event& event);
 		bool								dialogueEvent(const sf::Event& event);
 		void CollectShelves();

@@ -11,7 +11,8 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 	_player(context.playerBody),
 	_backgroundSprite(),
 	_textures(context.textures),
-	_total(0)
+	_total(0),
+	_sold(false)
 {
 	_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::Warehouse));
 
@@ -63,12 +64,22 @@ bool SellingState::handleEvent(const sf::Event & event)
 	if (event.key.code == sf::Keyboard::Return)//if key press is return
 	{
 		//update displayed text
-		//if (_sold)
-		//{
-		//	//update all neccessary stuff
-		//	requestStackPop();
-		//}
-		////if not sold update face and display some text
+		if (_sold)
+		{
+			//update all neccessary stuff
+			_player->setMoney((_player->getMoney()+_total));
+			GEX::CurrentShelf::getInstance().getCurrentShelf()->removeItemOnShelf();
+			requestStackPop();
+		}
+		//if not sold update face and display some text
+		//auto v = GEX::CurrentVillager::getInstance.getCurrentVillager();
+		
+		if (_total <= 100)//if amount less than amount willing to pay
+		{
+			_sold = true;
+			//say farewell or thanks in text
+		}
+
 		//updateText();
 	}
 	else if (event.key.code == sf::Keyboard::Right)

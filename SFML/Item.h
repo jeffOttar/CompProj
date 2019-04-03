@@ -41,7 +41,7 @@ namespace GEX {
 	class Item
 	{
 	public:
-		enum class Type { BlackCoat, Bread, OldSword, Count };
+		enum class Type { BlackCoat, Bread, OldSword, JeweledBangle, Hat, Count };
 		enum class State { Normal };
 
 		Item(Item::Type type,  GEX::TextureManager& textures);

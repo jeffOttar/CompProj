@@ -88,12 +88,14 @@
 		{
 			if (_optionsIndex == Warehouse)// if currently selected option is warehouse
 			{
+				requestStackPop();
 				requestStackPush(GEX::StateID::Warehouse);
 			}
 			else if (_optionsIndex == Marco)
 			{
 				if (_money >= 100000000)
 				{
+					requestStackPop();
 					requestStackPush(GEX::StateID::MarcoLand);
 				}
 			}
