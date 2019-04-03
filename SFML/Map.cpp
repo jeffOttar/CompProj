@@ -94,6 +94,7 @@
 			else if (_optionsIndex == Marco)
 			{
 				if (_money >= 100000000)
+				/*if (_money >= 1)*/
 				{
 					requestStackPop();
 					requestStackPush(GEX::StateID::MarcoLand);

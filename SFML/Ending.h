@@ -53,6 +53,8 @@ private:
 	sf::Text				_displayedText3;
 	std::vector<sf::Text*>	_displayedTexts;
 	bool _end;
+
+	GEX::TextureManager*		_textures;
 };
 
 

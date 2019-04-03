@@ -49,7 +49,8 @@ namespace GEX {
 		Shop,
 		WarehouseIcon,
 		Warehouse,
-		MarcoMoney
+		MarcoMoney,
+		Marco
 	};
 
 	enum class FontID

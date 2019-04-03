@@ -80,6 +80,7 @@ _statisticsNumFrames(0)
 	_textures.load(GEX::TextureID::WarehouseIcon, "Media/Textures/warehouseIcon.png");
 	_textures.load(GEX::TextureID::Warehouse, "Media/Textures/warehouse.png");
 	_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
+	_textures.load(GEX::TextureID::Marco, "Media/Textures/marco.png");
 
 	_statisticsText.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	_statisticsText.setPosition(5.f, 5.f);
@@ -208,4 +209,5 @@ void Application::registerStates()
 	_stateStack.registerState<RandomDialogue>(GEX::StateID::Dialogue);
 	_stateStack.registerState<SellingState>(GEX::StateID::Selling);
 	_stateStack.registerState<OutOfMoneyGameOver>(GEX::StateID::NoMoney);
+	_stateStack.registerState<Ending>(GEX::StateID::MarcoLand);
 }

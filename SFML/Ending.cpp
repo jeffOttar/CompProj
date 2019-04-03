@@ -44,6 +44,7 @@ Ending::Ending(GEX::StateStack & stack, Context context)
 	, _displayedText2()
 	, _displayedText3()
 	, _end(false)
+	, _textures(context.textures)
 {
 	_displayedTexts.push_back(&_displayedText1);
 	_displayedTexts.push_back(&_displayedText2);
@@ -165,6 +166,10 @@ void Ending::updateText()
 		{
 			_end = true;
 		}
+	}
+	if (index >= 10)
+	{
+		_backgroundSprite.setTexture(_textures->get(GEX::TextureID::Marco));//set to marco pic
 	}
 
 }

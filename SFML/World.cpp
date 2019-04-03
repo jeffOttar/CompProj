@@ -426,7 +426,7 @@ namespace GEX {
 					player.setPosition(pos.x, pos.y + 1);
 				}*/
 				//play collision sound
-				//player.playLocalSound(_commandQueue, SoundEffectID::CollectPickup);
+				player.playLocalSound(_commandQueue, SoundEffectID::Bump);
 			}
 			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup))
 			{
@@ -605,6 +605,7 @@ namespace GEX {
 					if (occupied)
 					{
 						v->setBuy(false);
+						//GEX::CurrentVillager::getInstance.setCurrentVillager(&v);
 						return true;
 					}
 				}
