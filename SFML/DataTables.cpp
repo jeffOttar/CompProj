@@ -283,6 +283,13 @@ namespace GEX {
 		data[Villager::Type::Courtney].animations[Villager::State::MoveLeft].setRepeating(false);
 
 
+		data[Villager::Type::Courtney].value[Item::Type::BlackCoat] = 500;
+		data[Villager::Type::Courtney].value[Item::Type::Bread] = 1;
+		data[Villager::Type::Courtney].value[Item::Type::JeweledBangle] = 2000;
+		data[Villager::Type::Courtney].value[Item::Type::Hat] = 10;
+		data[Villager::Type::Courtney].value[Item::Type::OldSword] = 25;
+
+
 		return data;
 	}
 }

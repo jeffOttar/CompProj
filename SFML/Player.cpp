@@ -3,14 +3,11 @@
 * Player.cpp
 * @authors
 * Jeff Ottar
-* John Romero
-* Marco Corsini Baccaro 
 * @Date
 * 2018
 * @version 1.0
 *
 * @section DESCRIPTION
-* Frogger Game
 *
 * @section LICENSE
 *
@@ -73,11 +70,27 @@ namespace GEX
 	}
 	sf::FloatRect Player::getBoundingBox() const
 	{
+		//auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
+		//box.width -= 35; // tighten up bounding box for more realistic collisions
+		//box.left += 10;
+		//box.height -= 25;
+		//box.top += 20;
+		//return box;
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		box.width -= 35; // tighten up bounding box for more realistic collisions
-		box.left += 10;
-		box.height -= 25;
-		box.top += 20;
+		box.width -= 95; // tighten up bounding box for more realistic collisions
+		box.left += 45;
+		box.height -= 85;
+		box.top += 60;
+		return box;
+	}
+
+	sf::FloatRect Player::getInteractBoundingBox() const
+	{
+		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
+		box.width -= 95; // tighten up bounding box for more realistic collisions
+		box.left += 45;
+		box.height -= 85;
+		box.top += 60;
 		return box;
 	}
 

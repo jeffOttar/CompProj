@@ -115,6 +115,7 @@ namespace GEX
 		TextureID								texture;
 		std::map<Villager::State, Animation2>		animations;
 		int										hitpoints;
+		std::map<Item::Type, int>				value;
 	};
 
 	//declaring a function that returns a map of aircrafttype and data

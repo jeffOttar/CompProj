@@ -1,7 +1,8 @@
 #include "Villager.h"
-#include "DataTables.h"
 #include "Category.h"
 #include "Utility.h"
+#include "DataTables.h"
+#include "Item.h"
 
 namespace GEX {
 	namespace
@@ -22,6 +23,7 @@ namespace GEX {
 		, _buyTime(defaultBuyTime)
 		, _moveTime(defaultMoveTime)
 		, _buying(false)
+		,_values(TABLE.at(type).value)
 	{ 
 		sprite_.setTexture(textures.get(TABLE.at(type).texture));
 		sprite_.scale(5.f, 5.f);
@@ -50,11 +52,17 @@ namespace GEX {
 
 	sf::FloatRect Villager::getBoundingBox() const
 	{
+		//auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
+		//box.width -= 35; // tighten up bounding box for more realistic collisions
+		//box.left += 10;
+		//box.height -= 25;
+		//box.top += 20;
+		//return box;
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		box.width -= 35; // tighten up bounding box for more realistic collisions
-		box.left += 10;
-		box.height -= 25;
-		box.top += 20;
+		box.width -= 95; // tighten up bounding box for more realistic collisions
+		box.left += 45;
+		box.height -= 85;
+		box.top += 60;
 		return box;
 	}
 
@@ -88,19 +96,19 @@ namespace GEX {
 	{
 		if (randomNumber() <= 30)
 		{
-			return sf::Vector2f(-5,0);
+			return sf::Vector2f(-25,0);
 		}
 		else if (randomNumber() > 30 && randomNumber() < 50)
 		{
-			return sf::Vector2f(5, 0);
+			return sf::Vector2f(25, 0);
 		}
 		else if (randomNumber() >= 55 && randomNumber() < 75)
 		{
-			return sf::Vector2f(0, 5);
+			return sf::Vector2f(0, 25);
 		}
 		else if (randomNumber() >= 75 && randomNumber() < 95)
 		{
-			return sf::Vector2f(0, -5);
+			return sf::Vector2f(0, -25);
 		}
 		else
 		{
@@ -112,6 +120,11 @@ namespace GEX {
 	Villager::Type Villager::getType()
 	{
 		return type_;
+	}
+
+	int Villager::getValue(Item::Type item)
+	{
+		return _values.at(item);
 	}
 
 	void Villager::decrementBuyTime(sf::Time time)

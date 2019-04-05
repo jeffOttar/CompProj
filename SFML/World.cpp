@@ -409,6 +409,23 @@ namespace GEX {
 
 				auto pos = player.getPosition();
 
+				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x - 1, pos.y);
+				}
+				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x + 1, pos.y);
+				}
+				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y , 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y - 1);
+				}
+				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y + 1);
+				}
+
 				/*if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x - 10, player.getWorldPosition().y, 32, 32))))
 				{
 					player.setPosition(pos.x - 1, pos.y);
@@ -484,8 +501,8 @@ namespace GEX {
 			for (auto s : _shelves)
 			{
 				//if it is intersecting player at all 
-				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f), 32, 32)) ||
-					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
+				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 40.f), (_player->getWorldPosition().y + 40.f), 32, 32)) ||
+					s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 40.f), (_player->getWorldPosition().y - 40.f), 32, 32)))
 				{
 					//tmp = s;
 					GEX::CurrentShelf::getInstance().setCurrentShelf(s);
@@ -496,10 +513,12 @@ namespace GEX {
 			if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr) {
 				if (shelfInteract && !tmp->isOccupied())
 				{
+					_player->playLocalSound(_commandQueue, SoundEffectID::Interact);
 					return true;
 				}
 				if (shelfInteract && tmp->isOccupied())
 				{
+					_player->playLocalSound(_commandQueue, SoundEffectID::Interact);
 					Item item = tmp->removeItemOnShelf();
 					_player->addToInventory(&item);
 					return false;
@@ -605,7 +624,7 @@ namespace GEX {
 					if (occupied)
 					{
 						v->setBuy(false);
-						//GEX::CurrentVillager::getInstance.setCurrentVillager(&v);
+						GEX::CurrentVillager::getInstance().setCurrentVillager(v);
 						return true;
 					}
 				}

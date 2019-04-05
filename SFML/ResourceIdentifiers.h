@@ -49,6 +49,7 @@ namespace GEX {
 		Shop,
 		WarehouseIcon,
 		Warehouse,
+		EasterEggWarehouse,
 		MarcoMoney,
 		Marco
 	};
@@ -67,7 +68,8 @@ namespace GEX {
 		LaunchMissile,
 		CollectPickup,
 		Button,
-		Bump
+		Bump,
+		Interact
 	};
 
 	enum class MusicID

@@ -79,6 +79,7 @@ _statisticsNumFrames(0)
 	_textures.load(GEX::TextureID::MarcoMoney, "Media/Textures/endIcon.png");
 	_textures.load(GEX::TextureID::WarehouseIcon, "Media/Textures/warehouseIcon.png");
 	_textures.load(GEX::TextureID::Warehouse, "Media/Textures/warehouse.png");
+	_textures.load(GEX::TextureID::EasterEggWarehouse, "Media/Textures/eastereggwarehouse.png");
 	_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
 	_textures.load(GEX::TextureID::Marco, "Media/Textures/marco.png");
 

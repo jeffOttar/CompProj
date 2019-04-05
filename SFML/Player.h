@@ -54,6 +54,7 @@ namespace GEX
 
 		unsigned int							getCategory() const override;
 		sf::FloatRect							getBoundingBox() const override;
+		sf::FloatRect							getInteractBoundingBox() const;
 		void									accelerate(sf::Vector2f velocity) override;
 		void									setState(State state);
 		bool									isMarkedForRemoval() const override;

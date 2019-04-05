@@ -19,5 +19,6 @@ private:
 	std::vector<sf::Text>		_amount;
 	int _total;
 	bool _sold;
+	int _incrementer;
 };
 

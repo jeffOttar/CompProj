@@ -15,7 +15,7 @@
 	{
 		_money = _player->getMoney();
 		//set the background face texture
-		_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::Warehouse));
+		_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::EasterEggWarehouse));
 		//centerOrigin(_backgroundSprite);
 		//_backgroundSprite.setColor(sf::Color(255, 255, 255, 100));//make image transparent
 

@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "Animation2.h"
 #include <random>
+#include "Item.h"
 
 namespace GEX {
 	class Villager :
@@ -26,6 +27,7 @@ namespace GEX {
 		void									setBuy(bool buying) { _buying = buying; }
 		sf::Vector2f							randomMove();
 		Type									getType();
+		int										getValue(Item::Type item);
 
 		//timers
 		void decrementBuyTime(sf::Time time);
@@ -51,7 +53,7 @@ namespace GEX {
 
 
 	private:
-		const sf::Time defaultBuyTime = sf::seconds(120);//120
+		const sf::Time defaultBuyTime = sf::seconds(12);//120
 		const sf::Time defaultMoveTime = sf::seconds(10);//10
 
 		Type									type_;
@@ -63,6 +65,7 @@ namespace GEX {
 		sf::Time								_buyTime;
 		sf::Time								_moveTime;
 		bool									_buying;
+		std::map<Item::Type, int>				_values;
 
 	};
 
