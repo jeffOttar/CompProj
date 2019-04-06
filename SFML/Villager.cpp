@@ -42,6 +42,12 @@ namespace GEX {
 		case Type::Courtney:
 			return Category::Courtney;
 			break;
+		case Type::Greg:
+			return Category::Greg;
+			break;
+		case Type::Jhon:
+			return Category::Jhon;
+			break;
 
 		/*case ObstacleType::RaceCar:
 			return Category::RaceCar;
@@ -59,9 +65,9 @@ namespace GEX {
 		//box.top += 20;
 		//return box;
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		box.width -= 95; // tighten up bounding box for more realistic collisions
+		box.width -= 85; // tighten up bounding box for more realistic collisions
 		box.left += 45;
-		box.height -= 85;
+		box.height -= 75;
 		box.top += 60;
 		return box;
 	}

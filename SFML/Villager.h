@@ -11,7 +11,7 @@ namespace GEX {
 		public Entity
 	{
 	public:
-		enum class Type { Courtney, count };
+		enum class Type { Courtney, Greg, Jhon, count };
 
 		enum class State { Up, Down, Left, Right, MoveUp, MoveDown, MoveLeft, MoveRight, count };
 

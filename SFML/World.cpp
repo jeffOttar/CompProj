@@ -66,7 +66,7 @@ namespace GEX {
 		loadTextures();
 		buildScene();
 
-		_player->addToInventory(new Item(Item::Type::BlackCoat, _textures));
+		_player->addToInventory(new Item(Item::Type::BlackCoat, _textures));//REMOVE
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
 	}
@@ -167,10 +167,11 @@ namespace GEX {
 
 	void World::addVillagers()
 	{
-		//std::default_random_engine generator;
-		//std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) -1 ));
-		//int randomNum = distribution(generator);
-		auto type = Villager::Type::Courtney;//have it get random type for this variable
+		std::default_random_engine generator;
+		std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) - 1));
+		int randomNum = distribution(generator);
+		//auto type = Villager::Type::Jhon;//have it get random type for this variable
+		auto type = static_cast<Villager::Type>(randomNum);
 		bool exists = false;
 
 		//loop through all active villagers and check if new type exists
@@ -186,12 +187,30 @@ namespace GEX {
 			switch (type)
 			{
 			case Villager::Type::Courtney:
+			{
 				std::unique_ptr<Villager> villager(new Villager(type, _textures));
 				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
 				//shelf->setRotation(rotation);
 				_sceneLayers[UpperAir]->attachChild(std::move(villager));
 				break;
-				//case othervillager:
+			}
+			case Villager::Type::Greg:
+			{
+				std::unique_ptr<Villager> villager(new Villager(type, _textures));
+				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				//shelf->setRotation(rotation);
+				_sceneLayers[UpperAir]->attachChild(std::move(villager));
+				break;
+			}
+			case Villager::Type::Jhon:
+			{
+				std::unique_ptr<Villager> villager(new Villager(type, _textures));
+				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				//shelf->setRotation(rotation);
+				_sceneLayers[UpperAir]->attachChild(std::move(villager));
+				break;
+			}
+			//case othervillager:
 			}
 		}
 		//std::unique_ptr<Villager> villager (new Villager(type, _textures));
@@ -399,7 +418,6 @@ namespace GEX {
 				player.damage(enemy.getHitPoints());
 				enemy.destroy();
 			}
-			//BELOW STOPS COLLISION VERTICALLY BUT IS FLAWED WHEN MOVING HORIZONTALLY AND STOPS SHELF INTERACTION
 			else if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
 			{
 				auto& player = static_cast<Player&>(*pair.first);
@@ -407,9 +425,16 @@ namespace GEX {
 
 				// Apply pickup effect to player, destroy projectile
 
-				auto pos = player.getPosition();
+				auto pos = player.getWorldPosition();
+				auto pos2 = shelf.getWorldPosition();
 
-				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				if (!(player.getBoundingBox().contains(shelf.getWorldPosition())))
+				{
+					auto diff = pos - pos2;
+					player.setPosition((pos + (diff / 2.f)));
+				}
+
+				/*if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
 				{
 					player.setPosition(pos.x - 1, pos.y);
 				}
@@ -417,33 +442,89 @@ namespace GEX {
 				{
 					player.setPosition(pos.x + 1, pos.y);
 				}
-				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y , 32, 32))))
+				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
 				{
 					player.setPosition(pos.x, pos.y - 1);
 				}
 				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y + 1);
-				}
-
-				/*if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x - 10, player.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x - 1, pos.y);
-				}
-				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x + 10, player.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x + 1, pos.y);
-				}
-				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y - 10, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y - 1);
-				}
-				if (!(shelf.getBoundingBox().intersects(sf::FloatRect(player.getWorldPosition().x, player.getWorldPosition().y + 10, 32, 32))))
 				{
 					player.setPosition(pos.x, pos.y + 1);
 				}*/
+
+			
 				//play collision sound
 				player.playLocalSound(_commandQueue, SoundEffectID::Bump);
+			}
+			else if (matchesCategories(pair, Category::Type::Player, Category::Type::Villager))
+			{
+				auto& player = static_cast<Player&>(*pair.first);
+				auto& villager = static_cast<Villager&>(*pair.second);
+
+				auto pos = player.getWorldPosition();
+				auto pos2 = villager.getWorldPosition();
+
+				if (!(player.getBoundingBox().contains(villager.getWorldPosition())))
+				{
+					auto diff = pos - pos2;
+					player.setPosition((pos + (diff/2.f)));
+				}
+				
+
+				/*if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x - 10, pos.y);
+				}
+				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x + 10, pos.y);
+				}
+				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y - 10);
+				}
+				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
+				{
+					player.setPosition(pos.x, pos.y + 10);
+				}*/
+
+				
+				//play collision sound
+				player.playLocalSound(_commandQueue, SoundEffectID::Bump);
+			}
+			else if (matchesCategories(pair, Category::Type::Villager, Category::Type::Shelf))
+			{
+				auto& villager = static_cast<Villager&>(*pair.first);
+				auto& shelf = static_cast<Shelf&>(*pair.second);
+
+				// Apply pickup effect to player, destroy projectile
+
+				auto pos = villager.getPosition();
+				auto pos2 = shelf.getWorldPosition();
+
+				if (!(villager.getBoundingBox().contains(shelf.getWorldPosition())))
+				{
+					auto diff = pos - pos2;
+					villager.setPosition((pos + (diff / 2.f)));
+				}
+
+				/*if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					villager.setPosition(pos.x - 1, pos.y);
+				}
+				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					villager.setPosition(pos.x + 1, pos.y);
+				}
+				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					villager.setPosition(pos.x, pos.y - 1);
+				}
+				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
+				{
+					villager.setPosition(pos.x, pos.y + 1);
+				}*/
+
+
 			}
 			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup))
 			{
@@ -699,6 +780,7 @@ namespace GEX {
 
 		if (_player->getPosition().y < 480.f && _player->getPosition().y > 240.f)
 		{
+			_player->playLocalSound(_commandQueue, SoundEffectID::Interact);
 			//set the player positition back some after this
 			return !_worldBounds.contains(sf::Vector2f(_player->getPosition().x + BORDER_DISTANCE,
 				_player->getPosition().y + BORDER_DISTANCE));
@@ -726,12 +808,12 @@ namespace GEX {
 					break;
 				}
 			}
-			if ((!hasShelfItem)&&(money) < 20)//if the money on hand is less than 20 and no items
+			if ((!hasShelfItem) && (money) < 20)//if the money on hand is less than 20 and no items
 			{
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 

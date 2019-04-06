@@ -290,6 +290,91 @@ namespace GEX {
 		data[Villager::Type::Courtney].value[Item::Type::OldSword] = 25;
 
 
+		////////////////////////////////////////////////
+		data[Villager::Type::Greg].hitpoints = 100;
+		data[Villager::Type::Greg].texture = TextureID::Villagers;
+		//data[Player::PlayerType::Player].textureRect = sf::IntRect(0, 384, 32, 32);//first 2 numbers are location in sprite sheet
+
+		data[Villager::Type::Greg].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("oldManUpIdle"));
+		data[Villager::Type::Greg].animations[Villager::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::Up].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("oldManDownIdle"));
+		data[Villager::Type::Greg].animations[Villager::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::Down].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("oldManRightIdle"));
+		data[Villager::Type::Greg].animations[Villager::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::Right].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("oldManLeftIdle"));
+		data[Villager::Type::Greg].animations[Villager::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::Left].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::MoveUp].addFrameSet(frames.getFramesFor("oldManUpMove"));
+		data[Villager::Type::Greg].animations[Villager::State::MoveUp].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::MoveUp].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::MoveDown].addFrameSet(frames.getFramesFor("oldManDownMove"));
+		data[Villager::Type::Greg].animations[Villager::State::MoveDown].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::MoveDown].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::MoveRight].addFrameSet(frames.getFramesFor("oldManRightMove"));
+		data[Villager::Type::Greg].animations[Villager::State::MoveRight].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::MoveRight].setRepeating(false);
+
+		data[Villager::Type::Greg].animations[Villager::State::MoveLeft].addFrameSet(frames.getFramesFor("oldManLeftMove"));
+		data[Villager::Type::Greg].animations[Villager::State::MoveLeft].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Greg].animations[Villager::State::MoveLeft].setRepeating(false);
+
+		data[Villager::Type::Greg].value[Item::Type::BlackCoat] = 50;
+		data[Villager::Type::Greg].value[Item::Type::Bread] = 50;
+		data[Villager::Type::Greg].value[Item::Type::JeweledBangle] = 125;
+		data[Villager::Type::Greg].value[Item::Type::Hat] = 100;
+		data[Villager::Type::Greg].value[Item::Type::OldSword] = 250;
+
+		data[Villager::Type::Jhon].hitpoints = 100;
+		data[Villager::Type::Jhon].texture = TextureID::Villagers;
+
+		data[Villager::Type::Jhon].animations[Villager::State::Up].addFrameSet(frames.getFramesFor("yellowHairUpIdle"));
+		data[Villager::Type::Jhon].animations[Villager::State::Up].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::Up].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::Down].addFrameSet(frames.getFramesFor("yellowHairDownIdle"));
+		data[Villager::Type::Jhon].animations[Villager::State::Down].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::Down].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::Right].addFrameSet(frames.getFramesFor("yellowHairRightIdle"));
+		data[Villager::Type::Jhon].animations[Villager::State::Right].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::Right].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::Left].addFrameSet(frames.getFramesFor("yellowHairLeftIdle"));
+		data[Villager::Type::Jhon].animations[Villager::State::Left].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::Left].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::MoveUp].addFrameSet(frames.getFramesFor("yellowHairUpMove"));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveUp].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveUp].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::MoveDown].addFrameSet(frames.getFramesFor("yellowHairDownMove"));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveDown].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveDown].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::MoveRight].addFrameSet(frames.getFramesFor("yellowHairRightMove"));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveRight].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveRight].setRepeating(false);
+
+		data[Villager::Type::Jhon].animations[Villager::State::MoveLeft].addFrameSet(frames.getFramesFor("yellowHairLeftMove"));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveLeft].setDuration(sf::Time(sf::seconds(0.75f)));
+		data[Villager::Type::Jhon].animations[Villager::State::MoveLeft].setRepeating(false);
+
+		data[Villager::Type::Jhon].value[Item::Type::BlackCoat] = 250;
+		data[Villager::Type::Jhon].value[Item::Type::Bread] = 20;
+		data[Villager::Type::Jhon].value[Item::Type::JeweledBangle] = 800;
+		data[Villager::Type::Jhon].value[Item::Type::Hat] = 100;
+		data[Villager::Type::Jhon].value[Item::Type::OldSword] = 150;
+
+
 		return data;
 	}
 }

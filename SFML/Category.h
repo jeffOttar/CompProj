@@ -51,8 +51,11 @@ namespace Category {
 		OldSword = 1 << 14,
 		BlackCoat = 1 << 15,
 		Bread = 1 << 16,
+		Jhon = 1 << 17,
+		JeweledBangle = 1 << 18,
+		Hat = 1 << 19,
 
-		Villager = Courtney | Greg,
+		Villager = Courtney | Greg | Jhon,
 		Aircraft = PlayerAircraft | AlliedAircraft | EnemyAircraft,//used to include all ORed objects into one definition
 		Projectile = EnemyProjectile | AlliedProjectile,
 	};
