@@ -54,7 +54,9 @@ namespace GEX {
 		Marco,
 		Happy,
 		Indifferent,
-		Unhappy
+		Unhappy,
+		Intro,
+		End
 	};
 
 	enum class FontID

@@ -70,8 +70,6 @@ namespace GEX {
 
 		loadTextures();
 
-		_player->addToInventory(new Item(Item::Type::BlackCoat, _textures));//REMOVE
-
 		buildScene();
 
 		//prepare the view

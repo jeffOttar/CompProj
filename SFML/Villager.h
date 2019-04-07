@@ -56,7 +56,7 @@ namespace GEX {
 
 
 	private:
-		const sf::Time defaultBuyTime = sf::seconds(8);//120
+		const sf::Time defaultBuyTime = sf::seconds(120);//120
 		const sf::Time defaultMoveTime = sf::seconds(10);//10
 
 		Type									type_;

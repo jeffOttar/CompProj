@@ -84,6 +84,8 @@ _statisticsNumFrames(0)
 	_textures.load(GEX::TextureID::Happy, "Media/Textures/happyMarco.png");
 	_textures.load(GEX::TextureID::Indifferent, "Media/Textures/indifferentMarco.png");
 	_textures.load(GEX::TextureID::Unhappy, "Media/Textures/unhappyMarco.png");
+	_textures.load(GEX::TextureID::Intro, "Media/Textures/forest.png");
+	_textures.load(GEX::TextureID::End, "Media/Textures/forest.png");
 
 	_statisticsText.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	_statisticsText.setPosition(5.f, 5.f);

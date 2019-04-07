@@ -48,7 +48,7 @@ Ending::Ending(GEX::StateStack & stack, Context context)
 	_displayedTexts.push_back(&_displayedText2);
 	_displayedTexts.push_back(&_displayedText3);
 
-	_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::Warehouse));//CHANGE texture id
+	_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::End));
 
 	//Get the font from the font manager
 	sf::Font& font = GEX::FontManager::getInstance().get(GEX::FontID::Main);
