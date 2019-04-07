@@ -38,10 +38,15 @@
 #include "State.h"
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
+#include <cstdlib>
 
 #include <algorithm>
 
+std::default_random_engine generator;
+std::uniform_int_distribution<int> distribution(0, (static_cast<int>(GEX::Villager::Type::count) - 1));
+auto randomNumber = std::bind(distribution, generator);
 namespace GEX {
+
 	World::World(sf::RenderTarget& outputTarget, SoundPlayer& sounds, Player& player) :
 		_target(outputTarget),
 		_worldView(outputTarget.getDefaultView()),
@@ -64,9 +69,11 @@ namespace GEX {
 		_sceneTexture.create(_target.getSize().x, _target.getSize().y);
 
 		loadTextures();
-		buildScene();
 
 		_player->addToInventory(new Item(Item::Type::BlackCoat, _textures));//REMOVE
+
+		buildScene();
+
 		//prepare the view
 		_worldView.setCenter(_spawnPosition);
 	}
@@ -141,6 +148,26 @@ namespace GEX {
 		_player->setVelocity(sf::Vector2f(0.f, 0.f));
 	}
 
+	sf::Vector2f World::adaptVillagerPosition(sf::Vector2f movement, Villager* v)
+	{
+		const float BORDER_DISTANCE = 195.f;
+		const float yBorder = 75.f;//used for the y axis addition
+
+		sf::FloatRect viewBounds(_worldView.getCenter() - _worldView.getSize() / 2.f, //get the 0,0 of the bounds by getting center and then half of the height and width
+			_worldView.getSize());
+		sf::Vector2f position = v->getPosition() + movement;
+
+		//adjust position so it stays within the left and right bounds
+		position.x = std::max(position.x, viewBounds.left + BORDER_DISTANCE);
+		position.x = std::min(position.x, viewBounds.left + viewBounds.width - BORDER_DISTANCE);
+
+		//adjust position so it stays within the bounds
+		position.y = std::max(position.y, viewBounds.top + BORDER_DISTANCE + yBorder);
+		position.y = std::min(position.y, viewBounds.top + viewBounds.height - 40.f);
+
+		return position;
+	}
+
 	void World::addShelves()
 	{
 		//left wall shelves
@@ -167,9 +194,11 @@ namespace GEX {
 
 	void World::addVillagers()
 	{
-		std::default_random_engine generator;
-		std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) - 1));
-		int randomNum = distribution(generator);
+
+		//std::default_random_engine generator;
+		//std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) - 1));
+		//int randomNum = rand() % (static_cast<int>(Villager::Type::count));
+		int randomNum = randomNumber();
 		//auto type = Villager::Type::Jhon;//have it get random type for this variable
 		auto type = static_cast<Villager::Type>(randomNum);
 		bool exists = false;
@@ -189,7 +218,7 @@ namespace GEX {
 			case Villager::Type::Courtney:
 			{
 				std::unique_ptr<Villager> villager(new Villager(type, _textures));
-				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				villager->setPosition(_spawnPosition.x + 150.f, _spawnPosition.y);
 				//shelf->setRotation(rotation);
 				_sceneLayers[UpperAir]->attachChild(std::move(villager));
 				break;
@@ -197,7 +226,7 @@ namespace GEX {
 			case Villager::Type::Greg:
 			{
 				std::unique_ptr<Villager> villager(new Villager(type, _textures));
-				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				villager->setPosition(_spawnPosition.x + 150.f, _spawnPosition.y);
 				//shelf->setRotation(rotation);
 				_sceneLayers[UpperAir]->attachChild(std::move(villager));
 				break;
@@ -205,7 +234,7 @@ namespace GEX {
 			case Villager::Type::Jhon:
 			{
 				std::unique_ptr<Villager> villager(new Villager(type, _textures));
-				villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
+				villager->setPosition(_spawnPosition.x + 150.f, _spawnPosition.y);
 				//shelf->setRotation(rotation);
 				_sceneLayers[UpperAir]->attachChild(std::move(villager));
 				break;
@@ -619,8 +648,8 @@ namespace GEX {
 			for (auto v : _activeVillagers)
 			{
 				//if it is intersecting player at all 
-				if (v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 20.f), (_player->getWorldPosition().y + 20.f), 32, 32)) ||
-					v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 20.f), (_player->getWorldPosition().y - 20.f), 32, 32)))
+				if (v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 40.f), (_player->getWorldPosition().y + 40.f), 32, 32)) ||
+					v->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x - 40.f), (_player->getWorldPosition().y - 40.f), 32, 32)))
 				{
 					GEX::CurrentVillager::getInstance().setCurrentVillager(v);
 					villagerInteract = true;
@@ -662,6 +691,8 @@ namespace GEX {
 				if (v->getMoveTime() <= sf::Time::Zero)
 				{
 					sf::Vector2f movement = v->randomMove();
+					//check if movement is out of bounds
+					adaptVillagerPosition(movement, v);
 					v->resetMoveTime();
 					moveVillager(movement, v);
 				}
@@ -828,6 +859,11 @@ namespace GEX {
 		_textures.load(GEX::TextureID::Shop, "Media/Textures/shopBackground2.png");
 		_textures.load(GEX::TextureID::Shelf, "Media/Textures/shelf.png");
 		_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
+
+
+		_textures.load(GEX::TextureID::Happy, "Media/Textures/happyMarco.png");
+		_textures.load(GEX::TextureID::Indifferent, "Media/Textures/indifferentMarco.png");
+		_textures.load(GEX::TextureID::Unhappy, "Media/Textures/unhappyMarco.png");
 
 	}
 

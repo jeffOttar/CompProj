@@ -158,7 +158,7 @@
 			requestStackPush(GEX::StateID::Map);
 		}
 
-		return true;
+		return false;
 	}
 
 	void Warehouse::updateOptionText()

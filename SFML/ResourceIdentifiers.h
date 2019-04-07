@@ -51,7 +51,10 @@ namespace GEX {
 		Warehouse,
 		EasterEggWarehouse,
 		MarcoMoney,
-		Marco
+		Marco,
+		Happy,
+		Indifferent,
+		Unhappy
 	};
 
 	enum class FontID

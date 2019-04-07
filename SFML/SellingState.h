@@ -20,5 +20,6 @@ private:
 	int _total;
 	bool _sold;
 	int _incrementer;
+	sf::Sprite					_face;
 };
 

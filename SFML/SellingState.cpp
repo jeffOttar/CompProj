@@ -17,12 +17,15 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 {
 	_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::Warehouse));
 
+	_face.setTexture(context.textures->get(GEX::TextureID::Indifferent));
+	_face.setPosition(context.window->getView().getSize() / 2.f - (sf::Vector2f(-250.f, 125.f)));
 
 	sf::Text option;
 	option.setString("0");
 	option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	centerOrigin(option);
-	option.setPosition(context.window->getView().getSize()/ 2.f);
+	option.setPosition(context.window->getView().getSize()/ 2.f - (sf::Vector2f(0.f, -250.f)));
+	option.setCharacterSize(48);
 	_amount.push_back(option);
 
 	sf::Text item;
@@ -31,17 +34,30 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 	item.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	item.setString(s);
 	centerOrigin(item);
-	item.setPosition((context.window->getView().getSize() / 2.f) - sf::Vector2f(150.f,0.f));
+	item.setPosition((context.window->getView().getSize() / 2.f) - sf::Vector2f(250.f,-250.f));
+	item.setCharacterSize(48);
 	_amount.push_back(item);
 }
 
 void SellingState::draw()
 {
-	//TODO: DRAW STUFF
+	//Draw the elements
+	//getting window
 	sf::RenderWindow& window = *getContext().window;
 	window.setView(window.getDefaultView());
 
-	window.draw(_backgroundSprite);
+	sf::RectangleShape backgroundShape;//the translucent background
+	backgroundShape.setFillColor(sf::Color(255, 255, 224, 150));
+	backgroundShape.setSize(sf::Vector2f(window.getView().getSize().x, window.getView().getSize().y / 3));
+	backgroundShape.setPosition(0, window.getView().getSize().y*0.7f);
+
+	//draw objects
+	window.draw(backgroundShape);
+
+	window.draw(_face);
+	//_face.setTexture(_textures->get(GEX::TextureID::Indifferent));
+
+	//window.draw(_backgroundSprite);
 	//draw each of the text options
 	for (const sf::Text& text : _amount)
 	{
@@ -80,10 +96,12 @@ bool SellingState::handleEvent(const sf::Event & event)
 		if (_total <= willingToPay)//if amount less than amount willing to pay
 		{
 			_sold = true;
+			_face.setTexture(_textures->get(GEX::TextureID::Happy));
 			//say farewell or thanks in text
 		}
 		else
 		{
+			_face.setTexture(_textures->get(GEX::TextureID::Unhappy));
 			//say that they dont want the item at that price
 		}
 
@@ -150,7 +168,7 @@ bool SellingState::handleEvent(const sf::Event & event)
 		_incrementer = 1000;
 	}
 
-	return true;
+	return false;
 }
 
 void SellingState::updateOptionText()
@@ -158,5 +176,6 @@ void SellingState::updateOptionText()
 
 	//update option text
 	_amount[0].setString(std::to_string(_total));
+	_face.setTexture(_textures->get(GEX::TextureID::Indifferent));
 
 }

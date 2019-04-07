@@ -41,6 +41,7 @@
 
 #include <map>
 #include <vector>
+#include <string>
 
 namespace GEX
 {
@@ -116,6 +117,7 @@ namespace GEX
 		std::map<Villager::State, Animation2>		animations;
 		int										hitpoints;
 		std::map<Item::Type, int>				value;
+		std::vector<std::string>				dialogue;
 	};
 
 	//declaring a function that returns a map of aircrafttype and data

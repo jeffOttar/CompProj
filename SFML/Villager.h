@@ -5,6 +5,8 @@
 #include "Animation2.h"
 #include <random>
 #include "Item.h"
+#include <vector>
+#include <string>
 
 namespace GEX {
 	class Villager :
@@ -28,6 +30,7 @@ namespace GEX {
 		sf::Vector2f							randomMove();
 		Type									getType();
 		int										getValue(Item::Type item);
+		std::string								getRandomDialogue();
 
 		//timers
 		void decrementBuyTime(sf::Time time);
@@ -53,7 +56,7 @@ namespace GEX {
 
 
 	private:
-		const sf::Time defaultBuyTime = sf::seconds(12);//120
+		const sf::Time defaultBuyTime = sf::seconds(8);//120
 		const sf::Time defaultMoveTime = sf::seconds(10);//10
 
 		Type									type_;
@@ -66,6 +69,7 @@ namespace GEX {
 		sf::Time								_moveTime;
 		bool									_buying;
 		std::map<Item::Type, int>				_values;
+		std::vector<std::string>				_dialogue;
 
 	};
 

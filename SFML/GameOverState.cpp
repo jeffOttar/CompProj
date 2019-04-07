@@ -48,11 +48,11 @@ GameOverState::GameOverState(GEX::StateStack & stack, Context context) :
 
 	if (context.player->getMissionStatus() == GEX::MissionStatus::MissionFailure)
 	{
-		_gameOverText.setString("Mission failed!");
+		_gameOverText.setString("You Died Disappointingly!");
 	}
 	else 
 	{
-		_gameOverText.setString("Mission successful!");
+		_gameOverText.setString("You Died a Peaceful Death!");
 	}
 
 	_gameOverText.setCharacterSize(70);
@@ -67,7 +67,7 @@ void GameOverState::draw()
 
 	//create background
 	sf::RectangleShape backgroundShape;
-	backgroundShape.setFillColor(sf::Color(0, 0, 0, 15));
+	backgroundShape.setFillColor(sf::Color(0, 0, 0, 255));
 	backgroundShape.setSize(window.getView().getSize());
 
 	window.draw(backgroundShape);

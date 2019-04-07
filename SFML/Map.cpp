@@ -135,7 +135,7 @@
 			updateOptionSelect();
 		}
 
-		return true;
+		return false;
 	}
 	void Map::updateOptionSelect()
 	{

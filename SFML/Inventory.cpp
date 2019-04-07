@@ -127,7 +127,7 @@ bool Inventory::handleEvent(const sf::Event & event)
 	{
 		requestStackPop();
 	}
-	return true;
+	return false;
 }
 
 void Inventory::updateOptionText()

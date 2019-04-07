@@ -3,6 +3,7 @@
 #include "Utility.h"
 #include "DataTables.h"
 #include "Item.h"
+#include <cstdlib>
 
 namespace GEX {
 	namespace
@@ -24,6 +25,7 @@ namespace GEX {
 		, _moveTime(defaultMoveTime)
 		, _buying(false)
 		,_values(TABLE.at(type).value)
+		, _dialogue(TABLE.at(type).dialogue)
 	{ 
 		sprite_.setTexture(textures.get(TABLE.at(type).texture));
 		sprite_.scale(5.f, 5.f);
@@ -131,6 +133,15 @@ namespace GEX {
 	int Villager::getValue(Item::Type item)
 	{
 		return _values.at(item);
+	}
+
+	std::string Villager::getRandomDialogue()
+	{
+		int size = _dialogue.size();
+		int randomNum = (rand() % size);//return number of 0 -> size-1
+
+
+		return _dialogue.at(randomNum);
 	}
 
 	void Villager::decrementBuyTime(sf::Time time)

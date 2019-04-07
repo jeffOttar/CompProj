@@ -3,14 +3,11 @@
 * Shelf.cpp
 * @authors
 * Jeff Ottar
-* John Romero
-* Marco Corsini Baccaro 
 * @Date
 * 2018
 * @version 1.0
 *
 * @section DESCRIPTION
-* Frogger Game
 *
 * @section LICENSE
 *

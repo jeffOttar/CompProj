@@ -67,11 +67,10 @@ _statisticsNumFrames(0)
 
 	GEX::FontManager::getInstance().load(GEX::FontID::Main,"Media/Sansation.ttf");
 	
-	_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/title.png");//for small screen
+	_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/title.png");
 	//_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/TitleScreenBig.png");//for big screen
 
-	//ADD THIS BACK IN AFTER THE PLAYER HAS AN ACTUAL TEXTURE SET IN THE CONSTRUCTOR OF PLAYER
-	//_textures.load(GEX::TextureID::Face, "Media/Textures/face.png");//load face texture
+	_textures.load(GEX::TextureID::Face, "Media/Textures/face.png");//load face texture
 
 	_textures.load(GEX::TextureID::Villagers, "Media/Textures/characters.png");
 	_textures.load(GEX::TextureID::Map, "Media/Textures/MapBackground.png");
@@ -82,6 +81,9 @@ _statisticsNumFrames(0)
 	_textures.load(GEX::TextureID::EasterEggWarehouse, "Media/Textures/eastereggwarehouse.png");
 	_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
 	_textures.load(GEX::TextureID::Marco, "Media/Textures/marco.png");
+	_textures.load(GEX::TextureID::Happy, "Media/Textures/happyMarco.png");
+	_textures.load(GEX::TextureID::Indifferent, "Media/Textures/indifferentMarco.png");
+	_textures.load(GEX::TextureID::Unhappy, "Media/Textures/unhappyMarco.png");
 
 	_statisticsText.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
 	_statisticsText.setPosition(5.f, 5.f);

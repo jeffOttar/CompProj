@@ -77,6 +77,7 @@ namespace GEX {
 		void								buildScene();
 		void								adaptPlayerPosition();
 		void								adaptPlayerVelocity();
+		sf::Vector2f						adaptVillagerPosition(sf::Vector2f movement, Villager* v);
 
 		void								addShelves();
 		void								createShelves(float relX, float relY, float rotation);
@@ -149,7 +150,7 @@ namespace GEX {
 
 		BloomEffect							_bloomEffect;
 		sf::Time							_spawnTimer;
-		const sf::Time						DEFAULT_TIME = sf::seconds(30);
+		const sf::Time						DEFAULT_TIME = sf::seconds(30);//30
 	};
 
 }

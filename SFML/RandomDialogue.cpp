@@ -3,6 +3,7 @@
 #include "FontManager.h"
 #include <string>
 #include <sstream>
+#include "CurrentVillager.h"
 
 RandomDialogue::RandomDialogue(GEX::StateStack & stack, Context context)
 	: GEX::State(stack, context)
@@ -19,10 +20,10 @@ RandomDialogue::RandomDialogue(GEX::StateStack & stack, Context context)
 	sf::Font& font = GEX::FontManager::getInstance().get(GEX::FontID::Main);
 
 
-	std::map<std::string, std::string> villagerDialogue;
-	villagerDialogue.insert(std::pair<std::string, std::string>("test", "the story is so far test test/then it goes test test/followed by test test/ended by test test"));
+	//std::map<std::string, std::string> villagerDialogue;
+	//villagerDialogue.insert(std::pair<std::string, std::string>("test", "the story is so far test test/then it goes test test/followed by test test/ended by test test"));
 	
-	std::string s = villagerDialogue.at("test");//set string to type of villager dialogue
+	std::string s = GEX::CurrentVillager::getInstance().getCurrentVillager()->getRandomDialogue();
 
 	std::string word;
 	std::istringstream tokenStream(s);
@@ -96,13 +97,14 @@ bool RandomDialogue::handleEvent(const sf::Event & event)
 	if (event.key.code == sf::Keyboard::Return)//if key press is return
 	{
 		//update displayed text
+		updateText();
 		if (_end)
 		{
 			requestStackPop();
 		}
-		updateText();
+		
 	}
-	return true;
+	return false;
 }
 
 void RandomDialogue::updateText()
