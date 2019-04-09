@@ -30,7 +30,6 @@
 */
 
 #include "PlayerControl.h"
-#include "Aircraft.h"
 #include "Command.h"
 #include "CommandQueue.h"
 #include "Category.h"
@@ -38,26 +37,12 @@
 #include <functional>
 
 namespace GEX {
-	struct AircraftMover
-	{
-	public:
-		AircraftMover(float vx, float vy) : //the constructor for the struct
-			velocity(vx, vy)
-		{
-		}
-		void operator() (Aircraft& aircraft, sf::Time dt) const
-		{
-			aircraft.accelerate(velocity);
-		}
-
-		sf::Vector2f velocity;//this is accessible
-	};
 
 	struct PlayerMover
 	{
 		PlayerMover(float vx, float vy) : movement(vx, vy) {}
 
-		void	operator() (Player& player, sf::Time dt) const
+		void	operator() (Player& player, sf::Time dt) const//move then set the correct state
 		{
 			player.move(movement);
 
@@ -111,12 +96,6 @@ namespace GEX {
 
 		//set up action bindings
 		initializeActions();
-
-		
-
-		
-		
-
 	}
 
 	///events are the one time events like firing a Missile
@@ -164,8 +143,6 @@ namespace GEX {
 			pair.second.category = Category::Type::Player;
 		}
 
-		//_actionBindings[Action::Fire].action = derivedAction<Aircraft>(std::bind(&Aircraft::fire, std::placeholders::_1));
-		//_actionBindings[Action::Fire].category = Category::Type::PlayerAircraft;
 
 	}
 	bool PlayerControl::isRealtimeAction(Action action)
@@ -176,9 +153,6 @@ namespace GEX {
 		case Action::MoveRight:
 		case Action::MoveUp:
 		case Action::MoveDown:
-		case Action::RL:
-		case Action::RR:
-		case Action::Fire:
 			return true;//if the action is any of the realtime actions return true
 			break;
 		default:

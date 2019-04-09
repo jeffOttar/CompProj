@@ -1,6 +1,5 @@
 /**
 * @file
-* ScoreState.cpp
 * @authors
 * Jeff Ottar
 * @Date
@@ -44,6 +43,7 @@ Ending::Ending(GEX::StateStack & stack, Context context)
 	, _end(false)
 	, _textures(context.textures)
 {
+	//add the texts to a vector of texts
 	_displayedTexts.push_back(&_displayedText1);
 	_displayedTexts.push_back(&_displayedText2);
 	_displayedTexts.push_back(&_displayedText3);
@@ -68,6 +68,7 @@ Ending::Ending(GEX::StateStack & stack, Context context)
 		_text.push_back(line);
 	}
 
+	/*Position and Style texts*/
 	const float LEFT_MARGIN = 50.f;
 
 	sf::Vector2f viewsize = context.window->getView().getSize();

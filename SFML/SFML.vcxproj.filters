@@ -33,9 +33,6 @@
     <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Aircraft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GexState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataTables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,28 +75,10 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pickup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EmitterNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PostEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BloomEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundNode.cpp">
@@ -179,9 +155,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Aircraft.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -221,9 +194,6 @@
     <ClInclude Include="MenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GexState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DataTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -236,31 +206,10 @@
     <ClInclude Include="ResourceIdentifiers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pickup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EmitterNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PostEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BloomEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundNode.h">

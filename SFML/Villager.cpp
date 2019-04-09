@@ -1,3 +1,33 @@
+/**
+* @file
+* @author Jeff Ottar-
+* @version 1.0
+*
+*
+* @section DESCRIPTION
+* <  >
+*
+*
+* @section LICENSE
+*
+*
+* Copyright 2017
+* Permission to use, copy, modify, and/or distribute this software for
+* any purpose with or without fee is hereby granted, provided that the
+* above copyright notice and this permission notice appear in all copies.
+*
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+* WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+* ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*
+* @section Academic Integrity
+* I certify that this work is solely my own and complies with
+* NBCC Academic Integrity Policy (policy 1111)
+*/
 #include "Villager.h"
 #include "Category.h"
 #include "Utility.h"
@@ -8,12 +38,11 @@
 namespace GEX {
 	namespace
 	{
-		//const is all uppercase and this is for all the aircraft data (it had to be initialized when declared because its const
 		const std::map<Villager::Type, VillagerData> TABLE = initializeVillagerData();
 	}
 	std::default_random_engine generator;
 	std::uniform_int_distribution<int> distribution(1, 100);
-	auto randomNumber = std::bind(distribution, generator);
+	auto randomNumber = std::bind(distribution, generator);//bound random num generator for reuse
 
 	Villager::Villager(Villager::Type type, GEX::TextureManager & textures)
 		: Entity(TABLE.at(type).hitpoints)
@@ -39,7 +68,7 @@ namespace GEX {
 
 	unsigned int Villager::getCategory() const
 	{
-		switch (type_)
+		switch (type_)//return the category based on the type
 		{
 		case Type::Courtney:
 			return Category::Courtney;
@@ -51,21 +80,11 @@ namespace GEX {
 			return Category::Jhon;
 			break;
 
-		/*case ObstacleType::RaceCar:
-			return Category::RaceCar;
-			break;*/
-
 		}
 	}
 
 	sf::FloatRect Villager::getBoundingBox() const
 	{
-		//auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		//box.width -= 35; // tighten up bounding box for more realistic collisions
-		//box.left += 10;
-		//box.height -= 25;
-		//box.top += 20;
-		//return box;
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
 		box.width -= 85; // tighten up bounding box for more realistic collisions
 		box.left += 45;
@@ -90,7 +109,7 @@ namespace GEX {
 
 	void Villager::checkBuy()//random check to set variable
 	{
-		if (randomNumber() <= 85)
+		if (randomNumber() <= 85)//85% chance to buy 15% chance to not buy item
 		{
 			_buying = true;
 		}
@@ -102,7 +121,7 @@ namespace GEX {
 
 	sf::Vector2f Villager::randomMove()//random direction movement
 	{
-		if (randomNumber() <= 30)
+		if (randomNumber() <= 30)//random number is 1 - 100 so based on odds move in direction
 		{
 			return sf::Vector2f(-25,0);
 		}
@@ -141,7 +160,7 @@ namespace GEX {
 		int randomNum = (rand() % size);//return number of 0 -> size-1
 
 
-		return _dialogue.at(randomNum);
+		return _dialogue.at(randomNum);//get a random dialogue from the vector
 	}
 
 	void Villager::decrementBuyTime(sf::Time time)

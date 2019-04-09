@@ -36,9 +36,7 @@
 #include "SceneNode.h"
 #include "SpriteNode.h"
 #include "TextureManager.h"
-#include "Aircraft.h"
 #include "CommandQueue.h"
-#include "BloomEffect.h"
 #include "SoundPlayer.h"
 #include "Player.h"
 #include "Shelf.h"
@@ -84,15 +82,11 @@ namespace GEX {
 
 		void								addVillagers();
 
-		void								addEnemies();//add enemies spawn points for them to spawn at
-		void								addEnemy(AircraftType type, float relX, float relY);
-		void								spawnEnemies();
 		void								moveVillager(sf::Vector2f movement, Villager* v);
 
 		sf::FloatRect						getViewBounds() const;
 		sf::FloatRect						getBattlefieldBounds() const;
 
-		void								guideMissiles();
 		void								handleCollisions();
 
 		void								destroyEntitiesOutOfView();
@@ -108,19 +102,6 @@ namespace GEX {
 			LayerCount
 		};
 
-		struct SpawnPoint
-		{
-			SpawnPoint(AircraftType _type, float _x, float _y) :
-				type(_type),
-				x(_x),
-				y(_y)
-			{
-			}
-
-			AircraftType type;
-			float x;
-			float y;
-		};
 
 	
 
@@ -143,12 +124,8 @@ namespace GEX {
 
 		Player*								_player;
 
-		std::vector<SpawnPoint>				_enemySpawnPoints;
-
-		std::vector<Aircraft*>				_activeEnemies;
 		std::vector<Villager*>				_activeVillagers;
 
-		BloomEffect							_bloomEffect;
 		sf::Time							_spawnTimer;
 		const sf::Time						DEFAULT_TIME = sf::seconds(30);//30
 	};

@@ -30,10 +30,6 @@
 */
 #pragma once
 #include "TextureManager.h"
-#include "Aircraft.h"
-#include "Projectile.h"
-#include "Pickup.h"
-#include "Particle.h"
 #include "Item.h"
 #include "Player.h"
 #include "Shelf.h"
@@ -45,51 +41,13 @@
 
 namespace GEX
 {
-	//this will have an angle and distance that the plane will travel for and it will loop through directions
-	struct Direction
-	{
-		Direction(float a, float d) :
-			angle(a),
-			distance(d)
-		{}
-
-		float angle;
-		float distance;
-	};
-
-	struct AircraftData
-	{
-		int							hitpoints;
-		float						speed;
-		TextureID					texture;
-		sf::IntRect					textureRect;
-		sf::Time					fireInterval;
-		bool						hasRollAnimation;
-
-		std::vector<Direction>		directions;		
-	};
-
+	
 	struct ItemData
 	{
 		double						price;
 		TextureID					texture;
 		sf::IntRect		textureRect;
 		
-	};
-
-	struct ProjectileData
-	{
-		int				damage;
-		float			speed;
-		TextureID		texture;
-		sf::IntRect		textureRect;
-	};
-
-	struct PickupData
-	{
-		std::function<void(Aircraft&)>		action;
-		TextureID							texture;
-		sf::IntRect							textureRect;
 	};
 
 	struct ParticleData
@@ -120,16 +78,8 @@ namespace GEX
 		std::vector<std::string>				dialogue;
 	};
 
-	//declaring a function that returns a map of aircrafttype and data
-	std::map<AircraftType, AircraftData> initializeAircraftData();
 
 	std::map<Item::Type, ItemData> initializeItemData();
-
-	std::map<Projectile::Type, ProjectileData> initializeProjectileData();
-
-	std::map<Pickup::Type, PickupData> initializePickupData();
-
-	std::map<Particle::Type, ParticleData> initializeParticleData();
 
 	std::map<Player::PlayerType, PlayerData> initializePlayerData();
 

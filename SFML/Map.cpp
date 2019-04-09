@@ -1,3 +1,33 @@
+/**
+* @file
+* @author Jeff Ottar-
+* @version 1.0
+*
+*
+* @section DESCRIPTION
+* <  >
+*
+*
+* @section LICENSE
+*
+*
+* Copyright 2017
+* Permission to use, copy, modify, and/or distribute this software for
+* any purpose with or without fee is hereby granted, provided that the
+* above copyright notice and this permission notice appear in all copies.
+*
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+* WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+* ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*
+* @section Academic Integrity
+* I certify that this work is solely my own and complies with
+* NBCC Academic Integrity Policy (policy 1111)
+*/
 #include "Map.h"
 #include "Utility.h"
 #include "FontManager.h"
@@ -18,44 +48,27 @@
 		_backgroundSprite.setTexture(texture);
 		_backgroundSprite.scale(1.5, 1.5);
 
+		/**
+		set up sprite option list
+		**/
 		sf::Sprite shopOption;
 		shopOption.setTexture(context.textures->get(GEX::TextureID::ShopIcon));
-		//shopOption.setTexture = context.textures->get(GEX::TextureID::ShopIcon);
 		centerOrigin(shopOption);
 		shopOption.setPosition(context.window->getView().getSize().y / 1.2f, context.window->getView().getSize().x / 2.5f);
 		_options.push_back(shopOption);//add the option to the list
 
 		sf::Sprite warehouseOption;
-		//warehouseOption.setTexture = context.textures->get(GEX::TextureID::WarehouseIcon);
 		warehouseOption.setTexture(context.textures->get(GEX::TextureID::WarehouseIcon));
 		centerOrigin(warehouseOption);
 		warehouseOption.setPosition(context.window->getView().getSize().y / 5.f, context.window->getView().getSize().x / 2.f);
 		_options.push_back(warehouseOption);//add the option to the list
 
 		sf::Sprite marcoOption;
-		//marcoOption.setTexture = context.textures->get(GEX::TextureID::MarcoMoney);
 		marcoOption.setTexture(context.textures->get(GEX::TextureID::MarcoMoney));
 		centerOrigin(marcoOption);
 		marcoOption.setPosition(context.window->getView().getSize().y / 1.5f, context.window->getView().getSize().x / 12.f);
 		_options.push_back(marcoOption);//add the option to the list
 		
-		
-		//set up the menu 
-		//the play option settings
-		//sf::Text playOption;
-		//playOption.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
-		//playOption.setString("Play");
-		//centerOrigin(playOption);
-		//playOption.setPosition(context.window->getView().getSize() / 2.f);
-		//_options.push_back(playOption);//add the option to the list
-
-		////exit option settings
-		//sf::Text exitOption;
-		//exitOption.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
-		//exitOption.setString("Exit");
-		//centerOrigin(exitOption);
-		//exitOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 30.f));
-		//_options.push_back(exitOption);//add the option to the list
 
 		//this updates the display to show current selection
 		updateOptionSelect();
@@ -93,7 +106,7 @@
 			}
 			else if (_optionsIndex == Marco)
 			{
-				if (_money >= 100000000)
+				if (_money >= 100000000)//can only go to end game zone if have enough money
 				/*if (_money >= 1)*/
 				{
 					requestStackPop();

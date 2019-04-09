@@ -33,7 +33,6 @@
 #include "PauseState.h"
 #include "MenuState.h"
 #include "TitleState.h"
-#include "GexState.h"
 #include "GameOverState.h"
 #include "FontManager.h"
 #include "Map.h"
@@ -68,7 +67,6 @@ _statisticsNumFrames(0)
 	GEX::FontManager::getInstance().load(GEX::FontID::Main,"Media/Sansation.ttf");
 	
 	_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/title.png");
-	//_textures.load(GEX::TextureID::TitleScreen, "Media/Textures/TitleScreenBig.png");//for big screen
 
 	_textures.load(GEX::TextureID::Face, "Media/Textures/face.png");//load face texture
 
@@ -93,9 +91,6 @@ _statisticsNumFrames(0)
 	_statisticsText.setString("Frames / Second = \nTime / Update =");
 
 	registerStates();
-	//SWITCH BACK TO LOADING TITLE FIRST AFTER FINISHED WITH THE MAP TESTING
-	//_stateStack.pushState(GEX::StateID::Map);
-	//_stateStack.pushState(GEX::StateID::Opening);
 	_stateStack.pushState(GEX::StateID::Title);//when running titlescreen goes to top of stack so it shows first
 }
 
@@ -130,28 +125,6 @@ void Application::run()
 		render();
 	}
 
-	//while (_window.isOpen())
-	//{
-	//	
-	//	timeSinceLastUpdate = clock.restart();
-
-	//	while (timeSinceLastUpdate > TimePerFrame)//this loop if for the time if it is above spf and catches the update up to it
-	//	{
-	//		processInput();
-	//		update(TimePerFrame);
-
-	//		if (_stateStack.isEmpty()) //if state stack empty user has quit and the game needs to end
-	//		{
-	//			_window.close();
-	//		}
-
-	//		timeSinceLastUpdate -= TimePerFrame;
-	//	}
-
-	//	updateStats(timeSinceLastUpdate);
-
-	//	render();
-	//}
 }
 
 void Application::processInput()
@@ -203,9 +176,9 @@ void Application::registerStates()
 	_stateStack.registerState<MenuState>(GEX::StateID::Menu);
 	_stateStack.registerState<GameState>(GEX::StateID::Game);
 	_stateStack.registerState<PauseState>(GEX::StateID::Pause);
-	_stateStack.registerState<GexState>(GEX::StateID::Gex);
 	_stateStack.registerState<GameOverState>(GEX::StateID::GameOver);
 
+	//new game states different from GEX class game engine
 	_stateStack.registerState<Map>(GEX::StateID::Map);
 	_stateStack.registerState<Warehouse>(GEX::StateID::Warehouse);
 	_stateStack.registerState<Opening>(GEX::StateID::Opening);

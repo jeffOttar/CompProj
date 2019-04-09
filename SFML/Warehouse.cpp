@@ -1,3 +1,33 @@
+/**
+* @file
+* @author Jeff Ottar-
+* @version 1.0
+*
+*
+* @section DESCRIPTION
+* <  >
+*
+*
+* @section LICENSE
+*
+*
+* Copyright 2017
+* Permission to use, copy, modify, and/or distribute this software for
+* any purpose with or without fee is hereby granted, provided that the
+* above copyright notice and this permission notice appear in all copies.
+*
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+* WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+* ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*
+* @section Academic Integrity
+* I certify that this work is solely my own and complies with
+* NBCC Academic Integrity Policy (policy 1111)
+*/////
 #include "Warehouse.h"
 #include "Utility.h"
 #include "FontManager.h"
@@ -14,19 +44,16 @@
 		_player(context.playerBody)
 	{
 		_money = _player->getMoney();
-		//set the background face texture
 		_backgroundSprite.setTexture(context.textures->get(GEX::TextureID::EasterEggWarehouse));
-		//centerOrigin(_backgroundSprite);
-		//_backgroundSprite.setColor(sf::Color(255, 255, 255, 100));//make image transparent
 
-		//make loop creating a scrollable list of text for the items
 
+		/*Get a list of all items possible and make them availible in the warehouse*/
 		GEX::Item tmp(GEX::Item::Type::Bread, *_textures);
 		std::vector<GEX::Item::Type> itemTypes = tmp.getAllTypes();
 
 		for (int i = 0; i < itemTypes.size(); i++)
 		{
-			auto item = new GEX::Item(itemTypes.at(i), *_textures);
+			std::unique_ptr<GEX::Item> item(new GEX::Item(itemTypes.at(i), *_textures));
 			_items.push_back(*item);
 		}
 		for (int i = 0; i < itemTypes.size(); i++)
@@ -46,12 +73,7 @@
 		sf::RenderWindow& window = *getContext().window;
 		window.setView(window.getDefaultView());
 
-		//sf::RectangleShape backgroundShape;//the translucent background
-		//backgroundShape.setFillColor(sf::Color(255, 0, 0, 100));
-		//backgroundShape.setSize(window.getView().getSize());
-
 		//draw objects
-		//window.draw(backgroundShape);
 		window.draw(_backgroundSprite);
 
 		//draw each of the text options
@@ -76,7 +98,7 @@
 		{
 
 			//buy the items
-			for (int i = 0; i < _itemCount; i++)
+			for (int i = 0; i < _itemCount; i++)//loop through the amount wanted
 			{
 				auto item = new GEX::Item(_items.at(_optionsIndex).getType(), *_textures);
 				//item desired

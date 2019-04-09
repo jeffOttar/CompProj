@@ -61,10 +61,6 @@ bool GameState::update(sf::Time dt)
 		_player.setMissionStatus(GEX::MissionStatus::MissionSuccess);
 		requestStackPush(GEX::StateID::GameOver);
 	}
-	//else if (_world.atDoor())
-	//{
-	//	requestStackPush(GEX::StateID::Map);
-	//}
 	else if (_world.villagerBuying())
 	{
 		requestStackPush(GEX::StateID::Selling);
@@ -91,21 +87,12 @@ bool GameState::handleEvent(const sf::Event & event)
 	auto& commands = _world.getCommandQueue();//this is the same as above in update but using auto
 	_player.handleEvent(event, commands);
 
-	
-
-	//have villager buy event that checks villager if buy event in their method and if true and passes villager to here
-
-
 	//if the escape key is pressed then stack push the pause state
 	if (event.type==sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)
 	{
 		requestStackPush(GEX::StateID::Pause);
 	}
 
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::G)
-	{
-		requestStackPush(GEX::StateID::Gex);
-	}
 
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Q)
 	{
@@ -113,10 +100,8 @@ bool GameState::handleEvent(const sf::Event & event)
 		requestStackPush(GEX::StateID::Menu);
 	}
 
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)//space events
 	{
-		//change to new type of event and return true if clicked shelf and shelf empty
-		//if the shelf is clicked but full in world take the item, put in inventory, and return false to here as well
 		if (_world.shelfEvent(event))
 		{
 			requestStackPush(GEX::StateID::Inventory);
@@ -129,8 +114,6 @@ bool GameState::handleEvent(const sf::Event & event)
 		{
 			requestStackPush(GEX::StateID::Map);
 		}
-		//have villager talk in another world event that checks if player tried to talk to villager and passes villager to here 
-		//*ABOVE CONT* use same as shelf but go through active villagers and check if they were clicked
 	}
 
 

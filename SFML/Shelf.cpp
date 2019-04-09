@@ -52,15 +52,8 @@ namespace GEX {
 		, _textures(&textures)
 		, _item(Item::Type::Bread, textures)
 	{
-		//for (auto a : TABLE.at(type).animations)
-		//{
-		//	animations_[a.first] = a.second;
-		//}
 
-		// keeping a constant background
-		// This is very important for the fly, because the is no fly over the Shelf image in the atlas
 		backgroundSprite_.setTexture(textures.get(TABLE.at(type).texture));
-		//backgroundSprite_.setTextureRect(textures.get(TABLE.at(type).textureRect));
 		backgroundSprite_.scale(1.25f, 1.25f);
 		centerOrigin(backgroundSprite_);
 
@@ -101,7 +94,6 @@ namespace GEX {
 	sf::FloatRect GEX::Shelf::getBoundingBox() const
 	{
 		return getWorldTransform().transformRect(backgroundSprite_.getGlobalBounds());
-		//return getWorldTransform().transformRect(sprite_.getGlobalBounds());
 	}
 
 	bool GEX::Shelf::isMarkedForRemoval() const
@@ -154,9 +146,6 @@ namespace GEX {
 	{
 		updateStates();
 
-		/*auto rec = animations_.at(state_).update(dt);
-
-		sprite_.setTextureRect(rec);*/
 		centerOrigin(sprite_);
 
 		if (state_ != ShelfState::occupied) {

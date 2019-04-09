@@ -49,6 +49,9 @@ namespace GEX {
 		sprite_.setTexture(_textures->get(TABLE.at(type).texture));
 		sprite_.setTextureRect(TABLE.at(type).textureRect);
 	}
+	/**
+	return a string of the item name
+	**/
 	std::string Item::getItemName(Item::Type type)
 	{
 		switch (type)

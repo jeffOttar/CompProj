@@ -36,11 +36,6 @@ namespace GEX {
 		TitleScreen,
 		Characters,
 		Villagers,
-		Entities,
-		Jungle,
-		Explosion,
-		Particle,
-		FinishLine,
 		Shelf,
 		Face,
 		Items,
@@ -66,13 +61,6 @@ namespace GEX {
 
 	enum class SoundEffectID
 	{
-		AlliedGunfire,
-		EnemyGunfire,
-		Explosion1,
-		Explosion2,
-		LaunchMissile,
-		CollectPickup,
-		Button,
 		Bump,
 		Interact
 	};

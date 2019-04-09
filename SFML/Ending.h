@@ -1,6 +1,5 @@
 /**
 * @file
-* ScoreState.h
 * @authors
 * Jeff Ottar
 * @Date

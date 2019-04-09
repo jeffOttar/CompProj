@@ -29,11 +29,6 @@
 * NBCC Academic Integrity Policy (policy 1111)
 */
 #include "World.h"
-#include "Pickup.h"
-#include "Projectile.h"
-#include "ParticleNode.h"
-#include "PostEffect.h"
-#include "BloomEffect.h"
 #include "SoundNode.h"
 #include "State.h"
 #include "CurrentShelf.h"
@@ -59,11 +54,8 @@ namespace GEX {
 		_spawnPosition(_worldView.getSize().x / 2.f, _worldBounds.height - _worldView.getSize().y / 2.f),
 		_scrollSpeed(-50.f),
 		_player(&player),
-		_enemySpawnPoints(),
-		_activeEnemies(),
 		_activeVillagers(),
 		_commandQueue(),
-		_bloomEffect(),
 		_spawnTimer(DEFAULT_TIME)
 	{
 		_sceneTexture.create(_target.getSize().x, _target.getSize().y);
@@ -104,7 +96,7 @@ namespace GEX {
 		{
 			auto type = villager.getType();
 			bool exists = false;
-			for (auto v : _activeVillagers)
+			for (auto v : _activeVillagers)//if villager doesnt exist then they can be added
 			{
 				if ((v->getType()) == type)
 				{
@@ -118,20 +110,7 @@ namespace GEX {
 			}
 		});
 		_commandQueue.push(villagerCollector);
-		//for (auto v : _activeVillagers)
-		//{
-		//	if ((v->isDestroyed()))
-		//	{
-		//		//remove deleted villagers
-		//		auto it = std::find(_activeVillagers.begin(), _activeVillagers.end(), v);
-		//		if (it != _activeVillagers.end())//extra safety
-		//		{
-		//			_activeVillagers.erase(it);
-		//		}
-
-		//	}
-		//}
-		//spawnEnemies();
+		
 		_spawnTimer -= dt;
 		if (_spawnTimer <= sf::Time::Zero)//every so many seconds
 		{
@@ -192,12 +171,7 @@ namespace GEX {
 
 	void World::addVillagers()
 	{
-
-		//std::default_random_engine generator;
-		//std::uniform_int_distribution<int> distribution(0, (static_cast<int>(Villager::Type::count) - 1));
-		//int randomNum = rand() % (static_cast<int>(Villager::Type::count));
 		int randomNum = randomNumber();
-		//auto type = Villager::Type::Jhon;//have it get random type for this variable
 		auto type = static_cast<Villager::Type>(randomNum);
 		bool exists = false;
 
@@ -209,7 +183,7 @@ namespace GEX {
 				exists = true;
 			}
 		}
-		if (!exists)
+		if (!exists)//if new villager doesnt exist then spawn them
 		{
 			switch (type)
 			{
@@ -237,76 +211,14 @@ namespace GEX {
 				_sceneLayers[UpperAir]->attachChild(std::move(villager));
 				break;
 			}
-			//case othervillager:
 			}
 		}
-		//std::unique_ptr<Villager> villager (new Villager(type, _textures));
-			//villager->setPosition(_spawnPosition.x + 50.f, _spawnPosition.y);
-			////shelf->setRotation(rotation);
-			//_sceneLayers[UpperAir]->attachChild(std::move(villager));
+
 	}
 
-	void World::addEnemies()
-	{
-		addEnemy(AircraftType::Raptor, 0.f, 200.f);
-		addEnemy(AircraftType::Raptor, 250.f, 200.f);
-		addEnemy(AircraftType::Raptor, -250.f, 200.f);
-
-		addEnemy(AircraftType::Avenger, -70.f, 400.f);//these start at end of screen
-		addEnemy(AircraftType::Avenger, 70.f, 400.f);
-
-		addEnemy(AircraftType::Avenger, -170.f, 1000.f);
-		addEnemy(AircraftType::Avenger, 170.f, 1000.f);
-
-		addEnemy(AircraftType::Avenger, -140.f, 600.f);
-		addEnemy(AircraftType::Avenger, 140.f, 600.f);
-
-		//additional enemies
-		addEnemy(AircraftType::Raptor, 0.f, 1200.f);
-		addEnemy(AircraftType::Raptor, 250.f, 1200.f);
-		addEnemy(AircraftType::Raptor, -250.f, 1200.f);
-
-		addEnemy(AircraftType::Avenger, -70.f, 1400.f);//these start at end of screen
-		addEnemy(AircraftType::Avenger, 70.f, 1400.f);
-
-		addEnemy(AircraftType::Avenger, -170.f, 1800.f);
-		addEnemy(AircraftType::Avenger, 170.f, 1800.f);
-
-		addEnemy(AircraftType::Avenger, -140.f, 1600.f);
-		addEnemy(AircraftType::Avenger, 140.f, 1600.f);
-
-		//sort the planes based on spawn point location 
-		std::sort(_enemySpawnPoints.begin(), _enemySpawnPoints.end(),
-			[](SpawnPoint lhs, SpawnPoint rhs)
-		{
-			return lhs.y < rhs.y;
-		});
-	}
-
-	void World::addEnemy(AircraftType type, float relX, float relY)
-	{
-		//relY and relX stand for relative x and y
-		SpawnPoint spawnPoint(type, _spawnPosition.x + relX, _spawnPosition.y - relY);
-		_enemySpawnPoints.push_back(spawnPoint);
-	}
-
-	void World::spawnEnemies()
-	{
-		//while there are enemies to spawn and the enemy is located within the battlefield
-		while (!_enemySpawnPoints.empty() && _enemySpawnPoints.back().y > getBattlefieldBounds().top)
-		{
-			auto spawnPoint = _enemySpawnPoints.back();
-
-			std::unique_ptr<Aircraft> enemy(new Aircraft(spawnPoint.type, _textures));
-			enemy->setPosition(spawnPoint.x, spawnPoint.y);
-			enemy->setRotation(180);
-			//move the enemy to the scenegraph
-			_sceneLayers[UpperAir]->attachChild(std::move(enemy));
-			//remove the spawned enemy from the list
-			_enemySpawnPoints.pop_back();
-		}
-	}
-
+	/**
+	move the villager and update their state
+	*/
 	void World::moveVillager(sf::Vector2f movement, Villager* v)
 	{
 		v->move(movement);
@@ -352,53 +264,6 @@ namespace GEX {
 		return bounds;
 	}
 
-	void World::guideMissiles()
-	{
-
-		//build list of active enemies
-		Command enemyCollector;
-		enemyCollector.category = Category::Type::EnemyAircraft;//everything with category enemy with execute this command
-		enemyCollector.action = derivedAction<Aircraft>([this](Aircraft& enemy, sf::Time dt)
-		{
-			if (!enemy.isDestroyed())//dont add destroyed enemies to list
-			{
-				_activeEnemies.push_back(&enemy);
-			}
-		});
-
-		Command missileGuider;
-		missileGuider.category = Category::Type::AlliedProjectile;//the derived action is used for safe downcasts
-		missileGuider.action = derivedAction<Projectile>([this](Projectile& missile, sf::Time dt)
-		{
-			//ignore bullets only guide missiles
-			if (!missile.isGuided())
-			{
-				return;//if it is a bullet return
-			}
-
-			float minDistance = std::numeric_limits<float>::max();
-			//start the min distance as the max float and when you find a smaller value set that as minimum distance
-			Aircraft* closestEnemy = nullptr;
-
-			for (auto* e : _activeEnemies)
-			{
-				auto d = distance(missile, *e);
-				if (d < minDistance)
-				{
-					minDistance = d;
-					closestEnemy = e;
-				}
-			}
-			if (closestEnemy)
-			{
-				missile.guidedTowards(closestEnemy->getWorldPosition());
-			}
-		});
-
-		_commandQueue.push(enemyCollector);
-		_commandQueue.push(missileGuider);
-		_activeEnemies.clear();
-	}
 
 	/**
 	*check if they have matching categories or if they match but are in the wrong order
@@ -434,50 +299,21 @@ namespace GEX {
 
 		for (SceneNode::Pair pair : collisionPairs)
 		{
-			//check for matching categories for the player and enemy two enemies colliding does nothing
-			if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::EnemyAircraft))
-			{
-				//if there is a player and enemy colliding then cast them into variables
-				auto& player = static_cast<Aircraft&>(*(pair.first));
-				auto& enemy = static_cast<Aircraft&>(*(pair.second));
-
-				//when a collsion occurs the player loses health amounting to enemy health
-				player.damage(enemy.getHitPoints());
-				enemy.destroy();
-			}
-			else if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
+			 if (matchesCategories(pair, Category::Type::Player, Category::Type::Shelf))
 			{
 				auto& player = static_cast<Player&>(*pair.first);
 				auto& shelf = static_cast<Shelf&>(*pair.second);
 
-				// Apply pickup effect to player, destroy projectile
-
 				auto pos = player.getWorldPosition();
 				auto pos2 = shelf.getWorldPosition();
 
-				if (!(player.getBoundingBox().contains(shelf.getWorldPosition())))
+				if (!(player.getBoundingBox().contains(shelf.getWorldPosition())))//bounce player back the difference between positions
 				{
 					auto diff = pos - pos2;
 					player.setPosition((pos + (diff / 2.f)));
 				}
 
-				/*if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x - 1, pos.y);
-				}
-				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x + 1, pos.y);
-				}
-				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y - 1);
-				}
-				if (!(player.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y + 1);
-				}*/
-
+				
 			
 				//play collision sound
 				player.playLocalSound(_commandQueue, SoundEffectID::Bump);
@@ -490,29 +326,12 @@ namespace GEX {
 				auto pos = player.getWorldPosition();
 				auto pos2 = villager.getWorldPosition();
 
+				//bounce player back the difference between positions
 				if (!(player.getBoundingBox().contains(villager.getWorldPosition())))
 				{
 					auto diff = pos - pos2;
 					player.setPosition((pos + (diff/2.f)));
 				}
-				
-
-				/*if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x - 10, pos.y);
-				}
-				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x + 10, pos.y);
-				}
-				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y - 10);
-				}
-				else if (!(player.getBoundingBox().intersects(sf::FloatRect(villager.getWorldPosition().x, villager.getWorldPosition().y, 32, 32))))
-				{
-					player.setPosition(pos.x, pos.y + 10);
-				}*/
 
 				
 				//play collision sound
@@ -528,59 +347,21 @@ namespace GEX {
 				auto pos = villager.getPosition();
 				auto pos2 = shelf.getWorldPosition();
 
+				//bounce villager back the difference between positions
 				if (!(villager.getBoundingBox().contains(shelf.getWorldPosition())))
 				{
 					auto diff = pos - pos2;
 					villager.setPosition((pos + (diff / 2.f)));
 				}
-
-				/*if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					villager.setPosition(pos.x - 1, pos.y);
-				}
-				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					villager.setPosition(pos.x + 1, pos.y);
-				}
-				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					villager.setPosition(pos.x, pos.y - 1);
-				}
-				if (!(villager.getBoundingBox().intersects(sf::FloatRect(shelf.getWorldPosition().x, shelf.getWorldPosition().y, 32, 32))))
-				{
-					villager.setPosition(pos.x, pos.y + 1);
-				}*/
-
-
 			}
-			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup))
-			{
-				auto& player = static_cast<Aircraft&>(*pair.first);
-				auto& pickup = static_cast<Pickup&>(*pair.second);
-
-				// Apply pickup effect to player, destroy projectile
-				pickup.apply(player);
-				pickup.destroy();
-
-				player.playLocalSound(_commandQueue, SoundEffectID::CollectPickup);
-			}
-			else if ((matchesCategories(pair, Category::Type::EnemyAircraft, Category::Type::AlliedProjectile))
-				|| (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::EnemyProjectile)))
-			{
-				auto& aircraft = static_cast<Aircraft&>(*pair.first);
-				auto& projectile = static_cast<Projectile&>(*pair.second);
-
-				//projectile damages aircraft and then is destroyed
-				aircraft.damage(projectile.getDamage());
-				projectile.destroy();
-			}
+			
 		}
 	}
 
 	void World::destroyEntitiesOutOfView()
 	{
 		Command command;
-		command.category = Category::Type::Projectile | Category::Type::EnemyAircraft | Category::Type::Pickup;
+		command.category = Category::Type::Villager;
 		command.action = derivedAction<Entity>([this](Entity& e, sf::Time)
 		{
 			//destroy if it is not in the area
@@ -606,7 +387,7 @@ namespace GEX {
 
 
 			Shelf* tmp = nullptr;
-			for (auto s : _shelves)
+			for (auto s : _shelves)//if interacting with shelf then it is a shelf event
 			{
 				//if it is intersecting player at all 
 				if (s->getBoundingBox().intersects(sf::FloatRect((_player->getWorldPosition().x + 40.f), (_player->getWorldPosition().y + 40.f), 32, 32)) ||
@@ -619,6 +400,7 @@ namespace GEX {
 			}
 			tmp = GEX::CurrentShelf::getInstance().getCurrentShelf();
 			if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr) {
+				//if it occupied the remove item else change state and add item
 				if (shelfInteract && !tmp->isOccupied())
 				{
 					_player->playLocalSound(_commandQueue, SoundEffectID::Interact);
@@ -677,14 +459,12 @@ namespace GEX {
 
 	void World::updateVillagers(sf::Time dt)
 	{
-
-
-		for (auto v : _activeVillagers)
+		for (auto v : _activeVillagers)//update all active villagers
 		{
 			v->decrementBuyTime(dt);
 			v->decrementMoveTime(dt);
 			v->decrementLeaveTime(dt);
-			if (!(v->getLeaveTime() <= sf::Time::Zero))
+			if (!(v->getLeaveTime() <= sf::Time::Zero))//if time to do action then do that action
 			{
 				if (v->getMoveTime() <= sf::Time::Zero)
 				{
@@ -708,9 +488,7 @@ namespace GEX {
 					_activeVillagers.erase(it);
 				}
 				v->destroy();
-				//v->damage(10000);//destory the villager at leave time
 			}
-			//_activeVillagers.clear();
 		}
 	}
 
@@ -731,14 +509,13 @@ namespace GEX {
 				if (GEX::CurrentShelf::getInstance().getCurrentShelf() != nullptr)
 				{
 					bool occupied = GEX::CurrentShelf::getInstance().getCurrentShelf()->isOccupied();
-					if (occupied)
+					if (occupied)//if they can buy then return true to that item
 					{
 						v->setBuy(false);
 						GEX::CurrentVillager::getInstance().setCurrentVillager(v);
 						return true;
 					}
 				}
-				//_activeVillagers.clear();
 				v->setBuy(false);
 			}
 		}
@@ -770,19 +547,15 @@ namespace GEX {
 
 	void World::draw()
 	{
-		if (PostEffect::isSupported())
-		{
-			//apply the effects
+		
 			_sceneTexture.clear();
 			_sceneTexture.setView(_worldView);
 			_sceneTexture.draw(_sceneGraph);
 			_sceneTexture.display();
-			_bloomEffect.apply(_sceneTexture, _target);
-		}
-		else {
+		
 			_target.setView(_worldView);
 			_target.draw(_sceneGraph);
-		}
+		
 	}
 
 	CommandQueue & World::getCommandQueue()
@@ -848,12 +621,7 @@ namespace GEX {
 
 	void World::loadTextures()
 	{
-		_textures.load(GEX::TextureID::Entities, "Media/Textures/Entities.png");
 		_textures.load(GEX::TextureID::Villagers, "Media/Textures/characters.png");
-		_textures.load(GEX::TextureID::Jungle, "Media/Textures/Jungle.png");
-		_textures.load(GEX::TextureID::Particle, "Media/Textures/Particle.png");
-		_textures.load(GEX::TextureID::Explosion, "Media/Textures/Explosion.png");
-		_textures.load(GEX::TextureID::FinishLine, "Media/Textures/FinishLine.png");
 		_textures.load(GEX::TextureID::Shop, "Media/Textures/shopBackground2.png");
 		_textures.load(GEX::TextureID::Shelf, "Media/Textures/shelf.png");
 		_textures.load(GEX::TextureID::Items, "Media/Textures/items.png");
@@ -875,17 +643,7 @@ namespace GEX {
 			_sceneGraph.attachChild(std::move(layer));
 		}
 
-		//Particle systems
-		std::unique_ptr<ParticleNode> smoke(new ParticleNode(Particle::Type::Smoke, _textures));
-		_sceneLayers[LowerAir]->attachChild(std::move(smoke));
-		std::unique_ptr<ParticleNode> fire(new ParticleNode(Particle::Type::Propellant, _textures));
-		_sceneLayers[LowerAir]->attachChild(std::move(fire));
 
-		//add a finish line
-		//sf::Texture& finishTexture = _textures.get(TextureID::FinishLine);
-		//std::unique_ptr<SpriteNode> finishSprite(new SpriteNode(finishTexture));
-		//finishSprite->setPosition(0.f, -76.f);
-		//_sceneLayers[Background]->attachChild(std::move(finishSprite));
 
 		//sound effects
 		std::unique_ptr<SoundNode> sNode(new SoundNode(_sounds));
@@ -901,20 +659,9 @@ namespace GEX {
 		backgroundSprite->setPosition(_worldBounds.left, _worldBounds.top);//make texture bounds line up with world bounds
 		_sceneLayers[Background]->attachChild(std::move(backgroundSprite));//
 
-		////add player aircraft and game objects
-		//std::unique_ptr<Player> leader(new Player(Player::PlayerType::Player, _textures));
-		//leader->setPosition(_spawnPosition);
-		//leader->setVelocity(0.f, 0.f);
-		//_player = leader.get();
-		//_sceneLayers[UpperAir]->attachChild(std::move(leader));
-
-
-
-		addEnemies();
-
 		addShelves();
 
-		//add player aircraft and game objects
+		//add player and game objects
 		std::unique_ptr<Player> player(_player);
 		player->setPosition(_spawnPosition + sf::Vector2f(0, 50));
 		_sceneLayers[UpperAir]->attachChild(std::move(player));

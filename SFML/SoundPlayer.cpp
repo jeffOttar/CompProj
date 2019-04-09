@@ -48,13 +48,6 @@ namespace GEX {
 		_soundBuffers(),
 		_sounds()
 	{
-		loadBuffer(SoundEffectID::AlliedGunfire, "Media/Sound/AlliedGunfire.wav");
-		loadBuffer(SoundEffectID::EnemyGunfire, "Media/Sound/EnemyGunfire.wav");
-		loadBuffer(SoundEffectID::Explosion1, "Media/Sound/Explosion1.wav");
-		loadBuffer(SoundEffectID::Explosion2, "Media/Sound/Explosion2.wav");
-		loadBuffer(SoundEffectID::LaunchMissile, "Media/Sound/LaunchMissile.wav");
-		loadBuffer(SoundEffectID::CollectPickup, "Media/Sound/CollectPickup.wav");
-		loadBuffer(SoundEffectID::Button, "Media/Sound/Button.wav");
 		loadBuffer(SoundEffectID::Bump, "Media/Sound/Bump.wav");
 		loadBuffer(SoundEffectID::Interact, "Media/Sound/interactEffect.wav");
 

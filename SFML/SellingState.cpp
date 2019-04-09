@@ -1,3 +1,33 @@
+/**
+* @file
+* @author Jeff Ottar-
+* @version 1.0
+*
+*
+* @section DESCRIPTION
+* <  >
+*
+*
+* @section LICENSE
+*
+*
+* Copyright 2017
+* Permission to use, copy, modify, and/or distribute this software for
+* any purpose with or without fee is hereby granted, provided that the
+* above copyright notice and this permission notice appear in all copies.
+*
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+* WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+* ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*
+* @section Academic Integrity
+* I certify that this work is solely my own and complies with
+* NBCC Academic Integrity Policy (policy 1111)
+*/
 #include "SellingState.h"
 #include "CurrentShelf.h"
 #include "CurrentVillager.h"
@@ -20,6 +50,7 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 	_face.setTexture(context.textures->get(GEX::TextureID::Indifferent));
 	_face.setPosition(context.window->getView().getSize() / 2.f - (sf::Vector2f(-250.f, 125.f)));
 
+	//text for amount
 	sf::Text option;
 	option.setString("0");
 	option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
@@ -28,6 +59,7 @@ SellingState::SellingState(GEX::StateStack & stack, Context context)
 	option.setCharacterSize(48);
 	_amount.push_back(option);
 
+	//text for item
 	sf::Text item;
 	auto item2 = GEX::CurrentShelf::getInstance().getCurrentShelf()->getItem().getType();
 	auto s = GEX::CurrentShelf::getInstance().getCurrentShelf()->getItem().getItemName(item2);
@@ -55,9 +87,7 @@ void SellingState::draw()
 	window.draw(backgroundShape);
 
 	window.draw(_face);
-	//_face.setTexture(_textures->get(GEX::TextureID::Indifferent));
 
-	//window.draw(_backgroundSprite);
 	//draw each of the text options
 	for (const sf::Text& text : _amount)
 	{
@@ -81,11 +111,11 @@ bool SellingState::handleEvent(const sf::Event & event)
 	if (event.key.code == sf::Keyboard::Return)//if key press is return
 	{
 		//update displayed text
-		if (_sold)
+		if (_sold)//if enter pressed after sold then user confirmed
 		{
 			//update all neccessary stuff
-			_player->setMoney((_player->getMoney()+_total));
-			GEX::CurrentShelf::getInstance().getCurrentShelf()->removeItemOnShelf();
+			_player->setMoney((_player->getMoney()+_total));//add money
+			GEX::CurrentShelf::getInstance().getCurrentShelf()->removeItemOnShelf();//remove the item
 			requestStackPop();
 		}
 		//if not sold update face and display some text
@@ -97,12 +127,10 @@ bool SellingState::handleEvent(const sf::Event & event)
 		{
 			_sold = true;
 			_face.setTexture(_textures->get(GEX::TextureID::Happy));
-			//say farewell or thanks in text
 		}
 		else
 		{
 			_face.setTexture(_textures->get(GEX::TextureID::Unhappy));
-			//say that they dont want the item at that price
 		}
 
 		//updateText();
@@ -139,7 +167,7 @@ bool SellingState::handleEvent(const sf::Event & event)
 	{
 		requestStackPop();
 	}
-	else if (event.key.code == sf::Keyboard::Num1)
+	else if (event.key.code == sf::Keyboard::Num1)//change the number you increment/decrement by with numberkeys below
 	{
 		_incrementer = 1;
 	}

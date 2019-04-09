@@ -40,12 +40,12 @@ Inventory::Inventory(GEX::StateStack & stack, Context context) :
 	_textures(context.textures),
 	_shelf(GEX::CurrentShelf::getInstance().getCurrentShelf())
 {
-  	for (auto i : _player->getInventory())
+  	for (auto i : _player->getInventory())//get the entire player inventory
 	{
 		auto item = new GEX::Item(i.first, *_textures);
 		_items.push_back(*item);
 	}
-	for (int i = 0; i < _player->getInventory().size(); i++)
+	for (int i = 0; i < _player->getInventory().size(); i++)//make all inventory items a text
 	{
 		sf::Text option;
 		option.setFont(GEX::FontManager::getInstance().get(GEX::FontID::Main));
@@ -92,7 +92,7 @@ bool Inventory::handleEvent(const sf::Event & event)
 	{
 		//set the item to shelf 
 		_shelf->setItemOnShelf(_items[_optionsIndex]);
-		_player->removeFromInventory(&_items[_optionsIndex]);
+		_player->removeFromInventory(&_items[_optionsIndex]);//take item from inventory
 		requestStackPop();
 	}
 	else if (event.key.code == sf::Keyboard::Up)//if key is up

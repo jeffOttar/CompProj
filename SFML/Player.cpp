@@ -58,8 +58,6 @@ namespace GEX
 		{
 			animations_[a.first] = a.second;
 		}
-
-		//sprite_.setTextureRect(TABLE.at(type).textureRect);
 		sprite_.setTextureRect(sf::IntRect());
 		centerOrigin(sprite_);
 
@@ -70,12 +68,6 @@ namespace GEX
 	}
 	sf::FloatRect Player::getBoundingBox() const
 	{
-		//auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
-		//box.width -= 35; // tighten up bounding box for more realistic collisions
-		//box.left += 10;
-		//box.height -= 25;
-		//box.top += 20;
-		//return box;
 		auto box = getWorldTransform().transformRect(sprite_.getGlobalBounds());
 		box.width -= 95; // tighten up bounding box for more realistic collisions
 		box.left += 45;
@@ -118,7 +110,7 @@ namespace GEX
 
 	void Player::updateStates()
 	{
-
+		//update the states
 		if (state_ == State::MoveUp && animations_[state_].isFinished())
 			setState(State::Up);
 		else if (state_ == State::MoveDown && animations_[state_].isFinished())
@@ -144,40 +136,39 @@ namespace GEX
 
 	}
 
-	void Player::addToInventory(Item* item)//CHANGE TO USE ITEM::TYPE
+	void Player::addToInventory(Item* item)
 	{
-		auto it = _inventory.find(item->getType());
-		int count = it != _inventory.end() ? _inventory.at(item->getType()) : 1;
+		auto it = _inventory.find(item->getType());//find the item
+		int count = it != _inventory.end() ? _inventory.at(item->getType()) : 1;//if it exists get count
 		if (it != _inventory.end())
 		{
-			_inventory.at(item->getType()) = ++count;
+			_inventory.at(item->getType()) = ++count;//increment if it exists
 		}
 		else
 		{
-			_inventory.insert(std::pair<Item::Type, int>(item->getType(), count));
+			_inventory.insert(std::pair<Item::Type, int>(item->getType(), count));//insert any new item
 		}
-		//_inventory.insert_or_assign(std::pair<Item,int>(*item, count));
 	}
 
-	void Player::removeFromInventory(Item* item)//CHANGE TO USE ITEM::TYPE
+	void Player::removeFromInventory(Item* item)
 	{
-		auto it = _inventory.find(item->getType());
-		if (it != _inventory.end())
+		auto it = _inventory.find(item->getType());//find the item
+		if (it != _inventory.end())//if it exists
 		{
-			int count = _inventory.at(item->getType());
+			int count = _inventory.at(item->getType());//find count of item
 			if (count == 1)
 			{
-				_inventory.erase(it);
+				_inventory.erase(it);//erase if last one of its kind
 			}
 			else
 			{
-				count--;
+				count--;//if you have multiple then decrement the amount
 				_inventory.at(item->getType()) = count;
 			}
 		}
 	}
 
-	std::map<Item::Type, int> Player::getInventory()//CHANGE TO USE ITEM::TYPE
+	std::map<Item::Type, int> Player::getInventory()//return the inventory
 	{
 		return _inventory;
 	}
