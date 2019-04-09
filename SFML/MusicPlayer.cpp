@@ -35,7 +35,7 @@ namespace GEX {
 	MusicPlayer::MusicPlayer() :
 		_music(),
 		_filenames(),
-		_volume(5.f)
+		_volume(15.f)
 	{
 		_filenames[MusicID::MenuTheme] = "Media/Music/GameTheme.wav";
 		_filenames[MusicID::MissionTheme] = "Media/Music/GameTheme.wav";

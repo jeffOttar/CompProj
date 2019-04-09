@@ -77,7 +77,7 @@ void GameOverState::draw()
 bool GameOverState::update(sf::Time dt)
 {
 	_elapsedTime += dt;
-	if (_elapsedTime > sf::seconds(3))
+	if (_elapsedTime > sf::seconds(5))
 	{
 		requestStackClear();
 		requestStackPush(GEX::StateID::Menu);

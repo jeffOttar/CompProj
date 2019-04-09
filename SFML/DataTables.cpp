@@ -204,31 +204,6 @@ namespace GEX {
 
 		return data;
 
-		/***VILLAGER AND ITEM WILL USE JSON LIKE THIS
-
-		data[Ghost::GhostType::Ghost].texture = TextureID::Atlas;
-		data[Ghost::GhostType::Ghost].hitpoints = 5;
-		data[Ghost::GhostType::Ghost].textureRect = sf::IntRect(43, 379, 40, 40);
-
-		JsonFrameParser frames = JsonFrameParser("Media/Textures/pacManAtlas.json");
-
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Up].addFrameSet(frames.getFramesFor("red up"));//ghost up images
-
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Up].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Up].setRepeating(true);
-
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Down].addFrameSet(frames.getFramesFor("red down"));//ghost down images
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Down].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Down].setRepeating(true);
-
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Left].addFrameSet(frames.getFramesFor("red left"));//ghost left images
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Left].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Left].setRepeating(true);
-
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Right].addFrameSet(frames.getFramesFor("red right"));//ghost right images
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Right].setDuration(sf::Time(sf::seconds(1.f)));
-		data[Ghost::GhostType::Ghost].animations[Ghost::GhostState::Right].setRepeating(true);
-		*/
 	}
 	std::map<Shelf::ShelfType, ShelfData> initializeShelfData()
 	{
