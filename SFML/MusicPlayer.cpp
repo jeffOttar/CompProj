@@ -29,7 +29,7 @@
 * NBCC Academic Integrity Policy (policy 1111)
 */
 #include "MusicPlayer.h"
-
+#include <stdexcept>
 
 namespace GEX {
 	MusicPlayer::MusicPlayer() :

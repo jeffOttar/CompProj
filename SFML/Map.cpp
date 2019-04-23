@@ -106,8 +106,8 @@
 			}
 			else if (_optionsIndex == Marco)
 			{
-				if (_money >= 100000000)//can only go to end game zone if have enough money
-				/*if (_money >= 1)*/
+				//if (_money >= 100000000)//can only go to end game zone if have enough money
+				if (_money >= 1)
 				{
 					requestStackPop();
 					requestStackPush(GEX::StateID::MarcoLand);

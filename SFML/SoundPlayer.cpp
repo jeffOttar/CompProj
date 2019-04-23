@@ -34,6 +34,8 @@
 #include <SFML/Audio/Listener.hpp>
 
 #include <cassert>
+#include <cmath>
+#include <stdexcept>
 
 namespace {
 	// Sound coordinate system, point of view of a player in front of the screen:
